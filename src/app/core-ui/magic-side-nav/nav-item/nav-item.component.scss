@@ -2,7 +2,8 @@
 
 // Folder expand/collapse icon animation
 .folder-icon {
-  transition: transform 0.3s ease-in-out;
+  transition: transform var(--motion-duration-medium, 300ms)
+    var(--motion-spring-spatial-fast, cubic-bezier(0.2, 0, 0, 1));
 
   &.expanded {
     transform: rotate(90deg);
@@ -43,14 +44,17 @@
       letter-spacing: inherit;
       overflow: hidden;
       text-overflow: ellipsis;
-      // smooth collapse/expand for title
+      // smooth collapse/expand for title using M3 spring motion
       display: inline-block;
       white-space: nowrap;
       max-width: 100%;
       transition:
-        opacity var(--transition-duration-m, 0.25s) var(--ani-standard-timing),
-        max-width var(--transition-duration-m, 0.25s) var(--ani-standard-timing),
-        margin var(--transition-duration-m, 0.25s) var(--ani-standard-timing);
+        opacity var(--motion-duration-medium, 250ms)
+          var(--motion-spring-effects-default, cubic-bezier(0.2, 0, 0, 1)),
+        max-width var(--motion-duration-medium, 250ms)
+          var(--motion-spring-spatial-default, cubic-bezier(0.2, 0, 0, 1)),
+        margin var(--motion-duration-medium, 250ms)
+          var(--motion-spring-spatial-default, cubic-bezier(0.2, 0, 0, 1));
     }
 
     .ico-wrapper {
@@ -173,7 +177,8 @@ button[mat-menu-item].nav-link.active {
   color: var(--sidenav-text);
   text-decoration: none;
   border-radius: var(--sys-corner-radius-full);
-  transition: all 0.2s ease;
+  transition: all var(--motion-duration-short, 200ms)
+    var(--motion-spring-effects-default, cubic-bezier(0.2, 0, 0, 1));
   cursor: pointer;
   background: transparent;
   border: none;
@@ -288,7 +293,8 @@ button[mat-menu-item].nav-link.active {
 }
 
 .expand-icon {
-  transition: transform 0.2s ease;
+  transition: transform var(--motion-duration-short, 200ms)
+    var(--motion-spring-spatial-fast, cubic-bezier(0.2, 0, 0, 1));
 }
 
 .expanded .expand-icon {

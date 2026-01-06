@@ -1,8 +1,12 @@
 :host {
   --sidenav-width-expanded: var(--side-nav-width, 260px);
   --mobile-breakpoint: 768px;
-  --sidenav-transition-duration: var(--transition-duration-m, 0.3s);
-  --sidenav-transition-timing: var(--ani-standard-timing, cubic-bezier(0.4, 0, 0.2, 1));
+  // M3 Expressive motion tokens
+  --sidenav-transition-duration: var(--motion-duration-medium, 300ms);
+  --sidenav-transition-timing: var(
+    --motion-spring-spatial-default,
+    cubic-bezier(0.2, 0, 0, 1)
+  );
   --mat-menu-item-spacing: 4px;
   --sidenav-border-color: var(--separator-color);
 

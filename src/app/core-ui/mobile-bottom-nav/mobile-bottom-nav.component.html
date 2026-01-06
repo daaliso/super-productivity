@@ -1,21 +1,29 @@
 <nav class="mobile-bottom-nav">
+  <!-- Menu Button -->
   <button
-    mat-button
-    class="nav-button"
+    class="nav-item"
     (click)="toggleMobileNav()"
   >
-    <mat-icon>menu</mat-icon>
+    <div class="nav-item-content">
+      <mat-icon class="nav-icon">menu</mat-icon>
+      <span class="nav-label">Menu</span>
+    </div>
   </button>
 
+  <!-- Today Button -->
   <button
-    mat-button
-    class="nav-button"
+    class="nav-item"
     [class.active]="currentRoute().includes('/tag/' + todayTagId + '/tasks')"
     [routerLink]="todayRoute"
   >
-    <mat-icon>wb_sunny</mat-icon>
+    <div class="nav-item-content">
+      <span class="active-indicator"></span>
+      <mat-icon class="nav-icon">wb_sunny</mat-icon>
+      <span class="nav-label">Today</span>
+    </div>
   </button>
 
+  <!-- Add Task FAB -->
   <button
     mat-fab
     class="add-task-button"
@@ -26,21 +34,28 @@
     <mat-icon>add</mat-icon>
   </button>
 
+  <!-- Planner Button -->
   <button
-    mat-button
-    class="nav-button"
+    class="nav-item"
     [class.active]="currentRoute() === '/planner'"
     routerLink="/planner"
   >
-    <mat-icon>edit_calendar</mat-icon>
+    <div class="nav-item-content">
+      <span class="active-indicator"></span>
+      <mat-icon class="nav-icon">edit_calendar</mat-icon>
+      <span class="nav-label">Planner</span>
+    </div>
   </button>
 
+  <!-- Panels Menu Button -->
   <button
-    mat-button
-    class="nav-button"
+    class="nav-item"
     [matMenuTriggerFor]="panelsMenu"
   >
-    <mat-icon>view_sidebar</mat-icon>
+    <div class="nav-item-content">
+      <mat-icon class="nav-icon">view_sidebar</mat-icon>
+      <span class="nav-label">Panels</span>
+    </div>
   </button>
 </nav>
 
