@@ -3,24 +3,59 @@
 }
 
 .collapsible-header {
+  position: relative;
   cursor: pointer;
   user-select: none;
-  -webkit-user-select: none; /* Safari */
+  -webkit-user-select: none;
   display: flex;
   flex-direction: row;
   align-items: center;
-  //padding-top: 16px;
-  padding-bottom: 8px;
+  min-height: 48px; // M3 touch target
+  padding: 12px 12px 8px 12px; // Maintain bottom padding for formly spacing
+  border-radius: var(--sys-corner-radius-small);
+  isolation: isolate;
+
+  // M3 State layer
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: var(--sys-on-surface);
+    opacity: 0;
+    transition: opacity var(--motion-duration-effect-fast)
+      var(--motion-spring-effect-fast);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  // Hover state
+  &:hover::before {
+    opacity: 0.08;
+  }
+
+  // Pressed state
+  &:active::before {
+    opacity: 0.12;
+  }
 
   &:focus {
     outline: none;
   }
 
+  // Focus visible
+  &:focus-visible {
+    outline: 2px solid var(--sys-primary);
+    outline-offset: 2px;
+  }
+
   :host.isInline & {
-    display: inline-block;
+    display: inline-flex;
+    min-height: auto;
+    padding: 4px 8px;
 
     & > * {
-      display: inline-block;
+      display: inline-flex;
       vertical-align: middle;
     }
   }
@@ -28,15 +63,18 @@
 
 .collapsible-title {
   flex-grow: 1;
-
-  :host.isInline & {
-    //display: inline-block;
-  }
+  color: var(--sys-on-surface);
+  z-index: 1; // Above state layer
 }
 
 .collapsible-expand-icon {
-  margin-right: var(--s);
-  transition: all var(--transition-standard);
+  margin-right: 8px;
+  color: var(--sys-on-surface-variant);
+  z-index: 1; // Above state layer
+
+  // Use spring-based spatial motion for rotation
+  transition: transform var(--motion-duration-spatial-default)
+    var(--motion-spring-spatial-default);
 
   :host.isExpanded & {
     transform: rotate(180deg);
@@ -46,8 +84,9 @@
 .collapsible-panel {
   height: auto;
   display: block;
+  overflow: hidden;
 
-  // make sure we don't produce clunky animations
+  // Ensure no padding/margin affects animation
   padding: 0 !important;
   margin: 0 !important;
 }

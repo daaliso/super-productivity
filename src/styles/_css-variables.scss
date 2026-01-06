@@ -228,16 +228,19 @@ body {
   --card-bg: #ffffff;
   --card-shadow: var(--whiteframe-shadow-2dp);
 
-  // Navigation & Panel backgrounds
-  --sidenav-bg: transparent;
-  --sidenav-bg-mobile: var(--bg);
-  --sidenav-item-active-bg: rgba(255, 255, 255, 1.25);
-  --sidenav-hover-bg: rgba(205, 205, 205, 0.35);
-  --sidenav-active-text: var(--sys-primary); // Darker for better contrast on light bg
-  --sidenav-text: var(--text-color-less-intense);
-  --sidenav-text-hover: var(--text-color-most-intense);
+  // Navigation & Panel backgrounds - M3 Surface Containers
+  --sidenav-bg: var(--sys-surface-container);
+  --sidenav-bg-mobile: var(--sys-surface-container);
+  --sidenav-section-bg: var(--sys-surface-container-low);
+  --sidenav-item-active-bg: var(--sys-secondary-container);
+  --sidenav-item-active-text: var(--sys-on-secondary-container);
+  --sidenav-hover-bg: color-mix(in srgb, var(--sys-on-surface) 8%, transparent);
+  --sidenav-active-text: var(--sys-on-secondary-container);
+  --sidenav-text: var(--sys-on-surface-variant);
+  --sidenav-text-hover: var(--sys-on-surface);
   // task numbers and projects/tags expand and hover buttons on right
-  --sidenav-text-secondary: var(--text-color-muted);
+  --sidenav-text-secondary: var(--sys-on-surface-variant);
+  --sidenav-divider: var(--sys-outline-variant);
 
   --overlay-bg: var(--c-backdrop, rgba(0, 0, 0, 0.6));
   --right-panel-bg: transparent;
@@ -371,12 +374,15 @@ body.isDarkTheme {
   --bg-super-light: #616161;
   --card-bg: var(--dark3);
 
-  // Navigation & Panel backgrounds
-  --sidenav-bg: transparent;
-  --sidenav-bg-mobile: var(--bg);
-  --sidenav-item-active-bg: rgba(255, 255, 255, 0.075);
-  --sidenav-hover-bg: rgba(255, 255, 255, 0.05);
-  --sidenav-active-text: var(--sys-primary);
+  // Navigation & Panel backgrounds - M3 Surface Containers
+  --sidenav-bg: var(--sys-surface-container);
+  --sidenav-bg-mobile: var(--sys-surface-container);
+  --sidenav-section-bg: var(--sys-surface-container-low);
+  --sidenav-item-active-bg: var(--sys-secondary-container);
+  --sidenav-item-active-text: var(--sys-on-secondary-container);
+  --sidenav-hover-bg: color-mix(in srgb, var(--sys-on-surface) 8%, transparent);
+  --sidenav-active-text: var(--sys-on-secondary-container);
+  --sidenav-divider: var(--sys-outline-variant);
 
   --overlay-bg: var(--c-backdrop, rgba(0, 0, 0, 0.8));
   --right-panel-bg: transparent;

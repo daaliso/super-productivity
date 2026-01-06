@@ -7,94 +7,141 @@
 
 .segmented-button-group {
   display: flex;
-  gap: var(--s3);
-  padding: var(--s);
-  border-radius: var(--s4);
-  //background: var(--bg-lightest);
-  //box-shadow: 0 18px 45px var(--c-dark-20);
+  gap: 0; // M3: No gap between segments
+  padding: 0;
+  border-radius: var(--sys-corner-radius-full);
+  background: var(--sys-surface-container-low);
+  border: 1px solid var(--sys-outline-variant);
+  isolation: isolate; // For proper state layer stacking
 
   @include mq(xs, max) {
-    gap: var(--s2);
+    // Maintain same layout on mobile
   }
 }
 
 .segment {
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: var(--s-quarter);
+  gap: 2px;
   flex: 1 1 0;
-  border-radius: 16px;
-  padding: var(--s) var(--s2);
-  border: 1px solid var(--options-border-color);
-  background: var(--bg-lighter);
+  min-width: 48px; // M3 touch target
+  min-height: 48px; // M3 touch target
+  padding: 10px 12px;
+  border: none;
   background: transparent;
   cursor: pointer;
-  color: var(--text-color);
-  text-align: left;
-  box-shadow: none;
-  border-width: 3px;
-  transition:
-    transform var(--transition-duration-m) var(--ani-enter-timing),
-    box-shadow var(--transition-duration-m) var(--ani-enter-timing),
-    border-color var(--transition-duration-m) var(--ani-enter-timing),
-    background var(--transition-duration-m) var(--ani-enter-timing),
-    color var(--transition-duration-m) var(--ani-enter-timing);
+  color: var(--sys-on-surface);
+  text-align: center;
+  isolation: isolate;
 
-  @include mq(xs, max) {
-    padding: var(--s) var(--s);
+  // Remove individual borders - use container approach
+  border-radius: 0;
+
+  // First segment
+  &:first-child {
+    border-radius: var(--sys-corner-radius-full) 0 0 var(--sys-corner-radius-full);
   }
 
+  // Last segment
+  &:last-child {
+    border-radius: 0 var(--sys-corner-radius-full) var(--sys-corner-radius-full) 0;
+  }
+
+  // Only segment
+  &:only-child {
+    border-radius: var(--sys-corner-radius-full);
+  }
+
+  @include mq(xs, max) {
+    padding: 8px 10px;
+    min-width: 40px;
+  }
+
+  // M3 State Layer (for interactive states)
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: currentColor;
+    opacity: 0;
+    transition: opacity var(--motion-duration-effect-fast)
+      var(--motion-spring-effect-fast);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  // Hover state layer
   @include mousePrimaryDevice {
-    &:not(.is-active):hover {
-      border-color: var(--options-border-color);
-      transform: translateY(-1px);
-      box-shadow: var(--whiteframe-shadow-8dp);
+    &:not(.is-active):not(.is-disabled):hover::before {
+      opacity: 0.08; // M3 hover state layer
     }
   }
 
+  // Pressed state (while clicking)
+  &:not(.is-disabled):not(.is-active):active::before {
+    opacity: 0.12; // M3 pressed state layer
+  }
+
+  // Active state (selected)
   &.is-active {
-    border-color: var(--c-primary);
-    border-width: 3px;
-    box-shadow: var(--whiteframe-shadow-8dp);
-    transform: scale(1.1);
+    background: var(--sys-secondary-container);
+    color: var(--sys-on-secondary-container);
+
+    // No state layer on active - background shows selection
+    &::before {
+      opacity: 0;
+    }
+  }
+
+  // Disabled state
+  &.is-disabled {
+    cursor: not-allowed;
+    color: color-mix(in srgb, var(--sys-on-surface) 38%, transparent);
+
+    &::before {
+      display: none;
+    }
+  }
+
+  // Focus visible (keyboard navigation)
+  &:focus-visible {
+    outline: 2px solid var(--sys-primary);
+    outline-offset: -2px; // Inside the button
+    z-index: 1; // Above siblings
   }
 }
 
 .segment-icon {
-  font-size: 22px;
-  height: 22px;
-  width: 22px;
-  color: var(--text-color-more-intense);
-  transition: color var(--transition-duration-m) var(--ani-enter-timing);
+  font-size: 18px;
+  height: 18px;
+  width: 18px;
+  color: inherit;
+  z-index: 1; // Above state layer
+
+  .segment.is-active & {
+    // Icon stays same color as text in active state
+    color: inherit;
+  }
 }
 
 .segment-label {
-  font-weight: 600;
-  font-size: 15px;
+  font-weight: 500; // M3 label-large
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: 0.1px;
+  z-index: 1; // Above state layer
 }
 
-.segment-hint {
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--text-color-muted);
-  letter-spacing: 0.015em;
-  transition:
-    color var(--transition-duration-m) var(--ani-enter-timing),
-    opacity var(--transition-duration-m) var(--ani-enter-timing);
-}
-
-.segment.is-disabled {
-  cursor: not-allowed;
-  opacity: 0.6;
-}
-
-.segment:focus-visible {
-  outline: 2px solid var(--c-primary);
-  outline-offset: 2px;
-}
-
+// Size variant: medium (more compact)
 :host([data-size='md']) .segment {
-  padding: var(--s-half) var(--s);
+  min-height: 40px;
+  padding: 6px 12px;
+
+  @include mq(xs, max) {
+    padding: 6px 8px;
+  }
 }

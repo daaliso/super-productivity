@@ -1,0 +1,94 @@
+// ============================================================================
+// Material 3 Expressive Motion Tokens
+// ============================================================================
+// Reference: https://m3.material.io/styles/motion/easing-and-duration/tokens-specs
+//
+// M3 uses a physics-based motion system with springs instead of traditional
+// easing curves. For web (CSS), these are approximated using cubic-bezier.
+//
+// Two main categories:
+// - SPATIAL: For position, size, rotation, shape (overshoots/bounces)
+// - EFFECTS: For color, opacity (smooth without overshoot)
+// ============================================================================
+
+:root {
+  // --------------------------------------------------------------------------
+  // SPATIAL MOTION
+  // --------------------------------------------------------------------------
+  // Used for: transform, border-radius, width, height
+  // Characteristic: Springs overshoot and bounce into place
+
+  // Fast - For small elements (< 100px)
+  --motion-spring-spatial-fast: cubic-bezier(0.2, 0, 0, 1);
+  --motion-duration-spatial-fast: 200ms;
+
+  // Default - For most use cases
+  --motion-spring-spatial-default: cubic-bezier(0.3, 0, 0.2, 1);
+  --motion-duration-spatial-default: 300ms;
+
+  // Slow - For large elements (> 500px)
+  --motion-spring-spatial-slow: cubic-bezier(0.4, 0, 0.2, 1);
+  --motion-duration-spatial-slow: 400ms;
+
+  // --------------------------------------------------------------------------
+  // EFFECTS MOTION
+  // --------------------------------------------------------------------------
+  // Used for: background-color, color, opacity, box-shadow
+  // Characteristic: Smooth easing without overshoot
+
+  // Fast - Quick color/opacity changes
+  --motion-spring-effect-fast: cubic-bezier(0.05, 0.7, 0.1, 1);
+  --motion-duration-effect-fast: 150ms;
+
+  // Default - Standard color/opacity transitions
+  --motion-spring-effect-default: cubic-bezier(0.05, 0.7, 0.1, 1);
+  --motion-duration-effect-default: 250ms;
+
+  // Slow - Gradual color/opacity changes
+  --motion-spring-effect-slow: cubic-bezier(0.05, 0.7, 0.1, 1);
+  --motion-duration-effect-slow: 350ms;
+
+  // --------------------------------------------------------------------------
+  // EMPHASIZED MOTION
+  // --------------------------------------------------------------------------
+  // Used for: Hero moments, important state changes
+  // Two-phase animation: accelerate quickly, decelerate smoothly
+
+  --motion-emphasized-accelerate: cubic-bezier(0.3, 0, 0.8, 0.15);
+  --motion-emphasized-decelerate: cubic-bezier(0.05, 0.7, 0.1, 1);
+  --motion-emphasized-duration: 500ms;
+
+  // --------------------------------------------------------------------------
+  // LEGACY TOKENS (for backwards compatibility)
+  // --------------------------------------------------------------------------
+  // Map old tokens to new M3 equivalents
+
+  --transition-duration-m: var(--motion-duration-spatial-default);
+  --ani-enter-timing: var(--motion-spring-spatial-default);
+  --transition-standard: var(--motion-duration-spatial-default)
+    var(--motion-spring-spatial-default);
+}
+
+// Respect user's motion preferences
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    // Reduce all durations significantly
+    --motion-duration-spatial-fast: 50ms;
+    --motion-duration-spatial-default: 50ms;
+    --motion-duration-spatial-slow: 50ms;
+    --motion-duration-effect-fast: 50ms;
+    --motion-duration-effect-default: 50ms;
+    --motion-duration-effect-slow: 50ms;
+    --motion-emphasized-duration: 50ms;
+
+    // Use linear easing (no spring effect)
+    --motion-spring-spatial-fast: linear;
+    --motion-spring-spatial-default: linear;
+    --motion-spring-spatial-slow: linear;
+    --motion-spring-effect-fast: linear;
+    --motion-spring-effect-default: linear;
+    --motion-spring-effect-slow: linear;
+    --motion-emphasized-accelerate: linear;
+    --motion-emphasized-decelerate: linear;
+  }
+}

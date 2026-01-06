@@ -133,7 +133,7 @@ export class MagicNavConfigService {
         type: 'tree',
         id: 'projects',
         label: T.MH.PROJECTS,
-        icon: 'expand_more',
+        icon: 'folder',
         treeKind: MenuTreeKind.PROJECT,
         tree:
           this._projectNavTree().length > 0
@@ -170,7 +170,7 @@ export class MagicNavConfigService {
         type: 'tree',
         id: 'tags',
         label: T.MH.TAGS,
-        icon: 'expand_more',
+        icon: 'label',
         treeKind: MenuTreeKind.TAG,
         tree:
           this._tagNavTree().length > 0

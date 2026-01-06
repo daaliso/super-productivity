@@ -82,6 +82,7 @@
     opacity: 1;
     visibility: visible;
   }
+
   .task-count {
     display: none !important;
   }
@@ -226,7 +227,7 @@ button[mat-menu-item].nav-link.active {
 
     .nav-label {
       color: var(--sidenav-active-text);
-      font-weight: 700;
+      font-weight: 600;
     }
 
     // Prevent Material focus styles from reducing contrast on active items

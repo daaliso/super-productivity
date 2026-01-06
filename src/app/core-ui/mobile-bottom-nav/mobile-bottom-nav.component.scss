@@ -9,44 +9,72 @@
   bottom: 0;
   left: 0;
   right: 0;
+  min-height: var(--bottom-nav-height);
   height: calc(var(--bottom-nav-height) + env(safe-area-inset-bottom) + 16px);
   box-sizing: border-box;
-  background: var(--bottom-nav-bg);
-  border-top: 1px solid var(--separator-color);
-  box-shadow: var(--whiteframe-shadow-8dp);
+  background: var(--sys-surface-container);
+  border-top: 1px solid var(--sys-outline-variant);
+  box-shadow:
+    0px 2px 6px -1px rgba(0, 0, 0, 0.2),
+    0px 1px 1px 0px rgba(0, 0, 0, 0.14),
+    0px 1px 3px 0px rgba(0, 0, 0, 0.12);
   align-items: center;
   justify-content: space-between;
-  padding: 0 16px;
-  padding-bottom: env(safe-area-inset-bottom);
+  padding: 12px 8px 0 8px;
+  padding-bottom: calc(12px + env(safe-area-inset-bottom));
   z-index: var(--z-mobile-bottom-nav);
   display: flex;
-
-  //// Glass effect only when background image is present
-  :host-context(.hasBgImage) & {
-    //backdrop-filter: blur(10px);
-    //-webkit-backdrop-filter: blur(10px);
-  }
+  gap: 4px;
 
   .nav-button {
+    position: relative;
     flex: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 32px;
-    min-width: 32px;
-    max-width: 64px;
+    min-height: 48px; // M3 touch target
+    min-width: 48px;
+    max-width: 80px;
     border-radius: var(--sys-corner-radius-full);
-    transition: all 0.2s ease;
-    padding: 0;
+    padding: 4px 8px;
+    color: var(--sys-on-surface-variant);
+    isolation: isolate; // For state layer stacking
 
-    &.active {
-      background-color: var(--bottom-nav-item-active-bg);
-      color: var(--bottom-nav-item-active-text);
+    // M3 State layer
+    &::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: var(--sys-on-surface);
+      opacity: 0;
+      transition: opacity var(--motion-duration-effect-fast)
+        var(--motion-spring-effect-fast);
+      pointer-events: none;
+      z-index: 0;
     }
 
-    &:hover {
-      background-color: var(--mat-surface-container-high);
+    // Hover state
+    @include mousePrimaryDevice {
+      &:not(.active):hover::before {
+        opacity: 0.08;
+      }
+    }
+
+    // Pressed state
+    &:not(.active):active::before {
+      opacity: 0.12;
+    }
+
+    // Active (selected) state
+    &.active {
+      background-color: var(--sys-secondary-container);
+      color: var(--sys-on-secondary-container);
+
+      &::before {
+        display: none; // No state layer when active
+      }
     }
 
     mat-icon {
@@ -55,25 +83,38 @@
       height: 24px;
       padding: 0;
       margin: 0;
+      z-index: 1; // Above state layer
     }
   }
 
   .add-task-button {
-    transition: all 0.2s ease;
+    flex: 0 0 auto;
+    margin: 0 8px -8px 8px; // Lift FAB above nav bar
+    transform-origin: center center;
+    transition:
+      transform var(--motion-duration-spatial-default)
+        var(--motion-spring-spatial-default),
+      box-shadow var(--motion-duration-effect-default) var(--motion-spring-effect-default);
 
-    &:hover {
-      transform: scale(1.05);
+    @include mousePrimaryDevice {
+      &:hover {
+        transform: scale(1.08); // Expressive scale with spring
+      }
     }
 
     &:active {
-      transform: scale(0.95);
+      transform: scale(0.95); // Spring back
     }
 
     &.smaller {
+      width: 40px;
       height: 40px;
-      margin-left: 8px;
-      margin-right: 8px;
-      margin-bottom: 0px;
+
+      mat-icon {
+        font-size: 24px;
+        width: 24px;
+        height: 24px;
+      }
     }
 
     mat-icon {
