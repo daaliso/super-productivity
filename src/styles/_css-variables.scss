@@ -17,8 +17,8 @@
   // Fonts
   // -----------------------------
   --font-primary-stack:
-    'Open Sans', 'Noto Sans', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
-    'Noto Color Emoji', 'Android Emoji', 'EmojiSymbols', -apple-system,
+    'Google Sans Flex', 'Open Sans', 'Noto Sans', 'Apple Color Emoji', 'Segoe UI Emoji',
+    'Segoe UI Symbol', 'Noto Color Emoji', 'Android Emoji', 'EmojiSymbols', -apple-system,
     BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
 
   --s2: 16px; // 2 * 8px
@@ -54,7 +54,7 @@
   --bar-height-small: 40px;
   --mat-mini-fab-size: 48px;
   --mac-title-bar-padding: 20px;
-  --card-border-radius: 4px;
+  --card-border-radius: var(--sys-corner-radius-medium);
   --window-controls-width: 140px; // Fallback for non-WCO contexts; main-header uses env() directly
 
   // Z-index layers
@@ -126,10 +126,10 @@
   --c-light-90: rgba(255, 255, 255, 0.9);
 
   // Legacy palette references
-  --c-primary: var(--palette-primary-500);
-  --c-accent: var(--palette-accent-500);
-  --c-warn: var(--palette-warn-500);
-  --c-contrast: var(--palette-primary-contrast-500);
+  --c-primary: var(--sys-primary);
+  --c-accent: var(--sys-secondary);
+  --c-warn: var(--sys-error);
+  --c-contrast: var(--sys-on-primary);
 
   // ===============================
   // ANIMATION & TRANSITIONS
@@ -178,7 +178,7 @@
   --task-icon-default-opacity: 0.7;
   --task-inner-padding-top-bottom: 4px;
   --task-is-done-dim-opacity: 0.3;
-  --task-border-radius: 4px;
+  --task-border-radius: var(--sys-corner-radius-small);
 
   // Task z-indexes
   --z-drag-handle: 1;
@@ -233,9 +233,7 @@ body {
   --sidenav-bg-mobile: var(--bg);
   --sidenav-item-active-bg: rgba(255, 255, 255, 1.25);
   --sidenav-hover-bg: rgba(205, 205, 205, 0.35);
-  --sidenav-active-text: var(
-    --palette-primary-600
-  ); // Darker for better contrast on light bg
+  --sidenav-active-text: var(--sys-primary); // Darker for better contrast on light bg
   --sidenav-text: var(--text-color-less-intense);
   --sidenav-text-hover: var(--text-color-most-intense);
   // task numbers and projects/tags expand and hover buttons on right
@@ -246,6 +244,8 @@ body {
   --right-panel-bg-mobile: #fff;
   --bottom-nav-height: 44px;
   --bottom-nav-bg: var(--sidenav-bg-mobile);
+  --bottom-nav-item-active-bg: var(--sys-secondary-container);
+  --bottom-nav-item-active-text: var(--sys-on-secondary-container);
   --bottom-panel-bg: #fff;
   --bottom-panel-handle: rgba(0, 0, 0, 0.4);
   --bottom-panel-handle-active: rgba(0, 0, 0, 0.6);
@@ -340,10 +340,7 @@ body {
   --hover-controls-border-opacity: 0.5;
 
   // Task detail item
-  --task-detail-value-color: rgba(
-    var(--palette-foreground-secondary-text),
-    var(--palette-foreground-secondary-text-alpha, 1)
-  );
+  --task-detail-value-color: var(--sys-on-surface-variant);
   --task-detail-bg: var(--card-bg);
   --task-detail-bg-hover: #eeeeee;
   --task-detail-shadow: var(--card-shadow);
@@ -379,12 +376,14 @@ body.isDarkTheme {
   --sidenav-bg-mobile: var(--bg);
   --sidenav-item-active-bg: rgba(255, 255, 255, 0.075);
   --sidenav-hover-bg: rgba(255, 255, 255, 0.05);
-  --sidenav-active-text: var(--palette-primary-400);
+  --sidenav-active-text: var(--sys-primary);
 
   --overlay-bg: var(--c-backdrop, rgba(0, 0, 0, 0.8));
   --right-panel-bg: transparent;
   --right-panel-bg-mobile: var(--bg);
   --bottom-nav-bg: var(--sidenav-bg-mobile);
+  --bottom-nav-item-active-bg: var(--sys-secondary-container);
+  --bottom-nav-item-active-text: var(--sys-on-secondary-container);
   --bottom-panel-bg: var(--dark1);
   --bottom-panel-handle: rgba(255, 255, 255, 0.4);
   --bottom-panel-handle-active: rgba(255, 255, 255, 0.6);

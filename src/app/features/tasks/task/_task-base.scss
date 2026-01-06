@@ -183,7 +183,7 @@
 
   ::ng-deep .box {
     box-shadow: var(--task-shadow-sub-task);
-    border-radius: 0;
+    border-radius: var(--sys-corner-radius-small);
     top: -1px;
     background: var(--sub-task-c-bg);
 

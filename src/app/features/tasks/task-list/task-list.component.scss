@@ -39,6 +39,7 @@
 
 .expand-tasks-btn {
   opacity: 0.8;
+  border-radius: var(--sys-corner-radius-full);
 
   &:hover {
     opacity: 1;

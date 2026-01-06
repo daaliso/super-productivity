@@ -21,9 +21,11 @@ import { MarkdownModule, MARKED_OPTIONS, provideMarkdown } from 'ngx-markdown';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { FeatureStoresModule } from './app/root-store/feature-stores.module';
 import { MATERIAL_ANIMATIONS, MatNativeDateModule } from '@angular/material/core';
+import { MatIconRegistry } from '@angular/material/icon';
+import { inject, provideAppInitializer } from '@angular/core';
 import { FormlyConfigModule } from './app/ui/formly-config.module';
 import { markedOptionsFactory } from './app/ui/marked-options-factory';
-import { MaterialCssVarsModule } from 'angular-material-css-vars';
+
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { ReminderModule } from './app/features/reminder/reminder.module';
@@ -95,11 +97,10 @@ bootstrapApplication(AppComponent, {
         },
         sanitize: SecurityContext.HTML,
       }),
-      MaterialCssVarsModule.forRoot(),
+
       MatSidenavModule,
       MatBottomSheetModule,
       ReminderModule,
-      MaterialCssVarsModule.forRoot(),
       // External
       BrowserModule,
       // NOTE: both need to be present to use forFeature stores
@@ -180,6 +181,11 @@ bootstrapApplication(AppComponent, {
     provideRouter(APP_ROUTES, withHashLocation(), withPreloading(PreloadAllModules)),
     PLUGIN_INITIALIZER_PROVIDER,
     provideZonelessChangeDetection(),
+    // Configure Material Symbols as default icon font
+    provideAppInitializer(() => {
+      const iconRegistry = inject(MatIconRegistry);
+      iconRegistry.setDefaultFontSetClass('material-symbols-rounded');
+    }),
   ],
 }).then(() => {
   // Initialize touch fix for Material menus

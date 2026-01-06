@@ -1,0 +1,133 @@
+// =============================================================================
+// MATERIAL SYMBOLS CONFIGURATION
+// =============================================================================
+// Variable font with axes: FILL, wght, GRAD, opsz
+// Reference: https://fonts.google.com/icons
+// =============================================================================
+
+// Import the variable font
+@import '@fontsource-variable/material-symbols-rounded';
+
+// Base configuration for Material Symbols
+.material-symbols-rounded {
+  font-family: 'Material Symbols Rounded Variable', sans-serif;
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+
+  // Default variable font settings
+  font-variation-settings:
+    'FILL' 0,
+    // 0 = outlined, 1 = filled
+    'wght' 400,
+    // 100-700 weight
+    'GRAD' 0,
+    // -50 to 200 grade (thickness fine-tuning)
+    'opsz' 24; // 20-48 optical size
+}
+
+// =============================================================================
+// ICON VARIANTS
+// =============================================================================
+
+// Filled icons (solid)
+.mat-icon.filled,
+.material-symbols-rounded.filled {
+  font-variation-settings:
+    'FILL' 1,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 24;
+}
+
+// Bold icons
+.mat-icon.bold,
+.material-symbols-rounded.bold {
+  font-variation-settings:
+    'FILL' 0,
+    'wght' 600,
+    'GRAD' 0,
+    'opsz' 24;
+}
+
+// Filled + Bold
+.mat-icon.filled.bold,
+.material-symbols-rounded.filled.bold {
+  font-variation-settings:
+    'FILL' 1,
+    'wght' 600,
+    'GRAD' 0,
+    'opsz' 24;
+}
+
+// Light icons (thin weight)
+.mat-icon.light,
+.material-symbols-rounded.light {
+  font-variation-settings:
+    'FILL' 0,
+    'wght' 300,
+    'GRAD' 0,
+    'opsz' 24;
+}
+
+// =============================================================================
+// SIZE VARIANTS WITH OPTICAL SIZE ADJUSTMENT
+// =============================================================================
+
+.mat-icon.icon-sm,
+.material-symbols-rounded.icon-sm {
+  font-size: 20px;
+  font-variation-settings:
+    'FILL' 0,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 20;
+}
+
+.mat-icon.icon-lg,
+.material-symbols-rounded.icon-lg {
+  font-size: 40px;
+  font-variation-settings:
+    'FILL' 0,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 40;
+}
+
+.mat-icon.icon-xl,
+.material-symbols-rounded.icon-xl {
+  font-size: 48px;
+  font-variation-settings:
+    'FILL' 0,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 48;
+}
+
+// =============================================================================
+// EXPRESSIVE ICON ANIMATIONS
+// =============================================================================
+
+// Icon with spring animation on state change
+.mat-icon.expressive {
+  transition: font-variation-settings var(--motion-duration-short)
+    var(--motion-spring-effects-default);
+}
+
+// Toggle fill on hover
+.mat-icon.expressive:hover {
+  font-variation-settings:
+    'FILL' 1,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 24;
+}

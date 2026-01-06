@@ -19,6 +19,8 @@
   position: relative;
   width: 100%;
   color: var(--sidenav-text);
+  margin-bottom: 4px;
+  padding: 0 12px;
 
   button:first-of-type {
     white-space: nowrap;
@@ -165,10 +167,11 @@ button[mat-menu-item].nav-link.active {
   display: flex;
   align-items: center;
   gap: var(--s2);
-  padding: var(--s) var(--s2);
+  padding: 0 var(--s2);
+  height: 48px;
   color: var(--sidenav-text);
   text-decoration: none;
-  border-radius: 6px;
+  border-radius: var(--sys-corner-radius-full);
   transition: all 0.2s ease;
   cursor: pointer;
   background: transparent;
@@ -177,8 +180,8 @@ button[mat-menu-item].nav-link.active {
   text-align: left;
   font-size: 14px;
   font-family: 'Open Sans', sans-serif;
-  font-weight: 400;
-  letter-spacing: normal;
+  font-weight: 500;
+  letter-spacing: 0.1px;
 
   // Override Angular Material mat-menu-item defaults so buttons/anchors match our palette
   &[mat-menu-item] {
@@ -215,7 +218,7 @@ button[mat-menu-item].nav-link.active {
   &.active {
     background: var(--sidenav-item-active-bg);
     color: var(--sidenav-active-text);
-    box-shadow: var(--whiteframe-shadow-1dp);
+    box-shadow: none;
 
     .nav-icon {
       color: var(--sidenav-active-text);
@@ -223,6 +226,7 @@ button[mat-menu-item].nav-link.active {
 
     .nav-label {
       color: var(--sidenav-active-text);
+      font-weight: 700;
     }
 
     // Prevent Material focus styles from reducing contrast on active items
@@ -242,7 +246,7 @@ button[mat-menu-item].nav-link.active {
   .nav-icon {
     width: 24px;
     height: 24px;
-    font-size: 18px;
+    font-size: 24px;
   }
 
   .nav-label {
@@ -261,13 +265,13 @@ button[mat-menu-item].nav-link.active {
   align-items: center;
   justify-content: center;
   // Don't set default color here - let it inherit or use theme colors
-  font-size: 18px;
+  font-size: 24px;
   line-height: 1;
 
   // Emoji-specific styling
   &.nav-icon-emoji {
     font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Noto Color Emoji', sans-serif;
-    font-size: 16px;
+    font-size: 20px;
     font-feature-settings: normal;
     font-variation-settings: normal;
     text-transform: none;
@@ -291,9 +295,14 @@ button[mat-menu-item].nav-link.active {
 }
 
 :host-context(.nav-sidenav.compactMode) {
+  padding: 0 4px;
+
   .nav-link {
     justify-content: center;
-    padding: 12px;
+    padding: 0;
+    height: 56px;
+    width: 56px;
+    margin: 0 auto;
 
     &:focus,
     &:hover {
@@ -321,7 +330,7 @@ button[mat-menu-item].nav-link.active {
     &.active {
       color: var(--sidenav-active-text) !important;
       background: var(--sidenav-item-active-bg) !important;
-      box-shadow: var(--whiteframe-shadow-1dp);
+      box-shadow: none;
 
       &::after {
         position: absolute;
