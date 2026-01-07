@@ -11,6 +11,9 @@ import { AVAILABLE_CUSTOM_THEMES } from '../../../core/theme/custom-theme.servic
 export const MISC_SETTINGS_FORM_CFG: ConfigFormSection<MiscConfig> = {
   title: T.GCF.MISC.TITLE,
   key: 'misc',
+  icon: 'tune',
+  subtitle: 'Display, behavior',
+  iconColor: 'primary',
   help: T.GCF.MISC.HELP,
   items: [
     // {

@@ -4,8 +4,11 @@ import { T } from '../../../t.const';
 
 export const TIME_TRACKING_FORM_CFG: ConfigFormSection<TimeTrackingConfig> = {
   title: T.GCF.TIME_TRACKING.TITLE,
-  help: T.GCF.TIME_TRACKING.HELP,
   key: 'timeTracking',
+  icon: 'timer',
+  subtitle: 'Estimates, reminders',
+  iconColor: 'tertiary',
+  help: T.GCF.TIME_TRACKING.HELP,
   items: [
     {
       key: 'defaultEstimate',

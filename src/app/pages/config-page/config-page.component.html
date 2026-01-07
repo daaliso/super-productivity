@@ -2,87 +2,133 @@
   @if (globalCfg) {
     <div>
       <div class="section-wrapper component-wrapper">
-        <h1 class="mat-h1">{{ T.PS.GLOBAL_SETTINGS | translate }}</h1>
         <theme-selector></theme-selector>
-        @for (section of globalConfigFormCfg; track section.key) {
-          <section class="config-section section-{{ section.key }}">
-            <config-section
-              (save)="saveGlobalCfg($event)"
-              [cfg]="getGlobalCfgSection(section.key)"
-              [section]="section"
-            ></config-section>
-          </section>
-        }
-        <section class="config-section">
-          <config-sound-form
-            [cfg]="getGlobalCfgSection('sound')"
-            (save)="saveGlobalCfg($event)"
-          ></config-sound-form>
-        </section>
 
-        <div>
-          <h2
-            class="mat-h2"
-            style="margin-top: 32px"
-          >
-            {{ T.PS.PLUGINS | translate }}
-          </h2>
-          <section class="config-section plugin-section">
-            <collapsible
-              [isIconBefore]="true"
-              [isExpanded]="false"
-              [title]="T.PS.PLUGINS | translate"
-            >
-              <plugin-management></plugin-management>
-            </collapsible>
-          </section>
-        </div>
-
-        <div class="tour-productivityHelper">
-          <h2
-            class="mat-h2"
-            style="margin-top: 32px"
-          >
-            {{ T.PS.PRODUCTIVITY_HELPER | translate }}
-          </h2>
-          @for (section of globalProductivityConfigFormCfg; track section.key) {
-            <section class="config-section">
-              <config-section
-                (save)="saveGlobalCfg($event)"
-                [cfg]="getGlobalCfgSection(section.key)"
-                [section]="section"
-              ></config-section>
-            </section>
+        <!-- Global Settings Group -->
+        <settings-group [header]="T.PS.GLOBAL_SETTINGS | translate">
+          @for (section of globalConfigFormCfg; track section.key) {
+            <settings-list-item
+              (itemClick)="expandSection(section.key)"
+              [icon]="section.icon || 'settings'"
+              [iconColor]="section.iconColor || 'primary'"
+              [subtitle]="section.subtitle | translate"
+              [title]="section.title | translate"
+            ></settings-list-item>
           }
-        </div>
+          <settings-list-item
+            (itemClick)="expandSection('sound')"
+            [subtitle]="T.GCF.SOUND.SUBTITLE || 'Audio feedback' | translate"
+            [title]="T.GCF.SOUND.TITLE | translate"
+            icon="volume_up"
+            iconColor="tertiary"
+          ></settings-list-item>
+        </settings-group>
 
-        <h2
-          class="mat-h2"
-          style="margin-top: 32px"
+        <!-- Plugins Group -->
+        <settings-group [header]="T.PS.PLUGINS | translate">
+          <settings-list-item
+            (itemClick)="expandSection('plugins')"
+            [subtitle]="'Extend functionality' | translate"
+            [title]="T.PS.PLUGINS | translate"
+            icon="extension"
+            iconColor="secondary"
+          ></settings-list-item>
+        </settings-group>
+
+        <!-- Productivity Helper Group -->
+        <settings-group
+          class="tour-productivityHelper"
+          [header]="T.PS.PRODUCTIVITY_HELPER | translate"
         >
-          {{ T.PS.SYNC_EXPORT | translate }}
-        </h2>
-
-        <section class="config-section tour-syncSection">
-          <!-- NOTE: we need to debounce, as external updates end us in an endless loop -->
-          @let syncSettingsForm = syncSettingsService.syncSettingsForm$ | async;
-          @if (syncSettingsForm) {
-            <config-section
-              (save)="syncSettingsService.updateSettingsFromForm($event.config)"
-              [cfg]="syncSettingsForm"
-              [section]="globalSyncConfigFormCfg"
-            ></config-section>
+          @for (section of globalProductivityConfigFormCfg; track section.key) {
+            <settings-list-item
+              (itemClick)="expandSection(section.key)"
+              [icon]="section.icon || 'psychology'"
+              [iconColor]="section.iconColor || 'primary'"
+              [subtitle]="section.subtitle | translate"
+              [title]="section.title | translate"
+            ></settings-list-item>
           }
-        </section>
+        </settings-group>
 
-        @for (section of globalImexFormCfg; track section.key) {
-          <section class="config-section imex-section">
-            <config-section
-              (save)="saveGlobalCfg($event)"
-              [cfg]="getGlobalCfgSection(section.key)"
-              [section]="section"
-            ></config-section>
-          </section>
+        <!-- Sync & Export Group -->
+        <settings-group [header]="T.PS.SYNC_EXPORT | translate">
+          @let syncSettingsForm = syncSettingsService.syncSettingsForm$ | async;
+          <settings-list-item
+            (itemClick)="expandSection('sync')"
+            [subtitle]="'Cloud backup, sync' | translate"
+            [title]="globalSyncConfigFormCfg.title | translate"
+            icon="sync"
+            iconColor="primary"
+          ></settings-list-item>
+          @for (section of globalImexFormCfg; track section.key) {
+            <settings-list-item
+              (itemClick)="expandSection(section.key)"
+              [icon]="section.icon || 'import_export'"
+              [iconColor]="section.iconColor || 'secondary'"
+              [subtitle]="section.subtitle | translate"
+              [title]="section.title | translate"
+            ></settings-list-item>
+          }
+        </settings-group>
+
+        <!-- Expanded Section Detail View -->
+        @if (expandedSection) {
+          <div
+            class="expanded-section-overlay"
+            (click)="closeSection()"
+          >
+            <div
+              class="expanded-section-container"
+              (click)="$event.stopPropagation()"
+            >
+              <div class="expanded-section-header">
+                <button
+                  (click)="closeSection()"
+                  class="back-button"
+                  mat-icon-button
+                  type="button"
+                >
+                  <mat-icon>arrow_back</mat-icon>
+                </button>
+                <h2 class="section-title">{{ expandedSectionTitle | translate }}</h2>
+              </div>
+
+              <div class="expanded-section-content">
+                @switch (expandedSection) {
+                  @case ('sound') {
+                    <config-sound-form
+                      (save)="saveGlobalCfg($event)"
+                      [cfg]="getGlobalCfgSection('sound')"
+                    ></config-sound-form>
+                  }
+                  @case ('plugins') {
+                    <plugin-management></plugin-management>
+                  }
+                  @case ('sync') {
+                    @if (syncSettingsForm) {
+                      <config-form
+                        (save)="syncSettingsService.updateSettingsFromForm($event.config)"
+                        [cfg]="syncSettingsForm"
+                        [formCfg]="globalSyncConfigFormCfg.items"
+                        [sectionKey]="globalSyncConfigFormCfg.key"
+                      ></config-form>
+                    }
+                  }
+                  @default {
+                    @if (getConfigSectionByKey(expandedSection); as section) {
+                      <config-form
+                        (save)="saveGlobalCfg($event)"
+                        [cfg]="getGlobalCfgSection(expandedSection)"
+                        [formCfg]="section.items"
+                        [sectionKey]="section.key"
+                      ></config-form>
+                    }
+                  }
+                }
+              </div>
+            </div>
+          </div>
         }
       </div>
     </div>

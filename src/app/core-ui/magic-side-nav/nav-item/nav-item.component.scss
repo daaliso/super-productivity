@@ -21,7 +21,7 @@
   width: 100%;
   color: var(--sidenav-text);
   margin-bottom: 4px;
-  padding: 0 12px;
+  padding: 0 8px; // Reduced padding for tighter fit
 
   button:first-of-type {
     white-space: nowrap;
@@ -66,6 +66,14 @@
     flex-shrink: 0;
     width: 40px !important;
     min-width: 40px !important;
+    // M3 expressive: rounded hover background
+    border-radius: var(--sys-corner-radius-full, 50%);
+
+    &:hover,
+    &:focus {
+      background: var(--sidenav-hover-bg);
+      border-radius: var(--sys-corner-radius-full, 50%);
+    }
   }
 
   &.isHidden {
@@ -150,6 +158,14 @@ button[mat-menu-item].nav-link.active {
   max-width: 0;
   margin-left: 0 !important;
   pointer-events: none;
+  display: none; // Ensure hidden labels don't take any space
+}
+
+// Visible labels in full mode - ensure they display
+.nav-label:not(.label-hidden) {
+  display: inline-block;
+  opacity: 1;
+  max-width: 200px;
 }
 
 .drag-handle {
@@ -167,13 +183,15 @@ button[mat-menu-item].nav-link.active {
   }
 }
 
-// Standard navigation row styles (simplified to be the only style)
+// Standard navigation row styles - M3 horizontal layout (icon beside text)
 .nav-link {
   display: flex;
+  flex-direction: row; // Icon beside text
   align-items: center;
-  gap: var(--s2);
-  padding: 0 var(--s2);
-  height: 48px;
+  justify-content: flex-start;
+  gap: 12px; // Gap between icon and text
+  padding: 8px 12px;
+  min-height: 48px;
   color: var(--sidenav-text);
   text-decoration: none;
   border-radius: var(--sys-corner-radius-full);
@@ -184,7 +202,7 @@ button[mat-menu-item].nav-link.active {
   border: none;
   width: 100%;
   text-align: left;
-  font-size: 14px;
+  font-size: 14px; // Larger text for horizontal layout
   font-family: 'Open Sans', sans-serif;
   font-weight: 500;
   letter-spacing: 0.1px;
@@ -193,8 +211,16 @@ button[mat-menu-item].nav-link.active {
   &[mat-menu-item] {
     color: var(--sidenav-text) !important;
 
-    .mat-mdc-menu-item-text {
+    // Fix: Angular Material sets height: 0 and overflow: hidden on this wrapper
+    // which hides the nav-label. Use ::ng-deep to pierce view encapsulation.
+    ::ng-deep .mat-mdc-menu-item-text {
       color: inherit !important;
+      height: auto !important;
+      overflow: visible !important;
+      display: flex !important;
+      flex-direction: row !important;
+      align-items: center !important;
+      gap: 12px;
     }
   }
 
@@ -259,6 +285,7 @@ button[mat-menu-item].nav-link.active {
     font: inherit;
     letter-spacing: inherit;
     color: inherit;
+    text-align: left;
   }
 }
 
@@ -305,11 +332,13 @@ button[mat-menu-item].nav-link.active {
   padding: 0 4px;
 
   .nav-link {
+    flex-direction: column; // Switch to vertical in compact mode
     justify-content: center;
-    padding: 0;
+    padding: 8px 4px;
     height: 56px;
     width: 56px;
     margin: 0 auto;
+    gap: 4px;
 
     &:focus,
     &:hover {

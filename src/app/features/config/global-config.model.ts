@@ -249,6 +249,12 @@ export type CustomCfgSection =
 export interface ConfigFormSection<FormModel> {
   title: string;
   key: GlobalConfigSectionKey | ProjectCfgFormKey;
+  /** Material Symbol icon name for M3 settings list */
+  icon?: string;
+  /** Supporting text shown below title in M3 settings list */
+  subtitle?: string;
+  /** Icon background color in M3 settings list */
+  iconColor?: 'primary' | 'secondary' | 'tertiary' | 'error';
   help?: string;
   helpArr?: { h?: string; p: string; p2?: string; p3?: string; p4?: string }[];
   customSection?: CustomCfgSection;

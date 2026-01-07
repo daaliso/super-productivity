@@ -497,8 +497,14 @@ body.isDarkTheme.theme-brown,
   color: var(--sys-on-error);
 }
 
+// Global light mode background - ensure proper surface colors
+body:not(.isDarkTheme) {
+  background-color: var(--sys-background);
+  color: var(--sys-on-background);
+}
+
 // Global dark mode background fix if not covered by mat-app-background
-.isDarkTheme body {
+body.isDarkTheme {
   background-color: var(--sys-background);
   color: var(--sys-on-background);
 }

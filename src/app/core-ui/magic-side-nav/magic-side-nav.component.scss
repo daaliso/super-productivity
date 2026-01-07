@@ -86,7 +86,8 @@
   bottom: 0;
   width: var(--sidenav-width-expanded);
   background: var(--sidenav-bg);
-  border-right: 1px solid var(--sidenav-divider, var(--sidenav-border-color));
+  border-right: none; // Clean M3 look without solid border
+  border-radius: 0 16px 16px 0; // Rounded top-right and bottom-right corners
   // Default: don't animate width
   transition: none;
   z-index: 1002;
@@ -131,6 +132,18 @@
     }
   }
 
+  // FullMode state (desktop) - labels visible, dynamic width
+  &.fullMode:not(.mobile) {
+    // Width is controlled by TypeScript signal, but ensure min-width for content
+    min-width: 120px;
+
+    .nav-label {
+      display: inline-block !important;
+      opacity: 1 !important;
+      max-width: none !important;
+    }
+  }
+
   // Mobile specific
   &.mobile {
     width: var(--sidenav-width-expanded);
@@ -144,8 +157,8 @@
   &.position-right {
     left: auto;
     right: 0;
-    border-right: none;
-    border-left: 1px solid var(--sidenav-divider, var(--sidenav-border-color));
+    border-left: none;
+    border-radius: 16px 0 0 16px; // Rounded top-left and bottom-left corners
 
     .mode-toggle {
       left: 16px;

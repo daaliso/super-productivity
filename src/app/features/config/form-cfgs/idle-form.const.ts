@@ -6,6 +6,9 @@ import { HelperClasses } from '../../../app.constants';
 export const IDLE_FORM_CFG: ConfigFormSection<IdleConfig> = {
   title: T.GCF.IDLE.TITLE,
   key: 'idle',
+  icon: 'hourglass_empty',
+  subtitle: 'Idle detection',
+  iconColor: 'secondary',
   help: T.GCF.IDLE.HELP,
   isHideForAndroidApp: true,
   items: [

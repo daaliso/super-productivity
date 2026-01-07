@@ -4,8 +4,11 @@ import { T } from '../../../t.const';
 
 export const REMINDER_FORM_CFG: ConfigFormSection<ReminderConfig> = {
   title: T.GCF.REMINDER.TITLE,
-  // help: T.GCF.REMINDER.HELP,
   key: 'reminder',
+  icon: 'notifications_active',
+  subtitle: 'Alert settings',
+  iconColor: 'primary',
+  // help: T.GCF.REMINDER.HELP,
   items: [
     {
       key: 'isCountdownBannerEnabled',
