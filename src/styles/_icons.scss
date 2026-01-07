@@ -119,7 +119,7 @@
 
 // Icon with spring animation on state change
 .mat-icon.expressive {
-  transition: font-variation-settings var(--motion-duration-short)
+  transition: font-variation-settings var(--motion-duration-medium)
     var(--motion-spring-effects-default);
 }
 

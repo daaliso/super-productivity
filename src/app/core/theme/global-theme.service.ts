@@ -122,10 +122,8 @@ export class GlobalThemeService {
   }
 
   private _setColorTheme(theme: WorkContextThemeCfg): void {
-    // Legacy theme config handling - likely needs updates for M3 but for now we keep the structure
-    // to avoid breaking the interface. M3 relies on pre-defined CSS classes rather than dynamic color injection.
-    // We might technically use the primary color from config to trigger a dynamic runtime theme generation
-    // if we wanted to support user-chosen hex codes, but for now we rely on the defined classes.
+    // Honor legacy toggles that affect layout/appearance
+    this._setBackgroundTint(!!theme.isDisableBackgroundTint);
   }
 
   private _setBackgroundTint(isDisableBackgroundTint: boolean): void {

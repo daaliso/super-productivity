@@ -416,6 +416,84 @@ $theme-brown: (
   ),
 );
 
+// Dracula theme - Purple seed #BD93F9
+$theme-dracula: (
+  schemes: (
+    light: (
+      primary: #6b538c,
+      onPrimary: #ffffff,
+      primaryContainer: #eddcff,
+      onPrimaryContainer: #523c73,
+      secondary: #874b6c,
+      onSecondary: #ffffff,
+      secondaryContainer: #ffd8e9,
+      onSecondaryContainer: #6c3453,
+      tertiary: #006877,
+      onTertiary: #ffffff,
+      tertiaryContainer: #a3eeff,
+      onTertiaryContainer: #004e5a,
+      error: #904a47,
+      onError: #ffffff,
+      errorContainer: #ffdad7,
+      onErrorContainer: #733331,
+      background: #fef7ff,
+      onBackground: #1d1a20,
+      surface: #fff7ff,
+      onSurface: #1e1a20,
+      surfaceVariant: #e8e0eb,
+      onSurfaceVariant: #4a454e,
+      outline: #7b757f,
+      outlineVariant: #ccc4cf,
+      inverseSurface: #332f35,
+      inverseOnSurface: #f6eef6,
+      inversePrimary: #d6bbfb,
+      surfaceDim: #dfd8df,
+      surfaceBright: #fff7ff,
+      surfaceContainerLowest: #ffffff,
+      surfaceContainerLow: #f9f1f9,
+      surfaceContainer: #f3ebf3,
+      surfaceContainerHigh: #eee6ee,
+      surfaceContainerHighest: #e8e0e8,
+    ),
+    dark: (
+      primary: #d6bbfb,
+      onPrimary: #3b255b,
+      primaryContainer: #523c73,
+      onPrimaryContainer: #eddcff,
+      secondary: #fcb0d6,
+      onSecondary: #511d3c,
+      secondaryContainer: #6c3453,
+      onSecondaryContainer: #ffd8e9,
+      tertiary: #83d2e4,
+      onTertiary: #00363e,
+      tertiaryContainer: #004e5a,
+      onTertiaryContainer: #a3eeff,
+      error: #ffb3ae,
+      onError: #571d1c,
+      errorContainer: #733331,
+      onErrorContainer: #ffdad7,
+      background: #151218,
+      onBackground: #e7e0e8,
+      surface: #151218,
+      onSurface: #e8e0e8,
+      surfaceVariant: #4a454e,
+      onSurfaceVariant: #ccc4cf,
+      outline: #958e99,
+      outlineVariant: #4a454e,
+      inverseSurface: #e8e0e8,
+      inverseOnSurface: #332f35,
+      inversePrimary: #6b538c,
+      surfaceDim: #151218,
+      surfaceBright: #3c383e,
+      surfaceContainerLowest: #100d12,
+      surfaceContainerLow: #1e1a20,
+      surfaceContainer: #221e24,
+      surfaceContainerHigh: #2c292e,
+      surfaceContainerHighest: #373339,
+    ),
+  ),
+);
+
 // -------------------------------------------------------------------------
 // APPLY THEMES
 // -------------------------------------------------------------------------
@@ -470,6 +548,19 @@ body.isDarkTheme.theme-brown,
 :root:has(body.theme-brown.isDarkTheme),
 :root:has(body.isDarkTheme.theme-brown) {
   @include apply-json-theme($theme-brown, true);
+}
+
+// Dracula theme (dark-mode focused, but supports light mode too)
+body.theme-dracula,
+:root:has(body.theme-dracula) {
+  @include apply-json-theme($theme-dracula, false);
+}
+
+body.theme-dracula.isDarkTheme,
+body.isDarkTheme.theme-dracula,
+:root:has(body.theme-dracula.isDarkTheme),
+:root:has(body.isDarkTheme.theme-dracula) {
+  @include apply-json-theme($theme-dracula, true);
 }
 
 // -------------------------------------------------------------------------
