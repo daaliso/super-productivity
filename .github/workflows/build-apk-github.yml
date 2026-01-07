@@ -23,6 +23,9 @@ jobs:
           node-version: 25
           cache: 'npm'
 
+      - name: Upgrade npm to match local environment
+        run: npm install -g npm@11.7.0
+
       - name: Setup Java
         uses: actions/setup-java@v4
         with:
