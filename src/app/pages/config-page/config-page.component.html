@@ -17,7 +17,7 @@
           }
           <settings-list-item
             (itemClick)="expandSection('sound')"
-            [subtitle]="T.GCF.SOUND.SUBTITLE || 'Audio feedback' | translate"
+            [subtitle]="'Audio feedback' | translate"
             [title]="T.GCF.SOUND.TITLE | translate"
             icon="volume_up"
             iconColor="tertiary"
@@ -119,7 +119,7 @@
                     @if (getConfigSectionByKey(expandedSection); as section) {
                       <config-form
                         (save)="saveGlobalCfg($event)"
-                        [cfg]="getGlobalCfgSection(expandedSection)"
+                        [cfg]="getGlobalCfgSection($any(expandedSection))"
                         [formCfg]="section.items"
                         [sectionKey]="section.key"
                       ></config-form>
