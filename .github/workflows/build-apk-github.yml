@@ -67,7 +67,7 @@ jobs:
       # Rename for clarity
       - name: Rename APK
         run: |
-          mv android/app/build/outputs/apk/debug/app-debug.apk super-productivity-android.apk
+          mv android/app/build/outputs/apk/fdroid/debug/app-fdroid-debug.apk super-productivity-android.apk
 
       # Upload Artifact to GitHub Action Run
       - name: Upload APK Artifact
