@@ -652,7 +652,7 @@ describe('TaskRepeatCfgService', () => {
       expect(updateAction.taskRepeatCfg.changes.lastTaskCreationDay).toBe('2025-08-01');
       // Verify timestamp is for the same day (at noon)
       const actualDate = new Date(updateAction.taskRepeatCfg.changes.lastTaskCreation);
-      expect(actualDate.toISOString().split('T')[0]).toBe('2025-08-01');
+      expect(getDbDateStr(actualDate)).toBe('2025-08-01');
     });
 
     it('should correctly handle task creation across day boundaries', async () => {
@@ -680,7 +680,7 @@ describe('TaskRepeatCfgService', () => {
       expect(updateAction.taskRepeatCfg.changes.lastTaskCreationDay).toBe('2025-08-02');
       // Verify timestamp is for the same day (at noon)
       const actualDate = new Date(updateAction.taskRepeatCfg.changes.lastTaskCreation);
-      expect(actualDate.toISOString().split('T')[0]).toBe('2025-08-02');
+      expect(getDbDateStr(actualDate)).toBe('2025-08-02');
     });
   });
 
