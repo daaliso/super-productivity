@@ -1,0 +1,36 @@
+# Ignore development and build files
+node_modules/
+.tmp/
+dist/
+.angular/
+.git/
+.github/
+.vscode/
+.idea/
+
+# Build artifacts
+*.log
+*.tsbuildinfo
+.eslintcache
+
+# Test files
+**/*.spec.ts
+e2e/
+coverage/
+
+# Platform specific
+android/
+electron/
+ios/
+
+# Documentation
+docs/
+*.md
+!README.md
+
+# Configuration files
+.env*
+.editorconfig
+.prettierrc*
+.eslintrc*
+.stylelintrc*
