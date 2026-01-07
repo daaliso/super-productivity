@@ -4,8 +4,11 @@ import { isValidSplitTime } from '../../../util/is-valid-split-time';
 
 export const SCHEDULE_FORM_CFG: ConfigFormSection<ScheduleConfig> = {
   title: T.GCF.SCHEDULE.TITLE,
-  help: T.GCF.SCHEDULE.HELP,
   key: 'schedule',
+  icon: 'calendar_today',
+  subtitle: 'Work hours, breaks',
+  iconColor: 'secondary',
+  help: T.GCF.SCHEDULE.HELP,
   items: [
     {
       key: 'isWorkStartEndEnabled',

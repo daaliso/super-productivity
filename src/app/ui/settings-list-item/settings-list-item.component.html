@@ -1,0 +1,24 @@
+<button
+  (click)="onClick()"
+  class="settings-list-item"
+  matRipple
+  type="button"
+>
+  <!-- Leading icon with tinted circle background -->
+  <div class="icon-container icon-{{ iconColor() }}">
+    <mat-icon>{{ icon() }}</mat-icon>
+  </div>
+
+  <!-- Two-line content -->
+  <div class="content">
+    <span class="title">{{ title() }}</span>
+    @if (subtitle()) {
+      <span class="subtitle">{{ subtitle() }}</span>
+    }
+  </div>
+
+  <!-- Trailing chevron -->
+  @if (showChevron()) {
+    <mat-icon class="chevron">chevron_right</mat-icon>
+  }
+</button>

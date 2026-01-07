@@ -5,6 +5,9 @@ import { T } from '../../../t.const';
 export const LANGUAGE_SELECTION_FORM_FORM: ConfigFormSection<LocalizationConfig> = {
   title: T.GCF.LANG.TITLE,
   key: 'localization',
+  icon: 'translate',
+  subtitle: 'Language, date format',
+  iconColor: 'primary',
   items: [
     {
       key: 'lng',

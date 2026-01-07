@@ -1,0 +1,568 @@
+// =============================================================================
+// M3 EXPRESSIVE COMPONENT ANIMATIONS
+// =============================================================================
+// Apply spring-based motion to Angular Material components
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// BUTTONS
+// -----------------------------------------------------------------------------
+
+.mat-mdc-button,
+.mat-mdc-raised-button,
+.mat-mdc-flat-button,
+.mat-mdc-stroked-button,
+.mat-mdc-outlined-button {
+  transition:
+    transform var(--motion-duration-short) var(--motion-spring-spatial-fast),
+    background-color var(--motion-duration-extra-short)
+      var(--motion-spring-effects-default),
+    box-shadow var(--motion-duration-short) var(--motion-spring-effects-default);
+
+  &:hover {
+    transform: scale(1.02);
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+
+  // Disable transform on disabled state
+  &:disabled {
+    transform: none;
+  }
+}
+
+// -----------------------------------------------------------------------------
+// FLOATING ACTION BUTTONS
+// -----------------------------------------------------------------------------
+
+.mat-mdc-fab,
+.mat-mdc-mini-fab {
+  transition:
+    transform var(--motion-duration-medium) var(--motion-spring-spatial-default),
+    box-shadow var(--motion-duration-short) var(--motion-spring-effects-default);
+
+  &:hover {
+    transform: scale(1.08) translateY(-2px);
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+}
+
+// Extended FAB
+.mat-mdc-extended-fab {
+  transition:
+    transform var(--motion-duration-medium) var(--motion-spring-spatial-default),
+    box-shadow var(--motion-duration-short) var(--motion-spring-effects-default),
+    width var(--motion-duration-medium) var(--motion-spring-spatial-default);
+
+  &:hover {
+    transform: scale(1.03) translateY(-1px);
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+}
+
+// -----------------------------------------------------------------------------
+// ICON BUTTONS
+// -----------------------------------------------------------------------------
+
+.mat-mdc-icon-button {
+  transition:
+    transform var(--motion-duration-short) var(--motion-spring-spatial-fast),
+    background-color var(--motion-duration-extra-short)
+      var(--motion-spring-effects-default);
+
+  &:hover {
+    transform: scale(1.1);
+  }
+
+  &:active {
+    transform: scale(0.9);
+  }
+}
+
+// -----------------------------------------------------------------------------
+// CARDS
+// -----------------------------------------------------------------------------
+
+.mat-mdc-card {
+  transition:
+    transform var(--motion-duration-medium) var(--motion-spring-spatial-default),
+    box-shadow var(--motion-duration-short) var(--motion-spring-effects-default);
+
+  &:hover {
+    transform: translateY(-4px);
+  }
+
+  // Clickable cards get more pronounced hover
+  &[mat-ripple]:hover,
+  &.clickable:hover {
+    transform: translateY(-6px) scale(1.01);
+  }
+}
+
+// -----------------------------------------------------------------------------
+// CHIPS
+// -----------------------------------------------------------------------------
+
+.mat-mdc-chip {
+  transition:
+    transform var(--motion-duration-short) var(--motion-spring-spatial-fast),
+    background-color var(--motion-duration-extra-short)
+      var(--motion-spring-effects-default);
+
+  &:hover {
+    transform: scale(1.05);
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+}
+
+// -----------------------------------------------------------------------------
+// DIALOGS / MODALS
+// -----------------------------------------------------------------------------
+
+.mat-mdc-dialog-container {
+  animation: dialog-spring-enter var(--motion-duration-long)
+    var(--motion-spring-spatial-default);
+}
+
+@keyframes dialog-spring-enter {
+  0% {
+    opacity: 0;
+    transform: scale(0.85) translateY(20px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+// Backdrop fade
+.cdk-overlay-backdrop.cdk-overlay-backdrop-showing {
+  animation: backdrop-fade-in var(--motion-duration-medium)
+    var(--motion-spring-effects-default);
+}
+
+@keyframes backdrop-fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+// -----------------------------------------------------------------------------
+// MENUS
+// -----------------------------------------------------------------------------
+
+.mat-mdc-menu-panel {
+  animation: menu-spring-enter var(--motion-duration-medium)
+    var(--motion-spring-spatial-fast);
+  transform-origin: top center;
+}
+
+@keyframes menu-spring-enter {
+  0% {
+    opacity: 0;
+    transform: scaleY(0.8) translateY(-8px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scaleY(1) translateY(0);
+  }
+}
+
+// Menu items
+.mat-mdc-menu-item {
+  transition:
+    background-color var(--motion-duration-extra-short)
+      var(--motion-spring-effects-default),
+    transform var(--motion-duration-short) var(--motion-spring-spatial-fast);
+
+  &:hover {
+    transform: translateX(4px);
+  }
+}
+
+// -----------------------------------------------------------------------------
+// SNACKBAR / TOAST
+// -----------------------------------------------------------------------------
+
+.mat-mdc-snack-bar-container {
+  animation: snackbar-spring-enter var(--motion-duration-medium)
+    var(--motion-spring-spatial-default);
+}
+
+@keyframes snackbar-spring-enter {
+  0% {
+    opacity: 0;
+    transform: translateY(100%) scale(0.9);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+// -----------------------------------------------------------------------------
+// TOOLTIPS
+// -----------------------------------------------------------------------------
+
+.mat-mdc-tooltip {
+  animation: tooltip-spring-enter var(--motion-duration-short)
+    var(--motion-spring-spatial-fast);
+}
+
+@keyframes tooltip-spring-enter {
+  0% {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+// -----------------------------------------------------------------------------
+// LIST ITEMS
+// -----------------------------------------------------------------------------
+
+.mat-mdc-list-item {
+  transition:
+    background-color var(--motion-duration-extra-short)
+      var(--motion-spring-effects-default),
+    transform var(--motion-duration-short) var(--motion-spring-spatial-fast);
+
+  &:hover {
+    transform: translateX(4px);
+  }
+
+  &:active {
+    transform: translateX(2px) scale(0.99);
+  }
+}
+
+// -----------------------------------------------------------------------------
+// EXPANSION PANELS
+// -----------------------------------------------------------------------------
+
+.mat-expansion-panel {
+  transition:
+    margin var(--motion-duration-medium) var(--motion-spring-spatial-default),
+    box-shadow var(--motion-duration-short) var(--motion-spring-effects-default);
+}
+
+.mat-expansion-panel-header {
+  transition:
+    background-color var(--motion-duration-short) var(--motion-spring-effects-default),
+    height var(--motion-duration-medium) var(--motion-spring-spatial-default);
+}
+
+.mat-expansion-panel-body {
+  animation: expand-spring-enter var(--motion-duration-medium)
+    var(--motion-spring-spatial-default);
+}
+
+@keyframes expand-spring-enter {
+  0% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// -----------------------------------------------------------------------------
+// TABS
+// -----------------------------------------------------------------------------
+
+.mat-mdc-tab {
+  transition:
+    color var(--motion-duration-short) var(--motion-spring-effects-default),
+    background-color var(--motion-duration-short) var(--motion-spring-effects-default);
+}
+
+// Tab indicator with spring motion
+.mat-mdc-tab-group .mdc-tab-indicator__content--underline {
+  transition: transform var(--motion-duration-medium) var(--motion-spring-spatial-default);
+}
+
+// -----------------------------------------------------------------------------
+// FORM FIELDS
+// -----------------------------------------------------------------------------
+
+.mat-mdc-form-field {
+  .mdc-floating-label {
+    transition:
+      transform var(--motion-duration-short) var(--motion-spring-spatial-fast),
+      color var(--motion-duration-short) var(--motion-spring-effects-default);
+  }
+
+  .mdc-line-ripple::before,
+  .mdc-line-ripple::after {
+    transition: transform var(--motion-duration-medium)
+      var(--motion-spring-spatial-default);
+  }
+}
+
+// -----------------------------------------------------------------------------
+// SLIDERS
+// -----------------------------------------------------------------------------
+
+.mat-mdc-slider {
+  .mdc-slider__thumb {
+    transition: transform var(--motion-duration-short) var(--motion-spring-spatial-fast);
+  }
+
+  &:hover .mdc-slider__thumb {
+    transform: scale(1.1);
+  }
+
+  &:active .mdc-slider__thumb {
+    transform: scale(1.2);
+  }
+}
+
+// -----------------------------------------------------------------------------
+// PROGRESS INDICATORS
+// -----------------------------------------------------------------------------
+
+.mat-mdc-progress-spinner circle {
+  transition: stroke-dashoffset var(--motion-duration-long)
+    var(--motion-spring-spatial-slow);
+}
+
+.mat-mdc-progress-bar .mdc-linear-progress__bar-inner {
+  transition: transform var(--motion-duration-long) var(--motion-spring-spatial-slow);
+}
+
+// -----------------------------------------------------------------------------
+// BUTTON TOGGLE GROUP (removes harsh borders, M3 expressive styling)
+// -----------------------------------------------------------------------------
+
+.mat-button-toggle-group {
+  border: none !important;
+  border-radius: var(--sys-corner-radius-full) !important;
+  background-color: var(--sys-surface-container-low);
+  overflow: hidden;
+
+  .mat-button-toggle {
+    border: none !important;
+    background-color: transparent;
+    transition:
+      background-color var(--motion-duration-short) var(--motion-spring-effects-default),
+      transform var(--motion-duration-short) var(--motion-spring-spatial-fast);
+
+    &:hover {
+      background-color: var(--sys-surface-container-high);
+    }
+
+    &.mat-button-toggle-checked {
+      background-color: var(--sys-secondary-container);
+      color: var(--sys-on-secondary-container);
+    }
+
+    .mat-button-toggle-button {
+      border: none !important;
+    }
+
+    // Remove the divider between toggles
+    + .mat-button-toggle {
+      border-left: none !important;
+    }
+  }
+
+  // Remove inner borders/separators
+  .mat-button-toggle-appearance-standard {
+    border: none !important;
+  }
+}
+
+// Single button toggle (standalone)
+.mat-button-toggle-standalone {
+  border: none !important;
+  border-radius: var(--sys-corner-radius-full);
+}
+
+// -----------------------------------------------------------------------------
+// SELECT / DROPDOWN
+// -----------------------------------------------------------------------------
+
+.mat-mdc-select {
+  transition: border-color var(--motion-duration-short)
+    var(--motion-spring-effects-default);
+
+  .mat-mdc-select-trigger {
+    transition: transform var(--motion-duration-short) var(--motion-spring-spatial-fast);
+  }
+}
+
+.mat-mdc-select-panel {
+  animation: menu-spring-enter var(--motion-duration-medium)
+    var(--motion-spring-spatial-fast);
+  border-radius: var(--sys-corner-radius-medium) !important;
+  border: none !important;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15) !important;
+}
+
+.mat-mdc-option {
+  transition:
+    background-color var(--motion-duration-extra-short)
+      var(--motion-spring-effects-default),
+    transform var(--motion-duration-short) var(--motion-spring-spatial-fast);
+
+  &:hover {
+    transform: translateX(4px);
+  }
+}
+
+// -----------------------------------------------------------------------------
+// CHECKBOXES
+// -----------------------------------------------------------------------------
+
+.mat-mdc-checkbox {
+  .mdc-checkbox {
+    transition: transform var(--motion-duration-short) var(--motion-spring-spatial-fast);
+  }
+
+  &:hover .mdc-checkbox {
+    transform: scale(1.1);
+  }
+
+  &:active .mdc-checkbox {
+    transform: scale(0.95);
+  }
+
+  // Smooth check animation
+  .mdc-checkbox__checkmark {
+    transition: opacity var(--motion-duration-short) var(--motion-spring-effects-default);
+  }
+}
+
+// -----------------------------------------------------------------------------
+// RADIO BUTTONS
+// -----------------------------------------------------------------------------
+
+.mat-mdc-radio-button {
+  .mdc-radio {
+    transition: transform var(--motion-duration-short) var(--motion-spring-spatial-fast);
+  }
+
+  &:hover .mdc-radio {
+    transform: scale(1.1);
+  }
+
+  &:active .mdc-radio {
+    transform: scale(0.95);
+  }
+
+  .mdc-radio__outer-circle,
+  .mdc-radio__inner-circle {
+    transition:
+      border-color var(--motion-duration-short) var(--motion-spring-effects-default),
+      background-color var(--motion-duration-short) var(--motion-spring-effects-default);
+  }
+}
+
+// -----------------------------------------------------------------------------
+// SLIDE TOGGLE
+// -----------------------------------------------------------------------------
+
+.mat-mdc-slide-toggle {
+  .mdc-switch {
+    transition: transform var(--motion-duration-short) var(--motion-spring-spatial-fast);
+  }
+
+  &:hover .mdc-switch {
+    transform: scale(1.05);
+  }
+
+  .mdc-switch__handle {
+    transition: transform var(--motion-duration-medium)
+      var(--motion-spring-spatial-default) !important;
+  }
+}
+
+// -----------------------------------------------------------------------------
+// FORM FIELD OUTLINE (removes harsh borders)
+// -----------------------------------------------------------------------------
+
+.mat-mdc-form-field-subscript-wrapper {
+  border: none;
+}
+
+.mdc-text-field--outlined {
+  .mdc-notched-outline {
+    .mdc-notched-outline__leading,
+    .mdc-notched-outline__notch,
+    .mdc-notched-outline__trailing {
+      border-color: var(--sys-outline-variant) !important;
+      transition: border-color var(--motion-duration-short)
+        var(--motion-spring-effects-default);
+    }
+  }
+
+  &:hover .mdc-notched-outline {
+    .mdc-notched-outline__leading,
+    .mdc-notched-outline__notch,
+    .mdc-notched-outline__trailing {
+      border-color: var(--sys-outline) !important;
+    }
+  }
+
+  &.mdc-text-field--focused .mdc-notched-outline {
+    .mdc-notched-outline__leading,
+    .mdc-notched-outline__notch,
+    .mdc-notched-outline__trailing {
+      border-color: var(--sys-primary) !important;
+    }
+  }
+}
+
+// -----------------------------------------------------------------------------
+// INPUT / TEXTAREA
+// -----------------------------------------------------------------------------
+
+.mat-mdc-input-element {
+  caret-color: var(--sys-primary);
+}
+
+// -----------------------------------------------------------------------------
+// BADGE
+// -----------------------------------------------------------------------------
+
+.mat-badge-content {
+  animation: badge-spring-enter var(--motion-duration-short)
+    var(--motion-spring-spatial-fast);
+}
+
+@keyframes badge-spring-enter {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}

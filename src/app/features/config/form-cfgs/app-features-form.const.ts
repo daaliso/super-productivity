@@ -3,6 +3,9 @@ import { T } from '../../../t.const';
 export const APP_FEATURES_FORM_CFG: ConfigFormSection<AppFeaturesConfig> = {
   title: T.GCF.APP_FEATURES.TITLE,
   key: 'appFeatures',
+  icon: 'widgets',
+  subtitle: 'Toggle features',
+  iconColor: 'secondary',
   help: T.GCF.APP_FEATURES.HELP,
   items: [
     {

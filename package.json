@@ -128,6 +128,8 @@
     "@ctrl/tinycolor": "4.1.0"
   },
   "dependencies": {
+    "@fontsource-variable/material-symbols-rounded": "^5.2.30",
+    "@fontsource/google-sans-flex": "^5.2.1",
     "electron-dl": "^3.5.2",
     "electron-localshortcut": "^3.2.1",
     "electron-log": "^5.4.3",
@@ -196,7 +198,6 @@
     "@typescript-eslint/parser": "7.18.0",
     "@typescript-eslint/types": "^8.17.0",
     "@typescript-eslint/utils": "^8.51.0",
-    "angular-material-css-vars": "^9.1.1",
     "baseline-browser-mapping": "^2.9.11",
     "canvas-confetti": "^1.9.4",
     "chai": "^5.1.2",

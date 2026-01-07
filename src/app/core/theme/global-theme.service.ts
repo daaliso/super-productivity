@@ -12,7 +12,6 @@ import { BodyClass, IS_ELECTRON } from '../../app.constants';
 import { IS_MAC } from '../../util/is-mac';
 import { distinctUntilChanged, map, startWith, switchMap, take } from 'rxjs/operators';
 import { IS_TOUCH_ONLY } from '../../util/is-touch-only';
-import { MaterialCssVarsService } from 'angular-material-css-vars';
 import { DOCUMENT } from '@angular/common';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -40,7 +39,6 @@ export type DarkModeCfg = 'dark' | 'light' | 'system';
 export class GlobalThemeService {
   private document = inject<Document>(DOCUMENT);
   private _layoutService = inject(LayoutService);
-  private _materialCssVarsService = inject(MaterialCssVarsService);
   private _workContextService = inject(WorkContextService);
   private _globalConfigService = inject(GlobalConfigService);
   private _matIconRegistry = inject(MatIconRegistry);
@@ -115,26 +113,19 @@ export class GlobalThemeService {
   }
 
   private _setDarkTheme(isDarkTheme: boolean): void {
-    this._materialCssVarsService.setDarkTheme(isDarkTheme);
+    if (isDarkTheme) {
+      this.document.body.classList.add('isDarkTheme');
+    } else {
+      this.document.body.classList.remove('isDarkTheme');
+    }
     this._setChartTheme(isDarkTheme);
-    // this._materialCssVarsService.setDarkTheme(true);
-    // this._materialCssVarsService.setDarkTheme(false);
   }
 
   private _setColorTheme(theme: WorkContextThemeCfg): void {
-    this._materialCssVarsService.setAutoContrastEnabled(!!theme.isAutoContrast);
-    this._setBackgroundTint(!!theme.isDisableBackgroundTint);
-
-    // NOTE: setting undefined values does not seem to be a problem so we use !
-    if (!theme.isAutoContrast) {
-      this._materialCssVarsService.setContrastColorThresholdPrimary(theme.huePrimary!);
-      this._materialCssVarsService.setContrastColorThresholdAccent(theme.hueAccent!);
-      this._materialCssVarsService.setContrastColorThresholdWarn(theme.hueWarn!);
-    }
-
-    this._materialCssVarsService.setPrimaryColor(theme.primary!);
-    this._materialCssVarsService.setAccentColor(theme.accent!);
-    this._materialCssVarsService.setWarnColor(theme.warn!);
+    // Legacy theme config handling - likely needs updates for M3 but for now we keep the structure
+    // to avoid breaking the interface. M3 relies on pre-defined CSS classes rather than dynamic color injection.
+    // We might technically use the primary color from config to trigger a dynamic runtime theme generation
+    // if we wanted to support user-chosen hex codes, but for now we rely on the defined classes.
   }
 
   private _setBackgroundTint(isDisableBackgroundTint: boolean): void {

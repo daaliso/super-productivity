@@ -28,6 +28,7 @@ import { IS_ANDROID_WEB_VIEW } from '../../util/is-android-web-view';
 import { getAutomaticBackUpFormCfg } from '../../features/config/form-cfgs/automatic-backups-form.const';
 import { getAppVersionStr } from '../../util/get-app-version-str';
 import { ConfigSectionComponent } from '../../features/config/config-section/config-section.component';
+import { ConfigFormComponent } from '../../features/config/config-form/config-form.component';
 import { ConfigSoundFormComponent } from '../../features/config/config-sound-form/config-sound-form.component';
 import { TranslatePipe } from '@ngx-translate/core';
 import { SYNC_FORM } from '../../features/config/form-cfgs/sync-form.const';
@@ -38,6 +39,10 @@ import { WebdavApi } from '../../pfapi/api/sync/providers/webdav/webdav-api';
 import { AsyncPipe } from '@angular/common';
 import { PluginManagementComponent } from '../../plugins/ui/plugin-management/plugin-management.component';
 import { CollapsibleComponent } from '../../ui/collapsible/collapsible.component';
+import { SettingsListItemComponent } from '../../ui/settings-list-item/settings-list-item.component';
+import { SettingsGroupComponent } from '../../ui/settings-group/settings-group.component';
+import { MatIconButton } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
 import { PluginBridgeService } from '../../plugins/plugin-bridge.service';
 import { createPluginShortcutFormItems } from '../../features/config/form-cfgs/plugin-keyboard-shortcuts';
 import { PluginShortcutCfg } from '../../plugins/plugin-api.model';
@@ -63,6 +68,11 @@ import { DialogDisableProfilesConfirmationComponent } from '../../features/user-
     AsyncPipe,
     PluginManagementComponent,
     CollapsibleComponent,
+    SettingsListItemComponent,
+    SettingsGroupComponent,
+    MatIconButton,
+    MatIcon,
+    ConfigFormComponent,
   ],
 })
 export class ConfigPageComponent implements OnInit, OnDestroy {
@@ -83,6 +93,10 @@ export class ConfigPageComponent implements OnInit, OnDestroy {
   globalSyncConfigFormCfg = this._buildSyncFormConfig();
 
   globalCfg?: GlobalConfigState;
+
+  // M3 Settings Navigation State
+  expandedSection: string | null = null;
+  expandedSectionTitle: string = '';
 
   appVersion: string = getAppVersionStr();
   versions?: any = versions;
@@ -346,6 +360,40 @@ export class ConfigPageComponent implements OnInit, OnDestroy {
     sectionKey: GlobalConfigSectionKey | ProjectCfgFormKey,
   ): GlobalSectionConfig {
     return (this.globalCfg as any)[sectionKey];
+  }
+
+  // M3 Settings Navigation Methods
+  expandSection(sectionKey: string): void {
+    this.expandedSection = sectionKey;
+    const section = this.getConfigSectionByKey(sectionKey);
+    if (section) {
+      this.expandedSectionTitle = section.title;
+    } else if (sectionKey === 'sound') {
+      this.expandedSectionTitle = T.GCF.SOUND.TITLE;
+    } else if (sectionKey === 'plugins') {
+      this.expandedSectionTitle = T.PS.PLUGINS;
+    } else if (sectionKey === 'sync') {
+      this.expandedSectionTitle = this.globalSyncConfigFormCfg.title;
+    } else {
+      this.expandedSectionTitle = sectionKey;
+    }
+    this._cd.detectChanges();
+  }
+
+  closeSection(): void {
+    this.expandedSection = null;
+    this.expandedSectionTitle = '';
+    this._cd.detectChanges();
+  }
+
+  getConfigSectionByKey(key: string): any {
+    // Search in all config arrays
+    const allSections = [
+      ...this.globalConfigFormCfg,
+      ...this.globalProductivityConfigFormCfg,
+      ...this.globalImexFormCfg,
+    ];
+    return allSections.find((section) => section.key === key);
   }
 
   async downloadLogs(): Promise<void> {

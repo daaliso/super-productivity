@@ -1,0 +1,33 @@
+// M3 Settings Group - Pixel-style bordered container
+
+:host {
+  display: block;
+  margin-bottom: 16px;
+}
+
+.group-header {
+  margin: 0 0 8px 16px;
+  font-family: var(--sys-title-small-font);
+  font-size: var(--sys-title-small-size, 14px);
+  font-weight: var(--sys-title-small-weight, 500);
+  line-height: var(--sys-title-small-line-height, 20px);
+  letter-spacing: var(--sys-title-small-tracking, 0.1px);
+  color: var(--sys-primary);
+}
+
+.group-container {
+  background: var(--sys-background); // Use page background for separator lines
+  border-radius: var(--sys-corner-radius-extra-large, 28px);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 4px; // Gap creates visible separator lines using background color
+
+  ::ng-deep > * {
+    background: var(--sys-surface-container-low); // Each item has surface color
+    border-radius: var(
+      --sys-corner-radius-large,
+      0.1px
+    ); // M3 rounded corners for each item
+  }
+}

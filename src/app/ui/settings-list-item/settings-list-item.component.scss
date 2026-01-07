@@ -1,0 +1,133 @@
+// M3 Settings List Item - Pixel-inspired design
+// Features: Tinted icon circle, two-line content, state layers
+
+:host {
+  display: block;
+}
+
+.settings-list-item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  min-height: 72px;
+  padding: 12px 16px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+  isolation: isolate;
+
+  // M3 State layer
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--sys-on-surface);
+    opacity: 0;
+    transition: opacity var(--motion-duration-effect-fast)
+      var(--motion-spring-effect-fast);
+    pointer-events: none;
+    z-index: 0;
+    border-radius: var(--sys-corner-radius-large, 0.1px); // Match item corner radius
+  }
+
+  &:hover::before {
+    opacity: 0.08;
+  }
+
+  &:active::before {
+    opacity: 0.12;
+  }
+
+  &:focus {
+    outline: none;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--sys-primary);
+    outline-offset: -2px;
+    border-radius: var(--sys-corner-radius-small);
+  }
+}
+
+// Icon container with tinted circle background (Pixel style)
+.icon-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  z-index: 1;
+
+  mat-icon {
+    font-size: 24px;
+    width: 24px;
+    height: 24px;
+  }
+
+  // Color variants (matching Pixel settings)
+  &.icon-primary {
+    background: color-mix(in srgb, var(--sys-primary) 12%, transparent);
+    color: var(--sys-primary);
+  }
+
+  &.icon-secondary {
+    background: color-mix(in srgb, var(--sys-secondary) 12%, transparent);
+    color: var(--sys-secondary);
+  }
+
+  &.icon-tertiary {
+    background: color-mix(in srgb, var(--sys-tertiary) 12%, transparent);
+    color: var(--sys-tertiary);
+  }
+
+  &.icon-error {
+    background: color-mix(in srgb, var(--sys-error) 12%, transparent);
+    color: var(--sys-error);
+  }
+}
+
+// Two-line content
+.content {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  gap: 2px;
+  min-width: 0;
+  z-index: 1;
+}
+
+.title {
+  font-family: var(--sys-title-medium-font);
+  font-size: var(--sys-title-medium-size, 16px);
+  font-weight: var(--sys-title-medium-weight, 500);
+  line-height: var(--sys-title-medium-line-height, 24px);
+  letter-spacing: var(--sys-title-medium-tracking, 0.15px);
+  color: var(--sys-on-surface);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.subtitle {
+  font-family: var(--sys-body-medium-font);
+  font-size: var(--sys-body-medium-size, 14px);
+  font-weight: var(--sys-body-medium-weight, 400);
+  line-height: var(--sys-body-medium-line-height, 20px);
+  letter-spacing: var(--sys-body-medium-tracking, 0.25px);
+  color: var(--sys-on-surface-variant);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+// Trailing chevron
+.chevron {
+  flex-shrink: 0;
+  color: var(--sys-on-surface-variant);
+  z-index: 1;
+}

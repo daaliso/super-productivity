@@ -1,7 +1,16 @@
 @use '../../../styles/_globals.scss' as *;
 
+// =============================================================================
+// M3 NAVIGATION BAR - MOBILE BOTTOM NAV
+// =============================================================================
+// Reference: https://m3.material.io/components/navigation-bar/overview
+// Height: 80dp (excluding safe area inset)
+// Active indicator: Pill shape with secondary-container background
+// =============================================================================
+
 :host {
   display: contents;
+  --bottom-nav-height: 80px;
 }
 
 .mobile-bottom-nav {
@@ -9,86 +18,210 @@
   bottom: 0;
   left: 0;
   right: 0;
-  height: calc(var(--bottom-nav-height) + env(safe-area-inset-bottom));
+  // M3 Navigation Bar height: 80dp + safe area
+  min-height: 80px;
+  height: calc(80px + env(safe-area-inset-bottom));
   box-sizing: border-box;
-  background: var(--bottom-nav-bg);
-  border-top: 1px solid var(--separator-color);
-  box-shadow: var(--whiteframe-shadow-8dp);
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 8px;
-  padding-bottom: env(safe-area-inset-bottom);
-  z-index: var(--z-mobile-bottom-nav);
+  background: var(--sys-surface-container);
+  // M3 elevation level 2 for navigation bar
+  box-shadow:
+    0 -1px 2px rgba(0, 0, 0, 0.05),
+    0 -2px 6px rgba(0, 0, 0, 0.1);
   display: flex;
+  align-items: flex-start;
+  justify-content: space-around;
+  padding: 12px 4px 0 4px;
+  padding-bottom: calc(12px + env(safe-area-inset-bottom));
+  z-index: var(--z-mobile-bottom-nav);
+  gap: 0;
+}
 
-  //// Glass effect only when background image is present
-  :host-context(.hasBgImage) & {
-    //backdrop-filter: blur(10px);
-    //-webkit-backdrop-filter: blur(10px);
+// =============================================================================
+// NAVIGATION ITEM (M3 Navigation Bar Destination)
+// =============================================================================
+
+.nav-item {
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 56px;
+  min-width: 48px;
+  max-width: 80px;
+  padding: 0;
+  margin: 0;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  color: var(--sys-on-surface-variant);
+
+  &:focus {
+    outline: none;
   }
 
-  .nav-button {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: var(--bottom-nav-height);
-    min-width: 64px;
-    border-radius: 16px;
-    transition: all 0.2s ease;
-
-    &:hover {
-      background-color: var(--mat-surface-container-high);
+  // Ripple/state layer on hover/focus
+  @include mousePrimaryDevice {
+    &:hover .nav-item-content::before {
+      opacity: 0.08;
     }
+  }
+
+  &:active .nav-item-content::before {
+    opacity: 0.12;
+  }
+}
+
+// Navigation item content wrapper (icon + label)
+.nav-item-content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  isolation: isolate;
+
+  // State layer
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 64px;
+    height: 32px;
+    border-radius: var(--sys-corner-radius-full);
+    background: var(--sys-on-surface);
+    opacity: 0;
+    transition: opacity var(--motion-duration-short) var(--motion-spring-effects-default);
+    pointer-events: none;
+    z-index: 0;
+  }
+}
+
+// =============================================================================
+// M3 ACTIVE INDICATOR (Pill shape)
+// =============================================================================
+
+.active-indicator {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--sys-corner-radius-full);
+  background: transparent;
+  transform: translateX(-50%) scaleX(0.5);
+  opacity: 0;
+  z-index: 0;
+  // M3 Expressive spring animation for indicator
+  transition:
+    transform var(--motion-duration-medium) var(--motion-spring-spatial-default),
+    width var(--motion-duration-medium) var(--motion-spring-spatial-default),
+    opacity var(--motion-duration-short) var(--motion-spring-effects-default),
+    background-color var(--motion-duration-short) var(--motion-spring-effects-default);
+}
+
+// Active state - show pill indicator
+.nav-item.active {
+  color: var(--sys-on-secondary-container);
+
+  .active-indicator {
+    width: 64px;
+    opacity: 1;
+    transform: translateX(-50%) scaleX(1);
+    background: var(--sys-secondary-container);
+  }
+
+  .nav-icon {
+    color: var(--sys-on-secondary-container);
+  }
+
+  .nav-label {
+    color: var(--sys-on-surface);
+    font-weight: 600;
+  }
+}
+
+// =============================================================================
+// ICON STYLES
+// =============================================================================
+
+.nav-icon {
+  position: relative;
+  z-index: 1;
+  font-size: 24px;
+  width: 24px;
+  height: 24px;
+  line-height: 32px; // Center in 32px indicator height
+  margin-bottom: 4px;
+  transition: color var(--motion-duration-short) var(--motion-spring-effects-default);
+}
+
+// =============================================================================
+// LABEL STYLES (M3: Always visible, 12sp)
+// =============================================================================
+
+.nav-label {
+  position: relative;
+  z-index: 1;
+  font-family: var(--sys-label-medium-font-family, 'Open Sans', sans-serif);
+  font-size: var(--sys-label-medium-font-size, 12px);
+  font-weight: var(--sys-label-medium-font-weight, 500);
+  letter-spacing: var(--sys-label-medium-letter-spacing, 0.5px);
+  line-height: 16px;
+  color: var(--sys-on-surface-variant);
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  transition:
+    color var(--motion-duration-short) var(--motion-spring-effects-default),
+    font-weight var(--motion-duration-short) var(--motion-spring-effects-default);
+}
+
+// =============================================================================
+// ADD TASK FAB (Centered, elevated above nav bar)
+// =============================================================================
+
+.add-task-button {
+  flex: 0 0 auto;
+  margin: -12px 8px 0 8px; // Lift FAB above nav bar
+  transform-origin: center center;
+  z-index: 1;
+  transition:
+    transform var(--motion-duration-medium) var(--motion-spring-spatial-default),
+    box-shadow var(--motion-duration-short) var(--motion-spring-effects-default);
+
+  @include mousePrimaryDevice {
+    &:hover {
+      transform: scale(1.08);
+    }
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+
+  &.smaller {
+    width: 48px;
+    height: 48px;
 
     mat-icon {
       font-size: 24px;
       width: 24px;
       height: 24px;
-      padding: 0;
-      margin: 0;
     }
   }
 
-  .add-task-button {
-    width: 56px;
-    height: 56px;
-    margin-left: 8px;
-    margin-right: 8px;
-    margin-bottom: 24px;
-    box-shadow: var(--mat-fab-container-elevation-shadow);
-    transition: all 0.2s ease;
-
-    &:hover {
-      transform: scale(1.05);
-      box-shadow:
-        var(--mat-fab-container-elevation-shadow),
-        0 8px 16px rgba(0, 0, 0, 0.2);
-    }
-
-    &:active {
-      transform: scale(0.95);
-    }
-
-    &.smaller {
-      height: 40px;
-      margin-left: 8px;
-      margin-right: 8px;
-      margin-bottom: 0px;
-    }
-
-    mat-icon {
-      font-size: 28px;
-      width: 28px;
-      height: 28px;
-    }
+  mat-icon {
+    font-size: 28px;
+    width: 28px;
+    height: 28px;
   }
-}
-
-// Material Design touch target improvements
-.nav-button,
-.add-task-button {
-  -webkit-tap-highlight-color: transparent;
-  touch-action: manipulation;
 }

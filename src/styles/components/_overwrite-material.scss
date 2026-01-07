@@ -13,6 +13,28 @@
   --mat-tab-header-active-hover-label-text-color: var(--palette-primary-700);
   --mdc-tab-indicator-active-indicator-color: var(--palette-primary-700);
   --mat-tab-header-inactive-label-text-color: var(--text-color-muted);
+
+  // M3 Expressive Design Overwrites
+  --mdc-filled-button-container-shape: var(--sys-corner-radius-full);
+  --mdc-outlined-button-container-shape: var(--sys-corner-radius-full);
+  --mdc-text-button-container-shape: var(--sys-corner-radius-full);
+  --mat-standard-button-state-layer-shape: var(--sys-corner-radius-full);
+
+  --mdc-dialog-container-shape: var(--sys-corner-radius-extra-large);
+  --mat-dialog-container-shape: var(--sys-corner-radius-extra-large);
+
+  --mdc-filled-card-container-shape: var(--sys-corner-radius-medium);
+  --mdc-outlined-card-container-shape: var(--sys-corner-radius-medium);
+  --mdc-elevated-card-container-shape: var(--sys-corner-radius-medium);
+
+  --mdc-shape-small: var(--sys-corner-radius-small);
+  --mdc-shape-medium: var(--sys-corner-radius-medium);
+  --mdc-shape-large: var(--sys-corner-radius-large);
+
+  --mat-select-panel-container-shape: var(--sys-corner-radius-small);
+  --mat-menu-container-shape: var(--sys-corner-radius-small);
+
+  --mat-option-label-text-font: var(--font-primary-stack);
 }
 
 // Dark theme tab overrides for better contrast - use lighter shade
@@ -44,7 +66,7 @@ body.isDarkTheme {
 }
 
 * {
-  --mat-chip-container-shape-radius: 4px !important;
+  --mat-chip-container-shape-radius: var(--sys-corner-radius-small) !important;
   --mat-chip-elevated-container-color: transparent !important;
   //--mat-chip-outline-color: var(--mat-chip-outline-color, var(--mat-sys-outline)) !important;
   --mat-chip-outline-color: var(--chip-outline-color) !important;
@@ -87,6 +109,7 @@ body .mat-mdc-dialog-content {
 
 body .mat-mdc-dialog-surface {
   overflow: visible;
+  border-radius: var(--sys-corner-radius-extra-large);
 }
 
 .mat-mdc-dialog-panel {
@@ -189,6 +212,11 @@ mat-option.isDone {
 
 .mat-mdc-mini-fab.mat-mdc-mini-fab.mat-mdc-mini-fab {
   --mat-fab-small-state-layer-size: 48px;
+  --mat-fab-small-container-shape: var(--sys-corner-radius-medium);
+}
+
+.mat-mdc-fab.mat-mdc-fab {
+  --mat-fab-container-shape: var(--sys-corner-radius-large);
 }
 
 .mat-mdc-icon-button.mat-mdc-icon-button.mat-mdc-icon-button {
@@ -259,6 +287,7 @@ body .mat-mdc-button-base .mat-icon {
   cursor: grabbing !important;
   overflow: hidden;
   pointer-events: none !important;
+  border-radius: var(--sys-corner-radius-medium);
 
   &:hover,
   &:active {
@@ -276,7 +305,7 @@ body .mat-mdc-button-base .mat-icon {
   font-size: 16px;
   font-weight: bold;
   border: 2px solid var(--c-primary);
-  border-radius: var(--card-border-radius);
+  border-radius: var(--sys-corner-radius-small);
   background: var(--bg-lighter);
   background: inherit;
   z-index: 100;
@@ -293,7 +322,7 @@ body .mat-mdc-button-base .mat-icon {
 
 .cdk-drop-list-dragging {
   outline: 1px dashed var(--c-primary);
-  border-radius: 6px;
+  border-radius: var(--sys-corner-radius-small);
   cursor: grabbing;
 }
 
@@ -304,7 +333,7 @@ body .mat-mdc-button-base .mat-icon {
 .cdk-drop-list-receiving {
   outline: 1px dashed var(--c-primary);
   border-color: var(--c-primary);
-  border-radius: 6px;
+  border-radius: var(--sys-corner-radius-small);
   cursor: grabbing;
   //border: 2px solid green;
 }
@@ -347,4 +376,8 @@ mat-tooltip-component {
     ) !important;
     pointer-events: auto;
   }
+}
+
+.mat-mdc-snack-bar-container .mdc-snackbar__surface {
+  border-radius: var(--sys-corner-radius-small) !important;
 }

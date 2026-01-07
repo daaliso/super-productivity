@@ -621,7 +621,7 @@ describe('TaskRepeatCfgService', () => {
 
       // Verify they represent the same date
       const actualTimestamp = updateAction.taskRepeatCfg.changes.lastTaskCreation;
-      const actualDay = new Date(actualTimestamp).toISOString().split('T')[0];
+      const actualDay = getDbDateStr(actualTimestamp);
       expect(actualDay).toBe(updateAction.taskRepeatCfg.changes.lastTaskCreationDay);
     });
   });
