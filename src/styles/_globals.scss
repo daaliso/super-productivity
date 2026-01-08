@@ -7,5 +7,4 @@
 // Forward all mixins
 @forward 'mixins/_mixins';
 
-// Forward motion tokens (M3 Expressive)
-@forward 'motion-tokens';
+// Note: Motion tokens are imported in styles.scss via motion-expressive
