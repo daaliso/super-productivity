@@ -1,0 +1,199 @@
+name: Sync Upstream Repository
+
+on:
+  # Run daily at 2 AM UTC
+  schedule:
+    - cron: '0 2 * * *'
+
+  # Allow manual trigger
+  workflow_dispatch:
+
+jobs:
+  sync-upstream:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Add upstream remote
+        run: |
+          git remote add upstream https://github.com/super-productivity/super-productivity.git || true
+          git fetch upstream
+
+      - name: Check for upstream changes
+        id: check
+        run: |
+          # Get current master HEAD
+          MASTER_HEAD=$(git rev-parse origin/master)
+          UPSTREAM_HEAD=$(git rev-parse upstream/master)
+
+          if [ "$MASTER_HEAD" = "$UPSTREAM_HEAD" ]; then
+            echo "No upstream changes detected"
+            echo "has_changes=false" >> $GITHUB_OUTPUT
+          else
+            # Count commits behind
+            COMMITS_BEHIND=$(git rev-list --count origin/master..upstream/master)
+            echo "Upstream is $COMMITS_BEHIND commits ahead"
+            echo "has_changes=true" >> $GITHUB_OUTPUT
+            echo "commits_behind=$COMMITS_BEHIND" >> $GITHUB_OUTPUT
+            
+            # Get version from package.json
+            CURRENT_VERSION=$(git show origin/master:package.json | grep '"version"' | head -1 | sed 's/.*"version": "\(.*\)".*/\1/')
+            UPSTREAM_VERSION=$(git show upstream/master:package.json | grep '"version"' | head -1 | sed 's/.*"version": "\(.*\)".*/\1/')
+            echo "current_version=$CURRENT_VERSION" >> $GITHUB_OUTPUT
+            echo "upstream_version=$UPSTREAM_VERSION" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Create sync branch
+        if: steps.check.outputs.has_changes == 'true'
+        id: branch
+        run: |
+          # Create branch name with date
+          BRANCH_NAME="sync-upstream-$(date +%Y-%m-%d)"
+          echo "branch_name=$BRANCH_NAME" >> $GITHUB_OUTPUT
+
+          # Check if branch already exists
+          if git ls-remote --heads origin $BRANCH_NAME | grep -q $BRANCH_NAME; then
+            echo "Branch $BRANCH_NAME already exists, appending timestamp"
+            BRANCH_NAME="sync-upstream-$(date +%Y-%m-%d-%H%M%S)"
+            echo "branch_name=$BRANCH_NAME" >> $GITHUB_OUTPUT
+          fi
+
+          # Create and checkout new branch from master
+          git checkout -b $BRANCH_NAME origin/master
+
+      - name: Analyze upstream changes
+        if: steps.check.outputs.has_changes == 'true'
+        id: analyze
+        run: |
+          # Get stats by comparing with upstream without merging
+          FILES_CHANGED=$(git diff origin/master...upstream/master --stat | tail -1 | awk '{print $1}')
+          INSERTIONS=$(git diff origin/master...upstream/master --numstat | awk '{sum+=$1} END {print sum}')
+          DELETIONS=$(git diff origin/master...upstream/master --numstat | awk '{sum+=$2} END {print sum}')
+
+          echo "files_changed=$FILES_CHANGED" >> $GITHUB_OUTPUT
+          echo "insertions=$INSERTIONS" >> $GITHUB_OUTPUT
+          echo "deletions=$DELETIONS" >> $GITHUB_OUTPUT
+
+          # Update branch to point to upstream/master for PR comparison
+          git reset --hard upstream/master
+
+      - name: Generate sync analysis
+        if: steps.check.outputs.has_changes == 'true'
+        id: analysis
+        run: |
+          # Create analysis report
+          cat > sync-analysis.md << 'EOF'
+          # 🤖 Automated Upstream Sync Analysis
+
+          > [!WARNING]
+          > **Manual Review Required**
+          > This PR contains upstream changes that need to be reviewed before merging.
+          > Do NOT auto-merge this PR.
+
+          ## Summary
+
+          - **Commits Behind**: ${{ steps.check.outputs.commits_behind }} commits
+          - **Version Change**: `${{ steps.check.outputs.current_version }}` → `${{ steps.check.outputs.upstream_version }}`
+          - **Files Changed**: ${{ steps.analyze.outputs.files_changed }}
+          - **Lines Added**: +${{ steps.analyze.outputs.insertions }}
+          - **Lines Removed**: -${{ steps.analyze.outputs.deletions }}
+
+          ## Change Categories
+
+          ### Recent CHANGELOG Entries
+
+          EOF
+
+          # Extract recent changelog entries (first 50 lines)
+          git show HEAD:CHANGELOG.md | head -50 >> sync-analysis.md
+
+          cat >> sync-analysis.md << 'EOF'
+
+          ## Manual Review Checklist
+
+          Before merging this PR, review:
+
+          - [ ] **CHANGELOG**: Check for breaking changes or deprecations
+          - [ ] **Material 3 Compatibility**: Ensure no conflicts with your `feat/material-3-migration` branch
+            - Review changes to `src/app/core-ui/**`
+            - Check theme/styling modifications
+            - Verify sidebar and navigation changes
+          - [ ] **Android Build**: Ensure no breaking changes to build process
+            - Review `android/**` directory changes
+            - Check Capacitor configuration
+            - Verify Gradle files
+          - [ ] **Custom Workflows**: Confirm `.github/workflows/build-apk-github.yml` still works
+          - [ ] **Dependencies**: Review `package.json` and `package-lock.json` changes
+
+          ## Testing Recommendations
+
+          ```bash
+          # Checkout this PR branch locally
+          git fetch origin
+          git checkout ${{ steps.branch.outputs.branch_name }}
+
+          # Test web build
+          npm install
+          npm run startFrontend
+
+          # Test Android build
+          npm run droid
+          cd android && .\gradlew assembleDebug
+          ```
+
+          ## Merge Instructions
+
+          Once reviewed and tested:
+
+          1. Click "Merge pull request" on GitHub, OR
+          2. Merge locally:
+             ```bash
+             git checkout master
+             git merge ${{ steps.branch.outputs.branch_name }}
+             git push origin master
+             ```
+          3. Rebase your feature branches:
+             ```bash
+             git checkout feat/material-3-migration
+             git rebase master
+             git push origin feat/material-3-migration --force-with-lease
+             ```
+
+          ---
+
+          *This analysis was generated automatically by the sync-upstream workflow.*
+          *Branch created but NOT merged automatically - manual review required.*
+          EOF
+
+          # Save analysis to file
+          cat sync-analysis.md
+
+      - name: Push sync branch
+        if: steps.check.outputs.has_changes == 'true'
+        run: |
+          git push origin ${{ steps.branch.outputs.branch_name }}
+
+      - name: Create Pull Request
+        if: steps.check.outputs.has_changes == 'true'
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ steps.branch.outputs.branch_name }}
+          base: master
+          title: '🔄 [Manual Review] Sync Upstream Changes (${{ steps.check.outputs.upstream_version }})'
+          body-path: sync-analysis.md
+          labels: |
+            upstream-sync
+            automated
+            review-required
+          assignees: ${{ github.repository_owner }}
