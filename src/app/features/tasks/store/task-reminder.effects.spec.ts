@@ -2,18 +2,21 @@ import { TestBed } from '@angular/core/testing';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { Observable, of } from 'rxjs';
 import { TaskReminderEffects } from './task-reminder.effects';
-import { provideMockStore } from '@ngrx/store/testing';
+import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { ReminderService } from '../../reminder/reminder.service';
 import { SnackService } from '../../../core/snack/snack.service';
 import { TaskService } from '../task.service';
 import { TaskSharedActions } from '../../../root-store/meta/task-shared.actions';
 import { Task, TaskWithSubTasks } from '../task.model';
 import { LocaleDatePipe } from 'src/app/ui/pipes/locale-date.pipe';
+import { removeReminderFromTask } from './task.actions';
 
 describe('TaskReminderEffects', () => {
   let effects: TaskReminderEffects;
   let actions$: Observable<any>;
   let reminderServiceMock: jasmine.SpyObj<ReminderService>;
+  let taskServiceMock: jasmine.SpyObj<TaskService>;
+  let store: MockStore;
 
   const createMockTask = (overrides: Partial<Task> = {}): Task =>
     ({
@@ -62,6 +65,11 @@ describe('TaskReminderEffects', () => {
       'updateReminder',
     ]);
 
+    taskServiceMock = jasmine.createSpyObj('TaskService', [
+      'getByIdOnce$',
+      'getByIdsLive$',
+    ]);
+
     TestBed.configureTestingModule({
       providers: [
         TaskReminderEffects,
@@ -74,10 +82,7 @@ describe('TaskReminderEffects', () => {
         },
         {
           provide: TaskService,
-          useValue: jasmine.createSpyObj('TaskService', [
-            'getByIdOnce$',
-            'getByIdsLive$',
-          ]),
+          useValue: taskServiceMock,
         },
         {
           provide: LocaleDatePipe,
@@ -87,6 +92,7 @@ describe('TaskReminderEffects', () => {
     });
 
     effects = TestBed.inject(TaskReminderEffects);
+    store = TestBed.inject(MockStore);
   });
 
   describe('clearRemindersOnDelete$', () => {
@@ -237,6 +243,178 @@ describe('TaskReminderEffects', () => {
         expect(reminderServiceMock.removeReminder).toHaveBeenCalledWith('rem-sub-2');
         done();
       });
+    });
+  });
+
+  describe('removeTaskReminderTrigger1$', () => {
+    it('should handle undefined tasks in array without crashing (issue #5873)', (done) => {
+      const taskWithReminder = createMockTask({ id: 'task-1', reminderId: 'rem-1' });
+      // Simulate a deleted task that returns undefined from the selector
+      taskServiceMock.getByIdsLive$.and.returnValue(
+        of([
+          taskWithReminder,
+          undefined as unknown as Task,
+          undefined as unknown as Task,
+        ]),
+      );
+
+      actions$ = of(
+        TaskSharedActions.planTasksForToday({
+          taskIds: ['task-1', 'deleted-task', 'another-deleted'],
+          parentTaskMap: {},
+          isSkipRemoveReminder: false,
+        }),
+      );
+
+      const emittedActions: any[] = [];
+      effects.removeTaskReminderTrigger1$.subscribe({
+        next: (action) => emittedActions.push(action),
+        complete: () => {
+          // Should only emit action for the valid task with reminder
+          expect(emittedActions.length).toBe(1);
+          expect(emittedActions[0]).toEqual(
+            removeReminderFromTask({
+              id: 'task-1',
+              reminderId: 'rem-1',
+              isSkipToast: true,
+            }),
+          );
+          done();
+        },
+      });
+    });
+
+    it('should not emit actions when all tasks are undefined', (done) => {
+      taskServiceMock.getByIdsLive$.and.returnValue(
+        of([undefined as unknown as Task, undefined as unknown as Task]),
+      );
+
+      actions$ = of(
+        TaskSharedActions.planTasksForToday({
+          taskIds: ['deleted-1', 'deleted-2'],
+          parentTaskMap: {},
+          isSkipRemoveReminder: false,
+        }),
+      );
+
+      const emittedActions: any[] = [];
+      effects.removeTaskReminderTrigger1$.subscribe({
+        next: (action) => emittedActions.push(action),
+        complete: () => {
+          expect(emittedActions.length).toBe(0);
+          done();
+        },
+      });
+    });
+
+    it('should only emit for tasks with reminderId', (done) => {
+      const taskWithReminder = createMockTask({ id: 'task-1', reminderId: 'rem-1' });
+      const taskWithoutReminder = createMockTask({ id: 'task-2', reminderId: undefined });
+      taskServiceMock.getByIdsLive$.and.returnValue(
+        of([taskWithReminder, taskWithoutReminder]),
+      );
+
+      actions$ = of(
+        TaskSharedActions.planTasksForToday({
+          taskIds: ['task-1', 'task-2'],
+          parentTaskMap: {},
+          isSkipRemoveReminder: false,
+        }),
+      );
+
+      const emittedActions: any[] = [];
+      effects.removeTaskReminderTrigger1$.subscribe({
+        next: (action) => emittedActions.push(action),
+        complete: () => {
+          expect(emittedActions.length).toBe(1);
+          expect(emittedActions[0]).toEqual(
+            removeReminderFromTask({
+              id: 'task-1',
+              reminderId: 'rem-1',
+              isSkipToast: true,
+            }),
+          );
+          done();
+        },
+      });
+    });
+  });
+
+  describe('unscheduleDoneTask$', () => {
+    it('should dispatch unscheduleTask when task with reminder is marked done', (done) => {
+      const taskWithReminder = createMockTask({
+        id: 'task-with-reminder',
+        reminderId: 'rem-123',
+        isDone: true,
+      });
+      taskServiceMock.getByIdOnce$.and.returnValue(of(taskWithReminder));
+
+      const dispatchSpy = spyOn(store, 'dispatch');
+
+      actions$ = of(
+        TaskSharedActions.updateTask({
+          task: { id: 'task-with-reminder', changes: { isDone: true } },
+        }),
+      );
+
+      effects.unscheduleDoneTask$.subscribe(() => {
+        expect(taskServiceMock.getByIdOnce$).toHaveBeenCalledWith('task-with-reminder');
+        expect(dispatchSpy).toHaveBeenCalledWith(
+          TaskSharedActions.unscheduleTask({
+            id: 'task-with-reminder',
+            reminderId: 'rem-123',
+          }),
+        );
+        done();
+      });
+    });
+
+    it('should not dispatch unscheduleTask when task has no reminder', (done) => {
+      const taskWithoutReminder = createMockTask({
+        id: 'task-no-reminder',
+        reminderId: undefined,
+        isDone: true,
+      });
+      taskServiceMock.getByIdOnce$.and.returnValue(of(taskWithoutReminder));
+
+      const dispatchSpy = spyOn(store, 'dispatch');
+
+      actions$ = of(
+        TaskSharedActions.updateTask({
+          task: { id: 'task-no-reminder', changes: { isDone: true } },
+        }),
+      );
+
+      effects.unscheduleDoneTask$.subscribe(() => {
+        expect(taskServiceMock.getByIdOnce$).toHaveBeenCalledWith('task-no-reminder');
+        expect(dispatchSpy).not.toHaveBeenCalled();
+        done();
+      });
+    });
+
+    it('should not trigger for non-isDone updates', (done) => {
+      const dispatchSpy = spyOn(store, 'dispatch');
+
+      actions$ = of(
+        TaskSharedActions.updateTask({
+          task: { id: 'task-123', changes: { title: 'New Title' } },
+        }),
+      );
+
+      // Effect should filter out this action since isDone is not set
+      let emitted = false;
+      effects.unscheduleDoneTask$.subscribe({
+        next: () => {
+          emitted = true;
+        },
+      });
+
+      // Give some time for potential emission
+      setTimeout(() => {
+        expect(emitted).toBe(false);
+        expect(dispatchSpy).not.toHaveBeenCalled();
+        done();
+      }, 50);
     });
   });
 });

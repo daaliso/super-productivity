@@ -20,6 +20,7 @@
     "CONTEXT_MENU": {
       "CHANGE_BACKGROUND": "Change Background"
     },
+    "SKIP_SYNC_WAIT": "Skip waiting for sync",
     "UPDATE_MAIN_MODEL": "Super Productivity has gotten a major update! Some migrations for your data are required. Please note that this renders your data incompatible with older versions of the app.",
     "UPDATE_MAIN_MODEL_NO_UPDATE": "No model update chosen. Please note that you either have to downgrade to the last version, if you do not want to perform the model upgrade.",
     "UPDATE_WEB_APP": "New version available. Load New Version?"
@@ -708,6 +709,23 @@
         "NOTE_LABEL": "Enter some text to save as note (you can use markdown)..."
       },
       "D_FULLSCREEN": {
+        "TOOLBAR": {
+          "BOLD": "Bold",
+          "BULLET_LIST": "Bulleted list",
+          "CODE_BLOCK": "Code block",
+          "HEADING_1": "Heading 1",
+          "HEADING_2": "Heading 2",
+          "HEADING_3": "Heading 3",
+          "INLINE_CODE": "Inline code",
+          "INSERT_IMAGE": "Insert image",
+          "INSERT_LINK": "Insert link",
+          "INSERT_TABLE": "Insert table",
+          "ITALIC": "Italic",
+          "NUMBERED_LIST": "Numbered list",
+          "QUOTE": "Quote",
+          "STRIKETHROUGH": "Strikethrough",
+          "TASK_LIST": "Task list"
+        },
         "VIEW_PARSED": "View as parsed (non editable) markdown",
         "VIEW_SPLIT": "View parsed and unparsed markdown in split view",
         "VIEW_TEXT_ONLY": "View as unparsed text"
@@ -1486,6 +1504,7 @@
         "REMINDER_ADDED": "Scheduled <strong>{{title}}</strong> at <strong>{{date}}</strong>",
         "REMINDER_DELETED": "Deleted reminder for task",
         "REMINDER_UPDATED": "Updated reminder for task \"{{title}}\"",
+        "TASK_ALREADY_EXISTS": "Task <strong>{{title}}</strong> already exists",
         "TASK_CREATED": "Created task \"{{taskTitle}}\""
       },
       "SELECT_OR_CREATE": "Select or create task",
@@ -1915,6 +1934,7 @@
       "EN": "English",
       "ES": "Español",
       "FA": "فارسی",
+      "FI": "Suomi",
       "FR": "français",
       "HR": "Hrvatski",
       "ID": "Indonesian",
@@ -1929,6 +1949,7 @@
       "PT_BR": "Português (Brazil)",
       "RU": "Русский",
       "SK": "Slovak",
+      "SV": "Svenska",
       "TIME_LOCALE": "Datetime format locale",
       "TIME_LOCALE_AUTO": "System default",
       "TIME_LOCALE_DE_DE": "German: 24-hour, DD.MM.YYYY",
