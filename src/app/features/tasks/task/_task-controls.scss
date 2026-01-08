@@ -264,6 +264,11 @@
     &.undo {
       display: none;
     }
+
+    &.unchecked {
+      opacity: 0.3;
+      transition: var(--transition-standard);
+    }
   }
 }
 

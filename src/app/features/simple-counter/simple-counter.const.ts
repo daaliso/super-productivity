@@ -47,4 +47,13 @@ export const DEFAULT_SIMPLE_COUNTERS: SimpleCounter[] = [
     isTrackStreaks: true,
     streakMinValue: 8,
   },
+  {
+    ...EMPTY_SIMPLE_COUNTER,
+    id: 'PRODUCTIVITY_HELPER',
+    title: 'Productivity Helper',
+    type: SimpleCounterType.ClickCounter,
+    icon: 'smart_toy',
+    isTrackStreaks: false,
+    streakMinValue: 1,
+  },
 ];

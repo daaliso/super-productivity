@@ -22,7 +22,7 @@ import { SnackService } from '../../core/snack/snack.service';
 import { NavigationEnd, Router } from '@angular/router';
 import { GlobalConfigService } from '../../features/config/global-config.service';
 import { KeyboardConfig } from 'src/app/features/config/keyboard-config.model';
-import { MatIconButton } from '@angular/material/button';
+import { MatIconButton, MatMiniFabButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { MatTooltip } from '@angular/material/tooltip';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -45,6 +45,9 @@ import { DateService } from '../../core/date/date.service';
 import { UserProfileButtonComponent } from '../../features/user-profile/user-profile-button/user-profile-button.component';
 import { FocusButtonComponent } from './focus-button/focus-button.component';
 import { UserProfileService } from '../../features/user-profile/user-profile.service';
+import { FabMenuComponent, FabMenuItem } from '../fab-menu/fab-menu.component';
+import { DialogCreateProjectComponent } from '../../features/project/dialogs/create-project/dialog-create-project.component';
+import { DialogAddNoteComponent } from '../../features/note/dialog-add-note/dialog-add-note.component';
 
 @Component({
   selector: 'main-header',
@@ -54,6 +57,7 @@ import { UserProfileService } from '../../features/user-profile/user-profile.ser
   animations: [fadeAnimation, expandFadeHorizontalAnimation],
   imports: [
     MatIconButton,
+    MatMiniFabButton,
     MatIcon,
     MatTooltip,
     TranslatePipe,
@@ -66,6 +70,7 @@ import { UserProfileService } from '../../features/user-profile/user-profile.ser
     DesktopPanelButtonsComponent,
     UserProfileButtonComponent,
     FocusButtonComponent,
+    FabMenuComponent,
   ],
 })
 export class MainHeaderComponent implements OnDestroy {
@@ -230,5 +235,30 @@ export class MainHeaderComponent implements OnDestroy {
 
   get kb(): KeyboardConfig {
     return (this._configService.cfg()?.keyboard as KeyboardConfig) || {};
+  }
+
+  readonly fabMenuItems: FabMenuItem[] = [
+    {
+      id: 'add-task',
+      icon: 'add_task',
+      label: T.MH.ADD_NEW_TASK,
+      action: () => this.layoutService.showAddTaskBar(),
+    },
+    {
+      id: 'add-project',
+      icon: 'create_new_folder',
+      label: T.F.BOARDS.V.ADD_NEW_BOARD,
+      action: () => this.matDialog.open(DialogCreateProjectComponent),
+    },
+    {
+      id: 'add-note',
+      icon: 'note_add',
+      label: T.F.NOTE.D_ADD.NOTE_LABEL,
+      action: () => this.matDialog.open(DialogAddNoteComponent),
+    },
+  ];
+
+  onMainFabClick(): void {
+    this.layoutService.showAddTaskBar();
   }
 }

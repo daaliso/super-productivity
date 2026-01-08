@@ -45,6 +45,7 @@ export interface NavRouteItem extends NavBaseItem {
   label: string;
   icon: string;
   route: string;
+  tooltip?: string;
 }
 
 export interface NavHrefItem extends NavBaseItem {

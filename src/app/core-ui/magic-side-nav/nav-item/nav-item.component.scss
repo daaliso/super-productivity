@@ -131,6 +131,7 @@ button[mat-menu-item].nav-link.active {
 
   .nav-icon {
     color: var(--sidenav-active-text) !important;
+    font-variation-settings: 'FILL' 1; // M3: Filled icon for active state
   }
 }
 
@@ -254,6 +255,7 @@ button[mat-menu-item].nav-link.active {
 
     .nav-icon {
       color: var(--sidenav-active-text);
+      font-variation-settings: 'FILL' 1;
     }
 
     .nav-label {
@@ -375,6 +377,7 @@ button[mat-menu-item].nav-link.active {
 
       .nav-icon {
         color: var(--sidenav-active-text) !important;
+        font-variation-settings: 'FILL' 1;
       }
 
       .nav-label {

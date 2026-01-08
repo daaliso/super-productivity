@@ -18,7 +18,7 @@ import { takeUntilDestroyed, toObservable, toSignal } from '@angular/core/rxjs-i
 import { FormsModule } from '@angular/forms';
 import { MentionConfig, MentionItem, MentionModule } from '../../../ui/mentions';
 import { MatInput } from '@angular/material/input';
-import { MatIconButton } from '@angular/material/button';
+import { MatIconButton, MatMiniFabButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { MatTooltip } from '@angular/material/tooltip';
 import { AsyncPipe } from '@angular/common';
@@ -86,6 +86,7 @@ import { PlannerActions } from '../../planner/store/planner.actions';
     FormsModule,
     MatInput,
     MatIconButton,
+    MatMiniFabButton,
     MatIcon,
     MatTooltip,
     AsyncPipe,

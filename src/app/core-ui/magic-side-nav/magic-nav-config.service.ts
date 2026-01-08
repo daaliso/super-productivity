@@ -373,6 +373,7 @@ export class MagicNavConfigService {
         icon: 'early_on',
         svgIcon: 'early_on',
         route: '/schedule',
+        tooltip: 'View your time-based calendar with scheduled tasks',
       });
     }
 
@@ -383,6 +384,7 @@ export class MagicNavConfigService {
         label: T.MH.PLANNER,
         icon: 'edit_calendar',
         route: '/planner',
+        tooltip: 'Plan and organize tasks for upcoming days',
       });
     }
 

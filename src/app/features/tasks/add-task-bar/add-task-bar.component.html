@@ -25,15 +25,17 @@
     />
 
     <div class="right-button-controls">
-      @if (stateService.inputTxt() && !isSearchMode()) {
+      @if (!isSearchMode()) {
         <div class="separator-box">
           <button
-            mat-icon-button
-            class="switch-add-to-btn e2e-add-task-submit"
+            mat-mini-fab
+            class="switch-add-to-btn e2e-add-task-submit add-fab"
             (click)="addTask()"
             type="submit"
+            [disabled]="!stateService.inputTxt()"
             [matTooltip]="T.F.TASK.ADD_TASK_BAR.TOOLTIP_ADD_TASK | translate"
             matTooltipPosition="above"
+            color="primary"
           >
             <mat-icon>add</mat-icon>
           </button>

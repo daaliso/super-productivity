@@ -25,17 +25,14 @@
   }
 
   <nav class="action-nav">
+    <!-- Desktop: Show all buttons inline -->
     @if (showDesktopButtons()) {
-      <button
-        (click)="layoutService.showAddTaskBar()"
-        matTooltip="{{ T.MH.ADD_NEW_TASK | translate }} {{
-          kb.addNewTask ? '[' + kb.addNewTask + ']' : ''
-        }}"
+      <fab-menu
+        [items]="fabMenuItems"
+        [mainTooltip]="T.MH.ADD_NEW_TASK"
+        expandDirection="down"
         class="tour-addBtn"
-        mat-icon-button
-      >
-        <mat-icon>add</mat-icon>
-      </button>
+      ></fab-menu>
     }
 
     @if (isSyncIconEnabled()) {
@@ -45,7 +42,7 @@
         (click)="syncIsEnabledAndReady() ? sync() : setupSync()"
         (longPress)="setupSync()"
         (contextmenu)="$event.preventDefault(); setupSync()"
-        mat-icon-button
+        mat-mini-fab
       >
         @if (syncIsEnabledAndReady()) {
           @if (isOnline()) {

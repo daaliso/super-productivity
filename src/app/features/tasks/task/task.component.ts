@@ -44,6 +44,7 @@ import {
   MatMenuItem,
   MatMenuTrigger,
 } from '@angular/material/menu';
+import { MatCheckbox } from '@angular/material/checkbox';
 import { WorkContextService } from '../../work-context/work-context.service';
 import { throttle } from '../../../util/decorators';
 import { TaskRepeatCfgService } from '../../task-repeat-cfg/task-repeat-cfg.service';
@@ -100,6 +101,7 @@ import { TaskFocusService } from '../task-focus.service';
   imports: [
     MatIcon,
     MatMenuTrigger,
+    MatCheckbox,
     LongPressIOSDirective,
     MatIconButton,
     TaskTitleComponent,

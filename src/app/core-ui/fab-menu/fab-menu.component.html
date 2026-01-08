@@ -1,0 +1,39 @@
+<div class="fab-menu-container">
+  <!-- Menu Items (Secondary Actions) -->
+  @if (isOpen()) {
+    <div
+      class="menu-items"
+      [class.expand-up]="expandDirection() === 'up'"
+      [class.expand-down]="expandDirection() === 'down'"
+      [@listAnimation]="items().length"
+    >
+      @for (item of items(); track item.id) {
+        <button
+          class="fab-menu-item"
+          [class.primary]="!item.color || item.color === 'primary'"
+          [class.accent]="item.color === 'accent'"
+          [class.warn]="item.color === 'warn'"
+          (click)="onItemClick(item, $event)"
+          [@menuState]
+        >
+          <mat-icon class="item-icon">{{ item.icon }}</mat-icon>
+          @if (item.label) {
+            <span class="item-label">{{ item.label | translate }}</span>
+          }
+        </button>
+      }
+    </div>
+  }
+
+  <!-- Main Toggle Button -->
+  <button
+    mat-mini-fab
+    color="primary"
+    class="main-fab mat-elevation-z4"
+    (click)="toggleMenu($event)"
+    [matTooltip]="mainTooltip() | translate"
+    matTooltipPosition="left"
+  >
+    <mat-icon [@fabRotation]="isOpen() ? 'open' : 'closed'">{{ mainIcon() }}</mat-icon>
+  </button>
+</div>

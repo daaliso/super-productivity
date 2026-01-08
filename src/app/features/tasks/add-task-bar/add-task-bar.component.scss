@@ -112,6 +112,20 @@
     }
   }
 
+  // Helper to make the FAB fit nicely
+  .add-fab {
+    opacity: 1; // FAB should be visible
+    transform: scale(0.8); // Scale down slightly to fit 56px height
+    margin-right: -4px;
+
+    // Disable when input empty
+    &[disabled] {
+      opacity: 0.5;
+      background-color: var(--sys-surface-variant);
+      color: var(--sys-on-surface-variant);
+    }
+  }
+
   .search-toggle-btn {
     opacity: 0.4;
 
@@ -165,6 +179,7 @@
   0% {
     opacity: 0;
   }
+
   100% {
     opacity: 1;
   }
