@@ -135,12 +135,13 @@
   // ANIMATION & TRANSITIONS
   // ===============================
 
-  // Timing functions
-  --ani-standard-timing: cubic-bezier(0.4, 0, 0.2, 1);
-  --ani-enter-timing: cubic-bezier(0, 0, 0.2, 1);
-  --ani-leave-timing: cubic-bezier(0.4, 0, 1, 1);
+  // Timing functions - M3 Expressive
+  --ani-standard-timing: var(--motion-easing-standard);
+  --ani-enter-timing: var(--motion-easing-emphasized-decelerate);
+  --ani-leave-timing: var(--motion-easing-emphasized-accelerate);
   --ani-sharp-timing: cubic-bezier(0.4, 0, 0.6, 1);
   --ease-in-out-quint: cubic-bezier(0.38, 0.04, 0.35, 0.96);
+  --ani-expressive-timing: var(--motion-easing-expressive);
 
   // Durations
   --transition-duration-xs: 90ms;
@@ -151,11 +152,13 @@
   --transition-duration-leave: 195ms;
   --page-transition-duration: 225ms;
 
-  // Transition shorthands
+  // Transition shorthands - M3 Expressive
   --transition-fast: all var(--transition-duration-xs) ease-in-out;
   --transition-standard: all var(--transition-duration-m) var(--ani-standard-timing);
   --transition-enter: all var(--transition-duration-m) var(--ani-enter-timing);
   --transition-leave: all var(--transition-duration-m) var(--ani-leave-timing);
+  --transition-expressive: all var(--motion-duration-medium)
+    var(--motion-easing-expressive);
 
   // ===============================
   // COMPONENT-SPECIFIC VARIABLES
@@ -217,19 +220,19 @@
 // Light Theme (Default)
 // -----------------------------
 body {
-  // Background colors
-  --bg: #f8f8f7;
-  --bg-darker: rgb(235, 235, 235);
-  --bg-drag-col: rgb(242, 242, 242);
-  --bg-slightly-lighter: var(--bg);
-  --bg-lighter: #fff;
-  --bg-lightest: #fff;
-  --bg-super-light: #fff;
-  --card-bg: #ffffff;
+  // Background colors - M3 Surface Hierarchy
+  --bg: var(--sys-surface-container-low);
+  --bg-darker: var(--sys-surface-container-low);
+  --bg-drag-col: var(--sys-surface-container);
+  --bg-slightly-lighter: var(--sys-surface-bright);
+  --bg-lighter: var(--sys-surface-container-low);
+  --bg-lightest: var(--sys-surface-container-lowest);
+  --bg-super-light: var(--sys-surface-container-highest);
+  --card-bg: var(--sys-surface-container-lowest);
   --card-shadow: var(--whiteframe-shadow-2dp);
 
   // Navigation & Panel backgrounds - M3 Surface Containers
-  --sidenav-bg: var(--sys-surface-container);
+  --sidenav-bg: var(--sys-surface-container-low);
   --sidenav-bg-mobile: var(--sys-surface-container);
   --sidenav-section-bg: var(--sys-surface-container-low);
   --sidenav-item-active-bg: var(--sys-secondary-container);
@@ -277,8 +280,8 @@ body {
   --standard-note-bg-hovered: var(--standard-note-bg);
   --notes-container-bg: inherit;
 
-  // Task colors
-  --task-c-bg: #fff;
+  // Task colors - M3 Surface Hierarchy
+  --task-c-bg: var(--sys-surface-container-lowest);
   --task-c-selected-bg: var(--selected-task-bg-color);
   --sub-task-c-bg: var(--task-c-bg);
   --sub-task-c-bg-done: var(--task-c-bg);
@@ -364,18 +367,17 @@ body {
 // Dark Theme
 // -----------------------------
 body.isDarkTheme {
-  // Background colors
-  //--bg: var(--dark0);
-  --bg: #131314;
-  --bg-darker: var(--dark0);
-  --bg-slightly-lighter: var(--dark4);
-  --bg-lighter: var(--dark12);
-  --bg-lightest: var(--dark24);
-  --bg-super-light: #616161;
-  --card-bg: var(--dark3);
+  // Background colors - M3 Surface Hierarchy
+  --bg: var(--sys-surface-container-low);
+  --bg-darker: var(--sys-surface-container-low);
+  --bg-slightly-lighter: var(--sys-surface-dim);
+  --bg-lighter: var(--sys-surface-container-low);
+  --bg-lightest: var(--sys-surface-container-lowest);
+  --bg-super-light: var(--sys-surface-container-highest);
+  --card-bg: var(--sys-surface-container-lowest);
 
   // Navigation & Panel backgrounds - M3 Surface Containers
-  --sidenav-bg: var(--sys-surface-container);
+  --sidenav-bg: var(--sys-surface-container-low);
   --sidenav-bg-mobile: var(--sys-surface-container);
   --sidenav-section-bg: var(--sys-surface-container-low);
   --sidenav-item-active-bg: var(--sys-secondary-container);
@@ -418,15 +420,14 @@ body.isDarkTheme {
   --standard-note-bg-hovered: var(--dark24);
   --notes-container-bg: inherit;
 
-  // Task colors
-  //--task-c-bg: #212123ff;
-  --task-c-bg: var(--dark3);
-  --sub-task-c-bg: var(--dark4-5);
-  --sub-task-c-bg-done: var(--dark2);
-  --task-c-bg-done: var(--dark1);
+  // Task colors - M3 Surface Hierarchy
+  --task-c-bg: var(--sys-surface-container-lowest);
+  --sub-task-c-bg: var(--sys-surface-container-low);
+  --sub-task-c-bg-done: var(--sys-surface-container);
+  --task-c-bg-done: var(--sys-surface-container);
 
-  --task-c-selected-bg: var(--dark6);
-  --task-c-current-bg: var(--dark12);
+  --task-c-selected-bg: var(--sys-surface-container-high);
+  --task-c-current-bg: var(--sys-surface-container-high);
   --task-c-drag-drop-bg: var(--dark12);
   --sub-task-c-bg-in-selected: var(--dark10);
 

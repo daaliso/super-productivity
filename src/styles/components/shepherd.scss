@@ -101,22 +101,28 @@
 }
 
 .shepherd-element {
-  border-radius: 8px;
+  border-radius: var(--sys-corner-dialog);
   box-shadow: var(--whiteframe-shadow-24dp);
   z-index: var(--z-tour);
   max-width: 400px;
   opacity: 0;
   outline: none;
   transition:
-    opacity 0.3s,
-    visibility 0.3s;
+    opacity var(--motion-duration-medium) var(--motion-easing-standard),
+    visibility var(--motion-duration-medium) var(--motion-easing-standard),
+    transform var(--motion-duration-medium) var(--motion-easing-expressive);
   visibility: hidden;
   width: 100%;
+  transform: scale(0.95);
 
   background: var(--bg-lightest) !important;
 
   .material-icons {
     vertical-align: middle;
+  }
+
+  &.shepherd-enabled {
+    transform: scale(1);
   }
 }
 
@@ -138,12 +144,15 @@
 .shepherd-button {
   position: relative;
   overflow: hidden;
+  border-radius: var(--sys-corner-button);
   transition:
-    background-color 200ms cubic-bezier(0.4, 0, 0.2, 1),
-    box-shadow 200ms cubic-bezier(0.4, 0, 0.2, 1);
+    background-color var(--motion-duration-medium) var(--motion-easing-standard),
+    box-shadow var(--motion-duration-medium) var(--motion-easing-standard),
+    transform var(--motion-duration-medium) var(--motion-easing-expressive);
 
-  // Hover state - similar to Material button hover
   &:hover:not(:disabled) {
+    transform: scale(1.02);
+
     &::before {
       content: '';
       position: absolute;
@@ -159,6 +168,8 @@
 
   // Active/pressed state - similar to Material button active
   &:active:not(:disabled) {
+    transform: scale(0.98);
+
     &::before {
       opacity: 0.12;
     }

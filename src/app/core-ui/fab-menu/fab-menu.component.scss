@@ -11,6 +11,7 @@
   align-items: center;
   gap: 16px;
   /* Space between main FAB and first item */
+  contain: layout style paint; // Performance optimization
 }
 
 .menu-items {
@@ -34,24 +35,37 @@
   }
 }
 
-// Extended FAB-style menu items (icon + label unified)
+// M3 Expressive: Extended FAB-style menu items
 .fab-menu-item {
   display: flex;
   align-items: center;
   gap: 8px;
   padding: 12px 20px 12px 16px;
   border: none;
-  border-radius: 16px;
-  font-family: inherit;
-  font-size: 14px;
-  font-weight: 500;
+  border-radius: var(--sys-corner-fab);
+  font-family: var(--sys-typescale-label-large-font);
+  font-size: var(--sys-typescale-label-large-size);
+  font-weight: var(--sys-typescale-label-large-weight);
+  line-height: var(--sys-typescale-label-large-line-height);
+  letter-spacing: var(--sys-typescale-label-large-tracking);
   cursor: pointer;
   white-space: nowrap;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+
+  // M3 Expressive: Elevation level 2 + surface tint
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.3),
+    0 2px 6px 2px rgba(0, 0, 0, 0.15);
+
+  // GPU acceleration
+  transform: translateZ(0);
+  will-change: transform, box-shadow, border-radius;
+
+  // M3 Expressive: Spring-based transitions
   transition:
-    background-color 200ms cubic-bezier(0.4, 0, 0.2, 1),
-    box-shadow 200ms cubic-bezier(0.4, 0, 0.2, 1),
-    transform 200ms cubic-bezier(0.4, 0, 0.2, 1);
+    background-color 200ms var(--motion-easing-standard),
+    box-shadow 200ms var(--motion-easing-standard),
+    transform 300ms var(--motion-easing-expressive),
+    border-radius var(--sys-shape-morph-duration) var(--sys-shape-morph-easing);
 
   // Primary (default) - using Material 3 system tokens
   &.primary {
@@ -71,19 +85,51 @@
     color: var(--sys-on-error-container);
   }
 
+  // M3 Expressive: Hover state with shape morph + lift
   &:hover {
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-    transform: scale(1.02);
+    border-radius: var(--sys-corner-radius-medium); // Morph from large to medium
+    box-shadow:
+      0 4px 8px 3px rgba(0, 0, 0, 0.15),
+      0 1px 3px rgba(0, 0, 0, 0.3);
+    transform: scale(1.03) translateY(-2px) translateZ(0);
+
+    .item-icon {
+      // M3 Expressive: Fill icon on hover (Material Symbols)
+      font-variation-settings:
+        'FILL' 1,
+        'wght' 500,
+        'GRAD' 0,
+        'opsz' 24;
+    }
   }
 
+  // M3 Expressive: Active state with spring compression
   &:active {
-    transform: scale(0.98);
+    transform: scale(0.96) translateZ(0);
+    box-shadow:
+      0 1px 2px rgba(0, 0, 0, 0.2),
+      0 1px 3px 1px rgba(0, 0, 0, 0.1);
+  }
+
+  // Focus state (accessibility)
+  &:focus-visible {
+    outline: 3px solid var(--sys-primary);
+    outline-offset: 2px;
   }
 
   .item-icon {
     font-size: 24px;
     width: 24px;
     height: 24px;
+
+    // M3 Expressive: Material Symbols variable font
+    font-variation-settings:
+      'FILL' 0,
+      'wght' 400,
+      'GRAD' 0,
+      'opsz' 24;
+
+    transition: font-variation-settings 200ms var(--motion-easing-standard);
   }
 
   .item-label {
@@ -93,4 +139,18 @@
 
 .main-fab {
   z-index: 2;
+  // Match other header buttons with reduced opacity
+  opacity: 0.8;
+  transition:
+    opacity var(--motion-duration-medium) var(--motion-easing-standard),
+    transform var(--motion-duration-medium) var(--motion-easing-expressive);
+
+  &:hover {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
 }

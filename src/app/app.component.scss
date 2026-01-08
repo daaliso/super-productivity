@@ -12,6 +12,8 @@
   min-height: 100vh;
   // mobile viewport bug fix
   min-height: -webkit-fill-available;
+  // M3 Base Surface - provides background for entire app
+  background: var(--bg);
 }
 
 .main-content {
@@ -20,6 +22,15 @@
   flex-direction: column;
   min-width: 0; // Prevent flex item from growing beyond container
   overflow: hidden;
+  // M3 Segmented Layout - Main Content Pane (brightest surface)
+  background: var(--sys-surface-container-lowest);
+  border-radius: var(--sys-corner-radius-extra-large); // 28px per M3 spec
+  margin: var(--s2);
+
+  @include mq(xs, max) {
+    border-radius: 0; // No rounding on mobile
+    margin: 0;
+  }
 }
 
 // Mobile bottom nav spacing
@@ -56,8 +67,8 @@
   z-index: var(--z-main-header-wrapper);
   display: block;
   transition: var(--transition-enter);
-  border-bottom: 1px solid transparent;
-  border-color: var(--extra-border-color);
+  background: transparent; // Inherits from .main-content
+  border-bottom: 1px solid var(--sys-outline-variant);
 
   &.isNotScrolled {
     border-color: transparent !important;
@@ -72,6 +83,7 @@
   height: 100%;
   container-type: inline-size;
   container-name: main-content;
+  background: transparent; // Inherits surfaceContainer from .main-content
 
   > ::ng-deep router-outlet + * {
     position: absolute;

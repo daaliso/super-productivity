@@ -215,7 +215,7 @@
   border-top: 4px solid var(--c-warn);
   border: 2px solid var(--c-warn);
   box-shadow: var(--whiteframe-shadow-6dp);
-  border-radius: 4px;
+  border-radius: var(--sys-corner-radius-small);
   background: var(--bg);
 
   @media (min-height: 1000px) {
@@ -333,7 +333,7 @@
     background: var(--c-accent);
     color: var(--text-on-accent);
     padding: 8px 16px;
-    border-radius: 20px;
+    border-radius: var(--sys-corner-radius-large);
     font-size: 14px;
     font-weight: 600;
     box-shadow: var(--whiteframe-shadow-8dp);
@@ -358,7 +358,7 @@
     background: var(--bg-darker);
     color: var(--text-color);
     padding: 12px 16px;
-    border-radius: 8px;
+    border-radius: var(--sys-corner-radius-small);
     box-shadow: var(--whiteframe-shadow-12dp);
     border: 1px solid var(--extra-border-color);
     font-size: 14px;
@@ -412,8 +412,7 @@
   }
 
   &.isScheduleForDay {
-    border-radius: var(--card-border-radius);
-    border-radius: 12px;
+    border-radius: var(--sys-corner-card);
 
     //.drag-preview-time-badge {
     //font-size: 13px;
@@ -424,7 +423,7 @@
   .drag-preview-time-badge {
     top: 0 !important;
     right: -8px;
-    border-radius: 12px;
+    border-radius: var(--sys-corner-card);
   }
 
   &.isShiftInsertPreview {

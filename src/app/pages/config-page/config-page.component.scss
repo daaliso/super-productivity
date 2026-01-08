@@ -151,7 +151,28 @@
 }
 
 .back-button {
-  color: var(--sys-on-surface);
+  // M3 Filled-Tonal Button Treatment
+  background: var(--sys-secondary-container);
+  color: var(--sys-on-secondary-container);
+  border-radius: var(--sys-corner-radius-full);
+  transition:
+    background var(--motion-duration-medium) var(--motion-easing-standard),
+    box-shadow var(--motion-duration-medium) var(--motion-easing-standard),
+    transform var(--motion-duration-medium) var(--motion-easing-expressive);
+
+  &:hover {
+    background: color-mix(
+      in srgb,
+      var(--sys-secondary-container) 92%,
+      var(--sys-on-secondary-container)
+    );
+    box-shadow: var(--sys-elevation-1);
+    transform: scale(1.05);
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
 }
 
 .section-title {

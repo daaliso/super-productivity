@@ -3,10 +3,7 @@
   --mobile-breakpoint: 768px;
   // M3 Expressive motion tokens
   --sidenav-transition-duration: var(--motion-duration-medium, 300ms);
-  --sidenav-transition-timing: var(
-    --motion-spring-spatial-default,
-    cubic-bezier(0.2, 0, 0, 1)
-  );
+  --sidenav-transition-timing: var(--motion-easing-expressive);
   --mat-menu-item-spacing: 4px;
   --sidenav-border-color: var(--separator-color);
 
@@ -78,16 +75,16 @@
   opacity: 1;
 }
 
-// Main sidenav - M3 Surface Container
+// Main sidenav - M3 Navigation Rail Pattern
 .nav-sidenav {
   position: fixed;
   top: 0;
   left: 0;
   bottom: 0;
   width: var(--sidenav-width-expanded);
-  background: var(--sidenav-bg);
-  border-right: none; // Clean M3 look without solid border
-  border-radius: 0 16px 16px 0; // Rounded top-right and bottom-right corners
+  background: var(--sidenav-bg); // Subtle tint with surfaceContainerLow
+  border-right: none; // Clean M3 look without visible border
+  border-radius: 0; // No rounded corners for navigation rail
   // Default: don't animate width
   transition: none;
   z-index: 1002;
