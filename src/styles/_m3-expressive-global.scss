@@ -1,0 +1,243 @@
+// -------------------------------------------------------------------------
+// M3 EXPRESSIVE GLOBAL COMPONENT STYLES
+// -------------------------------------------------------------------------
+// Enhanced interactions for Angular Material components
+
+// -------------------------------------------------------------------------
+// Dialogs & Modals
+// -------------------------------------------------------------------------
+.mat-mdc-dialog-container {
+  border-radius: var(--sys-corner-dialog) !important;
+  animation: dialog-enter 400ms var(--motion-easing-emphasized) !important;
+
+  .mdc-dialog__surface {
+    border-radius: var(--sys-corner-dialog) !important;
+  }
+}
+
+@keyframes dialog-enter {
+  from {
+    opacity: 0;
+    transform: scale(0.9) translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+// -------------------------------------------------------------------------
+// Cards
+// -------------------------------------------------------------------------
+.mat-mdc-card {
+  border-radius: var(--sys-corner-card);
+  transition:
+    transform 300ms var(--motion-easing-expressive),
+    box-shadow 300ms var(--motion-easing-standard);
+
+  &.interactive,
+  &[role='button'] {
+    cursor: pointer;
+
+    &:hover {
+      transform: translateY(-4px);
+      box-shadow:
+        0 8px 16px rgba(0, 0, 0, 0.1),
+        0 4px 8px rgba(0, 0, 0, 0.06);
+    }
+
+    &:active {
+      transform: translateY(-2px);
+    }
+  }
+}
+
+// -------------------------------------------------------------------------
+// Buttons (all types)
+// -------------------------------------------------------------------------
+.mat-mdc-button,
+.mat-mdc-raised-button,
+.mat-mdc-outlined-button,
+.mat-mdc-unelevated-button {
+  border-radius: var(--sys-corner-button) !important;
+  transition: all 300ms var(--motion-easing-expressive) !important;
+
+  &:not(:disabled):hover {
+    transform: scale(1.02);
+  }
+
+  &:not(:disabled):active {
+    transform: scale(0.98);
+  }
+}
+
+// Icon buttons
+.mat-mdc-icon-button {
+  transition: all 250ms var(--motion-easing-expressive);
+
+  &:not(:disabled):hover {
+    transform: scale(1.08);
+  }
+
+  &:not(:disabled):active {
+    transform: scale(0.95);
+  }
+}
+
+// -------------------------------------------------------------------------
+// FABs (global styling)
+// -------------------------------------------------------------------------
+.mat-mdc-fab,
+.mat-mdc-mini-fab {
+  border-radius: var(--sys-corner-fab) !important;
+  transition:
+    transform 300ms var(--motion-easing-expressive),
+    box-shadow 300ms var(--motion-easing-standard) !important;
+
+  &:not(:disabled):hover {
+    transform: scale(1.05);
+  }
+
+  &:not(:disabled):active {
+    transform: scale(0.95);
+  }
+}
+
+// -------------------------------------------------------------------------
+// Bottom Sheets (Mobile)
+// -------------------------------------------------------------------------
+.mat-bottom-sheet-container {
+  border-radius: var(--sys-corner-sheet) var(--sys-corner-sheet) 0 0 !important;
+  animation: sheet-slide-up 400ms var(--motion-easing-emphasized);
+}
+
+@keyframes sheet-slide-up {
+  from {
+    transform: translateY(100%);
+  }
+
+  to {
+    transform: translateY(0);
+  }
+}
+
+// -------------------------------------------------------------------------
+// Chips
+// -------------------------------------------------------------------------
+.mat-mdc-chip {
+  border-radius: var(--sys-corner-chip) !important;
+  transition: all 250ms var(--motion-easing-expressive);
+
+  &.mat-mdc-chip-selected {
+    transform: scale(1.02);
+  }
+
+  &:hover {
+    transform: scale(1.04);
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+}
+
+// -------------------------------------------------------------------------
+// Ripple Enhancement (M3 Expressive)
+// -------------------------------------------------------------------------
+.mat-ripple-element {
+  background-color: rgba(var(--sys-on-surface-rgb), 0.1) !important;
+  animation: ripple-expand 400ms var(--motion-easing-expressive) !important;
+}
+
+@keyframes ripple-expand {
+  0% {
+    transform: scale(0);
+    opacity: 0.3;
+  }
+
+  50% {
+    opacity: 0.2;
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 0;
+  }
+}
+
+// -------------------------------------------------------------------------
+// Focus Indicators (Accessibility - WCAG AAA)
+// -------------------------------------------------------------------------
+.mat-mdc-button:focus-visible,
+.mat-mdc-icon-button:focus-visible,
+.mat-mdc-fab:focus-visible,
+.mat-mdc-mini-fab:focus-visible,
+.mat-mdc-chip:focus-visible {
+  outline: 3px solid var(--sys-primary);
+  outline-offset: 2px;
+  animation: focus-pulse 1s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes focus-pulse {
+  0%,
+  100% {
+    outline-offset: 2px;
+  }
+
+  50% {
+    outline-offset: 4px;
+  }
+}
+
+// -------------------------------------------------------------------------
+// Material Icons → Material Symbols Migration Support
+// -------------------------------------------------------------------------
+mat-icon {
+  // Support for Material Symbols variable font features
+  &.material-symbols-rounded,
+  &.material-symbols-outlined,
+  &.material-symbols-sharp {
+    font-variation-settings:
+      'FILL' 0,
+      'wght' 400,
+      'GRAD' 0,
+      'opsz' 24;
+
+    transition: font-variation-settings 200ms var(--motion-easing-standard);
+  }
+
+  // Filled variant for selected/active states
+  &.filled,
+  &.icon-filled {
+    font-variation-settings:
+      'FILL' 1,
+      'wght' 400,
+      'GRAD' 0,
+      'opsz' 24;
+  }
+
+  // Emphasized variant (bolder)
+  &.emphasized {
+    font-variation-settings:
+      'FILL' 0,
+      'wght' 600,
+      'GRAD' 0,
+      'opsz' 24;
+  }
+}
+
+// Interactive icons in buttons/chips should fill on hover
+.mat-mdc-button:hover mat-icon,
+.mat-mdc-icon-button:hover mat-icon,
+.mat-mdc-chip:hover mat-icon {
+  &.material-symbols-rounded,
+  &.material-symbols-outlined,
+  &.material-symbols-sharp {
+    font-variation-settings:
+      'FILL' 1,
+      'wght' 500,
+      'GRAD' 0,
+      'opsz' 24;
+  }
+}

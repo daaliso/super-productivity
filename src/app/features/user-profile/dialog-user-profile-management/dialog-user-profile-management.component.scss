@@ -34,8 +34,8 @@
       align-items: center;
       padding: 16px;
       border: 1px solid rgba(0, 0, 0, 0.12);
-      border-radius: 4px;
-      transition: all 0.2s;
+      border-radius: var(--sys-corner-radius-small);
+      transition: all var(--motion-duration-medium) var(--motion-easing-expressive);
 
       &:hover {
         background: rgba(0, 0, 0, 0.02);
@@ -63,7 +63,7 @@
             padding: 2px 8px;
             background: var(--c-accent);
             color: white;
-            border-radius: 12px;
+            border-radius: var(--sys-corner-chip);
             font-size: 12px;
             font-weight: 500;
           }

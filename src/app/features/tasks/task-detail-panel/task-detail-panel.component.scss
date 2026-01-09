@@ -6,6 +6,8 @@
   z-index: 1;
   display: block;
   padding-bottom: var(--s);
+  // M3: Consistent font throughout detail panel
+  font-family: var(--font-family);
 
   task-list {
     padding: 0;
@@ -34,10 +36,11 @@ progress-bar {
   z-index: 44;
   border-radius: var(--card-border-radius);
   margin: 8px;
-  border-bottom: 2px solid var(--c-primary) !important;
+  // M3: Clean design without colored bottom border
+  border-bottom: none;
 
   ::ng-deep textarea {
-    border: 2px solid red;
+    font-family: var(--font-family);
     font-weight: 600 !important;
   }
 
@@ -46,6 +49,7 @@ progress-bar {
     padding-bottom: 4px;
     margin-top: 0;
     color: var(--text-color);
+    font-family: var(--font-family);
   }
 }
 

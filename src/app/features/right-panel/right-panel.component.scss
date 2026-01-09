@@ -21,6 +21,7 @@
     .side-inner {
       pointer-events: none;
     }
+
     .right-panel iframe {
       pointer-events: none;
     }
@@ -48,9 +49,13 @@
 
 .content {
   flex-grow: 1;
+  flex-shrink: 1;
+  min-width: 0; // Allow content to shrink below natural width
   max-width: 100%;
   position: relative;
   z-index: var(--z-right-panel);
+  overflow: hidden;
+  transition: var(--transition-standard);
 }
 
 .side {
@@ -62,11 +67,17 @@
   transition-property: width, right, transform;
   // Cap panel to at most half of the container width in side mode
   max-width: 50%;
-  background: var(--right-panel-bg);
-  background: transparent;
-  border-left: 1px solid var(--separator-color);
+  flex-shrink: 0; // Don't shrink - push content instead
   overflow: visible; // allow overlay controls to stick out on the left edge
   pointer-events: none; // Disable interactions when closed or closing
+
+  // M3 Pane: Distinct background and visual separation
+  background: var(--sys-surface-container);
+  border-radius: var(--sys-corner-radius-extra-large);
+  margin: var(--s2);
+  margin-left: 0;
+  border-left: none;
+  box-shadow: var(--whiteframe-shadow-2dp);
 
   @include mq(sm, max) {
     // NOTE: prevents overlapping with nav when open
@@ -75,12 +86,11 @@
 
   @include mq(xs, max) {
     max-width: 100%;
+    margin: 0;
+    border-radius: 0;
   }
 
-  //border-color: var(--extra-border-color);
-
   :host.isOpen.isOpen.isOpen & {
-    //box-shadow: var(--whiteframe-shadow-2dp);
     pointer-events: auto;
     transition: var(--transition-enter);
   }

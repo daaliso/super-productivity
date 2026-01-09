@@ -14,7 +14,8 @@
   display: block;
   position: relative;
   user-select: none;
-  -webkit-user-select: none; /* Safari */
+  -webkit-user-select: none;
+  /* Safari */
   --header-nav-button-gap: var(--s-half);
   --header-button-size: 40px;
 }
@@ -62,6 +63,7 @@
   align-items: center;
   padding: 4px 8px;
   min-height: var(--bar-height-large);
+
   @include mq(xs) {
     min-height: var(--bar-height);
     padding: 4px 16px;
@@ -70,6 +72,7 @@
 
 .project-settings-btn {
   display: none;
+
   @include mq(xs) {
     display: block;
     transition: var(--transition-standard);
@@ -152,14 +155,14 @@ button.isActive2 {
 
 .panel-btn {
   position: relative;
-  transition: all 0.2s;
+  transition: all var(--motion-duration-medium) var(--motion-easing-expressive);
   overflow: visible !important;
 
   &.isActive {
     background: transparent;
 
     .mat-icon {
-      transition: all 0.2s;
+      transition: all var(--motion-duration-medium) var(--motion-easing-expressive);
       transform: rotate(45deg);
     }
 
@@ -280,7 +283,7 @@ button.isActive2 {
   right: 100%;
   width: auto;
   border: 2px solid var(--c-accent);
-  border-radius: 12px;
+  border-radius: var(--sys-corner-card);
 }
 
 .sync-state-ico {

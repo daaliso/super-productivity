@@ -1,0 +1,106 @@
+// -------------------------------------------------------------------------
+// M3 EXPRESSIVE MOTION TOKENS
+// -------------------------------------------------------------------------
+// Physics-based spring animations for natural, fluid interactions
+// https://material.io/design/motion/spring.html
+
+:root {
+  // -------------------------------------------------------------------------
+  // Duration Tokens
+  // -------------------------------------------------------------------------
+  --motion-duration-short: 50ms;
+  --motion-duration-medium: 250ms;
+  --motion-duration-long: 400ms;
+  --motion-duration-extra-long: 600ms;
+
+  // -------------------------------------------------------------------------
+  // Spring Tokens (stiffness, damping, mass)
+  // -------------------------------------------------------------------------
+  // Spatial: For position, scale, rotation, corners (WITH overshoot)
+  --motion-spring-spatial-default: 1, 1, 1; // Bouncy, playful
+  --motion-spring-spatial-fast: 1.5, 1, 0.8; // Snappier for small elements
+  --motion-spring-spatial-slow: 0.7, 1, 1.2; // Heavier for large elements
+
+  // Effects: For color, opacity (NO overshoot)
+  --motion-spring-effects-default: 1, 1, 1;
+  --motion-spring-effects-fast: 1.5, 1, 0.8;
+  --motion-spring-effects-slow: 0.7, 1, 1.2;
+
+  // -------------------------------------------------------------------------
+  // CSS Linear() Easing Approximations
+  // -------------------------------------------------------------------------
+  // Expressive: Bouncy overshoot for hero moments
+  --motion-easing-expressive: linear(
+    0,
+    0.009,
+    0.035 2.1%,
+    0.141 4.4%,
+    0.723 12.9%,
+    0.938 16.7%,
+    1.017,
+    1.077,
+    1.121,
+    1.149 24.3%,
+    1.159,
+    1.163,
+    1.161,
+    1.154 29.9%,
+    1.129 32.8%,
+    1.051 39.6%,
+    1.017 43.1%,
+    0.991,
+    0.977 51%,
+    0.974 53.8%,
+    0.975 57.1%,
+    0.997 69.8%,
+    1.003 76.9%,
+    1
+  );
+
+  // Standard: Subtle ease, minimal bounce for utilitarian interactions
+  --motion-easing-standard: linear(
+    0,
+    0.009,
+    0.035 2.1%,
+    0.141 4.4%,
+    0.723 12.9%,
+    0.938 16.7%,
+    1.017,
+    1.077,
+    1.121,
+    1.048 39.6%,
+    1.011 43.1%,
+    0.991,
+    0.977 51%,
+    0.974 53.8%,
+    0.975 57.1%,
+    0.994 69.8%,
+    0.999 76.9%,
+    1
+  );
+
+  // Emphasized: For hero moments and key transitions
+  --motion-easing-emphasized: cubic-bezier(0.2, 0, 0, 1);
+  --motion-easing-emphasized-decelerate: cubic-bezier(0.05, 0.7, 0.1, 1);
+  --motion-easing-emphasized-accelerate: cubic-bezier(0.3, 0, 0.8, 0.15);
+
+  // Legacy M2 compatibility
+  --motion-easing-standard-legacy: cubic-bezier(0.4, 0, 0.2, 1);
+  --motion-easing-decelerate: cubic-bezier(0, 0, 0.2, 1);
+  --motion-easing-accelerate: cubic-bezier(0.4, 0, 1, 1);
+}
+
+// -------------------------------------------------------------------------
+// Accessibility: Reduced Motion
+// -------------------------------------------------------------------------
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --motion-duration-short: 1ms;
+    --motion-duration-medium: 1ms;
+    --motion-duration-long: 1ms;
+    --motion-duration-extra-long: 1ms;
+    --motion-easing-expressive: linear;
+    --motion-easing-standard: linear;
+    --motion-easing-emphasized: linear;
+  }
+}

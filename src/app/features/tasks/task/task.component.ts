@@ -658,11 +658,8 @@ export class TaskComponent implements OnDestroy, AfterViewInit {
   }
 
   titleBarClick(event: MouseEvent): void {
-    const targetEl = event.target as HTMLElement;
-    if (targetEl.closest('task-title')) {
-      return;
-    }
-    if (IS_TOUCH_PRIMARY && this.task().title.length) {
+    // Open detail panel on click anywhere (including title) for easier task editing
+    if (this.task().title.length) {
       this.toggleShowDetailPanel(event);
     } else {
       this.focusSelf();

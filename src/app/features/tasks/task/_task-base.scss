@@ -110,6 +110,7 @@
 
   :host:focus > .inner-wrapper > & {
     border-radius: var(--task-border-radius);
+
     // we don't want focus borders for touch only devices
     @include noTouchOnly() {
       border-color: var(--palette-primary-400);
@@ -142,9 +143,11 @@
     @include mq(xs) {
       right: -34px;
     }
+
     @include mq(md) {
       right: -234px;
     }
+
     @include mq(xl) {
       right: calc(-1 * var(--task-border-radius));
     }
@@ -204,10 +207,23 @@
   align-items: stretch;
   flex-wrap: nowrap;
   user-select: none;
-  -webkit-user-select: none; /* Safari */
+  -webkit-user-select: none;
+  /* Safari */
   justify-content: space-between;
   min-height: var(--task-first-line-min-height);
   touch-action: pan-y;
+  // M3: Indicate clickability for opening task details
+  cursor: pointer;
+  transition: transform var(--transition-duration-xs) var(--motion-easing-standard);
+
+  &:hover {
+    // M3: Subtle scale effect on hover
+    transform: scale(1.002);
+  }
+
+  &:active {
+    transform: scale(0.998);
+  }
 
   @include mq(xs, max) {
     flex-wrap: wrap;

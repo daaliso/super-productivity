@@ -37,35 +37,38 @@ export interface FabMenuItem {
   styleUrls: ['./fab-menu.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [
+    // M3 Expressive: Individual menu item entry/exit
     trigger('menuState', [
       transition(':enter', [
         style({ opacity: 0, transform: 'scale(0.8)' }),
         animate(
-          '200ms cubic-bezier(0.4, 0.0, 0.2, 1)',
+          '250ms var(--motion-easing-expressive)',
           style({ opacity: 1, transform: 'scale(1)' }),
         ),
       ]),
       transition(':leave', [
         animate(
-          '150ms cubic-bezier(0.4, 0.0, 0.2, 1)',
-          style({ opacity: 0, transform: 'scale(0.8)' }),
+          '150ms var(--motion-easing-standard)',
+          style({ opacity: 0, transform: 'scale(0.9)' }),
         ),
       ]),
     ]),
+    // M3 Expressive: Main FAB icon rotation with dramatic 135deg
     trigger('fabRotation', [
-      state('open', style({ transform: 'rotate(45deg)' })),
+      state('open', style({ transform: 'rotate(135deg)' })),
       state('closed', style({ transform: 'rotate(0)' })),
-      transition('open <=> closed', [animate('200ms cubic-bezier(0.4, 0.0, 0.2, 1)')]),
+      transition('open <=> closed', [animate('300ms var(--motion-easing-expressive)')]),
     ]),
+    // M3 Expressive: Staggered list animation with increased rhythm
     trigger('listAnimation', [
       transition('* => *', [
         query(
           ':enter',
           [
-            style({ opacity: 0, transform: 'translateY(10px) scale(0.8)' }),
-            stagger(50, [
+            style({ opacity: 0, transform: 'translateY(20px) scale(0.85)' }),
+            stagger(60, [
               animate(
-                '200ms cubic-bezier(0.4, 0.0, 0.2, 1)',
+                '300ms var(--motion-easing-expressive)',
                 style({ opacity: 1, transform: 'translateY(0) scale(1)' }),
               ),
             ]),
@@ -77,8 +80,8 @@ export interface FabMenuItem {
           [
             stagger(30, [
               animate(
-                '150ms cubic-bezier(0.4, 0.0, 0.2, 1)',
-                style({ opacity: 0, transform: 'translateY(10px) scale(0.8)' }),
+                '200ms var(--motion-easing-standard)',
+                style({ opacity: 0, transform: 'translateY(-10px) scale(0.9)' }),
               ),
             ]),
           ],
