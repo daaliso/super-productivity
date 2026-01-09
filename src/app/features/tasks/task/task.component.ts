@@ -660,7 +660,9 @@ export class TaskComponent implements OnDestroy, AfterViewInit {
   titleBarClick(event: MouseEvent): void {
     // Open detail panel on click anywhere (including title) for easier task editing
     if (this.task().title.length) {
-      this.toggleShowDetailPanel(event);
+      if (!this.isSelected()) {
+        this.toggleShowDetailPanel(event);
+      }
     } else {
       this.focusSelf();
     }
