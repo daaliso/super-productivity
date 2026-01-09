@@ -86,6 +86,10 @@ export class ShepherdService {
     this.isActive = true;
     this.tour?.start();
 
+    // Clean up previous navigation subscription if any
+    if (this._navigationSubscription) {
+      this._navigationSubscription.unsubscribe();
+    }
     // Auto-dismiss welcome dialog on navigation (ADHD-friendly)
     this._navigationSubscription = this._router.events
       .pipe(filter((event) => event instanceof NavigationStart))
