@@ -26,7 +26,7 @@
     "UPDATE_WEB_APP": "New version available. Load New Version?"
   },
   "BL": {
-    "NO_TASKS": "There are currently no tasks in your backlog"
+    "NO_TASKS": "Your backlog is empty — add tasks to plan ahead"
   },
   "BN": {
     "SHOW_ISSUE_PANEL": "Show Issue Panel",
@@ -1360,20 +1360,50 @@
         "TOOLTIP_ENABLE_SEARCH": "Enable issue search (Ctrl+2)"
       },
       "ADDITIONAL_INFO": {
-        "ADD_ATTACHMENT": "Add attachment",
-        "ADD_SUB_TASK": "Add Sub Task",
+        "ADD_ATTACHMENT": "Attach file or link",
+        "ADD_SUB_TASK": "Add subtask",
         "ATTACHMENTS": "Attachments ({{nr}})",
-        "DUE": "Planned at",
-        "FROM_PARENT": "(from Parent)",
-        "LOCAL_ATTACHMENTS": "Local Attachments",
-        "NOTES": "Description",
-        "PARENT": "Parent",
+        "ATTACHMENTS_EMPTY": "No attachments yet",
+        "ATTACHMENTS_DROP_HINT": "Drop files here to attach them",
+        "CREATED_AT": "Created {{date}}",
+        "COMPLETED_AT": "Completed {{date}}",
+        "DUE": "Due date",
+        "FROM_PARENT": "(from parent task)",
+        "LOCAL_ATTACHMENTS": "Your attachments",
+        "NOTES": "Notes",
+        "NOTES_EMPTY": "Click to add notes or create a checklist",
+        "PARENT": "Parent task",
         "REMINDER": "Reminder",
         "REPEAT": "Repeat",
-        "SCHEDULE_TASK": "Schedule Task",
-        "SUB_TASKS": "Sub Tasks ({{nr}})",
-        "TIME": "Time",
-        "TITLE_PLACEHOLDER": "Enter a title"
+        "SCHEDULE_TASK": "Schedule",
+        "SUB_TASKS": "Subtasks ({{nr}})",
+        "SUB_TASKS_EMPTY": "No subtasks yet",
+        "TIME": "Duration",
+        "TIME_SPENT": "Spent",
+        "TIME_ESTIMATE": "Estimated",
+        "TITLE_PLACEHOLDER": "What do you need to do?"
+      },
+      "ADDITIONAL_INFO_HINTS": {
+        "ATTACHMENTS": "Files, images, or links related to this task",
+        "DUE": "When this should be completed",
+        "NOTES": "Add details, links, or a checklist",
+        "PARENT": "The larger task this belongs to",
+        "REPEAT": "Create this task regularly",
+        "SCHEDULE": "Set a specific date and time",
+        "SUB_TASKS": "Break this into smaller steps",
+        "TIME": "Time spent vs estimated"
+      },
+      "ADDITIONAL_INFO_ARIA": {
+        "ATTACHMENTS": "Attachments for this task",
+        "DUE_DATE": "Due date for task",
+        "NOTES": "Task notes and description",
+        "PARENT_TASK": "Parent task containing this task",
+        "REPEAT_CONFIG": "Repeat configuration",
+        "SCHEDULE": "Schedule this task",
+        "SUB_TASKS": "Subtasks for this task",
+        "TIME_SPENT": "Time spent: {{duration}}",
+        "TIME_ESTIMATE": "Estimated time: {{duration}}",
+        "TIME_TRACKING": "Time tracking for this task"
       },
       "B": {
         "ADD_HALF_HOUR": "Add 1/2 hour",
@@ -1485,27 +1515,27 @@
         "TITLE": "Add for Day"
       },
       "N": {
-        "ESTIMATE_EXCEEDED": "Time estimate exceeded!",
-        "ESTIMATE_EXCEEDED_BODY": "You exceeded your estimated time for \"{{title}}\"."
+        "ESTIMATE_EXCEEDED": "You worked longer than estimated",
+        "ESTIMATE_EXCEEDED_BODY": "You've spent {{timeSpent}} on \"{{title}}\" (estimated: {{timeEstimate}}). That's totally normal! Want to update your estimate?"
       },
       "S": {
-        "CANNOT_ASSIGN_PROJECT_FOR_REPEATABLE_TASK": "Cannot assign project via short syntax for repeatable tasks!",
-        "CREATED_FOR_PROJECT": "Created task \"{{taskTitle}}\" for project \"{{projectTitle}}\"",
-        "CREATED_FOR_PROJECT_ACTION": "Go to Project",
-        "DELETED": "Deleted task \"{{title}}\"",
-        "FOUND_MOVE_FROM_BACKLOG": "Moved task <strong>{{title}}</strong> from backlog to todays task list",
-        "FOUND_MOVE_FROM_OTHER_LIST": "Added task <strong>{{title}}</strong> from <strong>{{contextTitle}}</strong> to current list",
-        "FOUND_RESTORE_FROM_ARCHIVE": "Restored task <strong>{{title}}</strong> related to issue from archive",
-        "GO_TO_TASK": "Go to Task",
-        "LAST_TAG_DELETION_WARNING": "You're trying to remove the last tag of a non project task. This is not allowed!",
+        "CANNOT_ASSIGN_PROJECT_FOR_REPEATABLE_TASK": "Repeatable tasks can't be assigned to projects via short syntax",
+        "CREATED_FOR_PROJECT": "Created \"{{taskTitle}}\" in {{projectTitle}}",
+        "CREATED_FOR_PROJECT_ACTION": "Go to project",
+        "DELETED": "Deleted \"{{title}}\"",
+        "FOUND_MOVE_FROM_BACKLOG": "Moved <strong>{{title}}</strong> to today's list",
+        "FOUND_MOVE_FROM_OTHER_LIST": "Added <strong>{{title}}</strong> from <strong>{{contextTitle}}</strong>",
+        "FOUND_RESTORE_FROM_ARCHIVE": "Restored <strong>{{title}}</strong> from archive",
+        "GO_TO_TASK": "Go to task",
+        "LAST_TAG_DELETION_WARNING": "Tasks need at least one tag. Add another tag before removing this one.",
         "MOVED_TO_ARCHIVE": "Moved {{nr}} tasks to archive",
-        "MOVED_TO_PROJECT": "Moved task \"{{taskTitle}}\" to project \"{{projectTitle}}\"",
-        "MOVED_TO_PROJECT_ACTION": "Go to Project",
-        "REMINDER_ADDED": "Scheduled <strong>{{title}}</strong> at <strong>{{date}}</strong>",
-        "REMINDER_DELETED": "Deleted reminder for task",
-        "REMINDER_UPDATED": "Updated reminder for task \"{{title}}\"",
-        "TASK_ALREADY_EXISTS": "Task <strong>{{title}}</strong> already exists",
-        "TASK_CREATED": "Created task \"{{taskTitle}}\""
+        "MOVED_TO_PROJECT": "Moved \"{{taskTitle}}\" to {{projectTitle}}",
+        "MOVED_TO_PROJECT_ACTION": "Go to project",
+        "REMINDER_ADDED": "Reminder set for <strong>{{title}}</strong> at <strong>{{date}}</strong>",
+        "REMINDER_DELETED": "Reminder removed",
+        "REMINDER_UPDATED": "Updated reminder for \"{{title}}\"",
+        "TASK_ALREADY_EXISTS": "<strong>{{title}}</strong> already exists",
+        "TASK_CREATED": "Created \"{{taskTitle}}\""
       },
       "SELECT_OR_CREATE": "Select or create task",
       "SUMMARY_TABLE": {
@@ -1514,6 +1544,80 @@
         "SPENT_TOTAL": "Spent Total",
         "TASK": "Task",
         "TOGGLE_DONE": "un-/mark as done"
+      }
+    },
+    "ADHD_OPTIMIZED": {
+      "EMPTY_STATES": {
+        "ALL_CAUGHT_UP": "You're all caught up! 🎉",
+        "NO_ATTACHMENTS": "No attachments yet — drag files here or click to add",
+        "NO_NOTES": "Click to add notes, links, or create a checklist",
+        "NO_SUBTASKS": "No subtasks yet",
+        "NO_TASKS_BACKLOG": "Your backlog is empty — add tasks to plan ahead",
+        "NO_TASKS_TODAY": "No tasks for today",
+        "ADD_FIRST_TASK": "Add your first task to get started",
+        "NO_REPETITION": "This task doesn't repeat",
+        "ALL_DONE_TODAY": "Great work! You completed everything for today"
+      },
+      "ENCOURAGEMENT": {
+        "GOOD_START": "Great start!",
+        "KEEP_GOING": "Keep going, you've got this!",
+        "NICE_WORK": "Nice work! ✓",
+        "PROGRESS_MADE": "You're making progress!",
+        "TASK_COMPLETED": "Task completed!"
+      },
+      "GENTLE_REMINDERS": {
+        "BREAK_SUGGESTION": "You've been working for {{duration}} — time for a break?",
+        "END_OF_DAY": "Wrapping up? Here's what you accomplished today:",
+        "RETURN_WELCOME": "Welcome back! Ready to continue?",
+        "UNSAVED_CHANGES": "Remember to save your changes"
+      },
+      "TIME_CONTEXT": {
+        "DURATION_FRIENDLY": "about {{estimate}}",
+        "HOURS_FRIENDLY": "{{value}} hours",
+        "HOURS_SHORT": "{{h}}h {{m}}m",
+        "MINUTES_FRIENDLY": "{{value}} minutes",
+        "MINUTES_SHORT": "{{n}}m",
+        "RELATIVE_FUTURE": "in {{duration}}",
+        "RELATIVE_PAST": "{{duration}} ago",
+        "TIME_LEFT": "{{duration}} left",
+        "TIME_OVER": "{{duration}} over",
+        "TODAY_AT": "Today at {{time}}",
+        "TOMORROW_AT": "Tomorrow at {{time}}",
+        "IN_DAYS": "In {{days}} days"
+      },
+      "CLEAR_ACTIONS": {
+        "CANCEL_CHANGES": "Discard changes",
+        "DELETE_WITH_UNDO": "Delete (you can undo)",
+        "KEEP_IT": "Keep it",
+        "MARK_DONE": "Mark as done ✓",
+        "NOT_NOW": "Not now",
+        "SAVE_AND_CLOSE": "Save and close",
+        "SAVE_AND_CONTINUE": "Save and keep editing",
+        "TRY_AGAIN": "Try again"
+      },
+      "EXPLANATIONS": {
+        "WHY_ESTIMATE": "Estimates help plan your day",
+        "WHY_SUBTASKS": "Break big tasks into small steps",
+        "WHY_TAG_REQUIRED": "Tags help organize your tasks"
+      },
+      "ERRORS_FRIENDLY": {
+        "GENERIC": "Something went wrong. Please try again, or contact support if this continues.",
+        "INVALID_DATE": "Date format should be: {{format}}",
+        "INVALID_DATE_EXAMPLE": "Example:{{example}}",
+        "INVALID_DURATION": "Duration should look like this: 2h 30m or 150m",
+        "INVALID_TIME": "Time format should be: {{format}}",
+        "NETWORK_ERROR": "Could not connect. Please check your internet connection and try again.",
+        "REQUIRED_FIELD": "This field is required",
+        "SAVE_FAILED": "Could not save your changes. {{reason}}"
+      },
+      "IDLE_DIALOG": {
+        "ACTION_BREAK": "This was a break",
+        "ACTION_DONT_TRACK": "Don't track this time",
+        "ACTION_TRACK": "Log time to task",
+        "DURATION_LABEL": "You were away for:",
+        "HINT_BREAK": "Break time won't be added to any task",
+        "INSTRUCTION": "Where should this time go?",
+        "TITLE": "Welcome back!"
       }
     },
     "TASK_REPEAT": {

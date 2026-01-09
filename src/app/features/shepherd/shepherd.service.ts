@@ -1,5 +1,7 @@
 import { Injectable, inject } from '@angular/core';
-import { first } from 'rxjs/operators';
+import { first, filter } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
+import { NavigationStart } from '@angular/router';
 import { SHEPHERD_STEPS, TourId } from './shepherd-steps.const';
 import { LayoutService } from '../../core-ui/layout/layout.service';
 import { TaskService } from '../tasks/task.service';
@@ -22,6 +24,7 @@ export class ShepherdService {
   isActive = false;
   tour?: any; // Will be Shepherd.Tour when loaded
   private _Shepherd?: typeof import('shepherd.js').default;
+  private _navigationSubscription?: Subscription;
 
   async init(): Promise<void> {
     // Lazy load Shepherd.js only when needed
@@ -82,6 +85,17 @@ export class ShepherdService {
   start(): void {
     this.isActive = true;
     this.tour?.start();
+
+    // Auto-dismiss welcome dialog on navigation (ADHD-friendly)
+    this._navigationSubscription = this._router.events
+      .pipe(filter((event) => event instanceof NavigationStart))
+      .subscribe(() => {
+        const currentStep = this.tour?.getCurrentStep();
+        // Only auto-dismiss if on Welcome step
+        if (this.isActive && currentStep?.id === TourId.Welcome) {
+          this.cancel();
+        }
+      });
   }
 
   /**
@@ -171,5 +185,8 @@ export class ShepherdService {
 
   private _onTourFinish(completeOrCancel: string): void {
     this.isActive = false;
+    // Clean up navigation subscription to prevent memory leaks
+    this._navigationSubscription?.unsubscribe();
+    this._navigationSubscription = undefined;
   }
 }

@@ -177,7 +177,7 @@
     <ng-container panel-header>
       @if (isMarkdownChecklist()) {
         <mat-icon>checklist</mat-icon>
-        Checklist
+        {{ T.F.TASK.ADDITIONAL_INFO.NOTES | translate }}
         <!-- -->
       } @else {
         @if (task().notes) {
@@ -323,7 +323,10 @@
       [title]="T.G.EDIT | translate"
       (click)="editCreated()"
     >
-      Created on {{ task().created | localeDate: 'short' }}
+      {{
+        T.F.TASK.ADDITIONAL_INFO.CREATED_AT
+          | translate: { date: (task().created | localeDate: 'short') }
+      }}
     </div>
     @if (task().doneOn) {
       <div
@@ -331,7 +334,10 @@
         [title]="T.G.EDIT | translate"
         (click)="editCompleted()"
       >
-        Completed on {{ task().doneOn | localeDate: 'short' }}
+        {{
+          T.F.TASK.ADDITIONAL_INFO.COMPLETED_AT
+            | translate: { date: (task().doneOn | localeDate: 'short') }
+        }}
       </div>
     }
   </div>

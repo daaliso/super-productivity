@@ -35,8 +35,14 @@ const CANCEL_BTN: any = (shepherdService: ShepherdService) => ({
     const checkbox = document.getElementById(
       'tour-show-on-startup-checkbox',
     ) as HTMLInputElement;
-    if (checkbox && !checkbox.checked) {
-      localStorage.setItem(LS.IS_SKIP_TOUR, 'true');
+    if (checkbox) {
+      if (checkbox.checked) {
+        // User wants tour on startup - remove skip flag
+        localStorage.removeItem(LS.IS_SKIP_TOUR);
+      } else {
+        // User doesn't want tour on startup - set skip flag
+        localStorage.setItem(LS.IS_SKIP_TOUR, 'true');
+      }
     }
     shepherdService.complete();
   },
@@ -84,9 +90,9 @@ export const SHEPHERD_STEPS = (
     // ------------------------------
     {
       id: TourId.Welcome,
-      title: 'Welcome to Super Productivity! 🚀',
-      text: `<p>Super Productivity is a ToDo List / Time Tracker app.</p>
-        <p>Do you want a quick tour of the most important features?</p>
+      title: 'Welcome to Super Productivity',
+      text: `<p>Super Productivity is a task management and time tracking application.</p>
+        <p>Would you like a quick tour of the key features?</p>
         <p style="margin-top: 12px;">
           <label style="display: flex; align-items: center; cursor: pointer; user-select: none;">
             <input
@@ -102,13 +108,19 @@ export const SHEPHERD_STEPS = (
         CANCEL_BTN(shepherdService),
         {
           ...NEXT_BTN,
-          text: "Let's go!",
+          text: 'Start Tour',
           action: () => {
             const checkbox = document.getElementById(
               'tour-show-on-startup-checkbox',
             ) as HTMLInputElement;
-            if (checkbox && !checkbox.checked) {
-              localStorage.setItem(LS.IS_SKIP_TOUR, 'true');
+            if (checkbox) {
+              if (checkbox.checked) {
+                // User wants tour on startup - remove skip flag
+                localStorage.removeItem(LS.IS_SKIP_TOUR);
+              } else {
+                // User doesn't want tour on startup - set skip flag
+                localStorage.setItem(LS.IS_SKIP_TOUR, 'true');
+              }
             }
             shepherdService.next();
           },
@@ -117,7 +129,7 @@ export const SHEPHERD_STEPS = (
     },
     {
       id: TourId.AddTask,
-      title: "Let's add your first task! ⚡",
+      title: 'Add your first task',
       text: IS_MOUSE_PRIMARY
         ? `<em>Click</em> on this button or press ${KEY_COMBO('addNewTask')}.`
         : '<em>Tap</em> on the button with the +',
@@ -171,8 +183,8 @@ export const SHEPHERD_STEPS = (
       ),
     },
     {
-      title: 'Congrats! 🎉 This is your first task!',
-      text: "Let's start tracking time to it!",
+      title: 'Your first task',
+      text: "Now let's start tracking time.",
       attachTo: {
         element: 'task',
         on: 'bottom' as any,
@@ -190,8 +202,8 @@ export const SHEPHERD_STEPS = (
     },
 
     {
-      title: 'Time Tracking ⏱️',
-      text: '<p>Pressing the play button in the top right corner will start your first time tracking session.</p><p>Time tracking is useful as it allows you to get a better idea on how you spend your time. It will enable you to make better estimates and can improve how you work.</p>',
+      title: 'Time Tracking',
+      text: '<p>Press the play button in the top right corner to start tracking time.</p><p>Time tracking helps you understand how you spend your time, make better estimates, and improve your workflow.</p>',
       attachTo: {
         element: '.tour-playBtn',
         on: 'bottom',
@@ -358,7 +370,7 @@ export const SHEPHERD_STEPS = (
             ),
           },
           {
-            title: 'Well done!  🎉',
+            title: 'Great work!',
             attachTo: {
               element: 'task',
               on: 'bottom' as any,
@@ -453,7 +465,7 @@ export const SHEPHERD_STEPS = (
       })(),
     },
     {
-      title: 'Excellent!  🎉',
+      title: 'Done!',
       when: HIDE_QUICK(shepherdService),
     },
 
@@ -493,14 +505,14 @@ export const SHEPHERD_STEPS = (
     // ------------------------------
     {
       id: TourId.Sync,
-      title: 'Data Privacy & Syncing 🔒',
-      text: '<p><strong>Super Productivity does NOT collect any data.</strong> There are no user accounts or registration required.</p><p>This means you are in full control of your data. You can choose to save it locally or sync it with a provider of your choice (like Dropbox, WebDAV, or a local file).</p>',
-      buttons: [{ ...NEXT_BTN, text: 'Great!' }],
+      title: 'Data Privacy & Sync',
+      text: '<p><strong>Super Productivity does not collect any data.</strong> There are no user accounts or registration required.</p><p>You have full control of your data. You can save it locally or sync with a provider of your choice (Dropbox, WebDAV, or a local file).</p>',
+      buttons: [{ ...NEXT_BTN, text: 'Continue' }],
     },
     {
-      title: 'Syncing & Data Privacy',
-      text: '<p>With Super Productivity <strong>you can save and sync your data with a cloud provider of your choice</strong> or even host it in your own cloud.</p><p>Let me show you where to configure this!!</p>',
-      buttons: [{ ...NEXT_BTN, text: "Let's go!" }],
+      title: 'Sync Options',
+      text: '<p>You can save and sync your data with a cloud provider of your choice or host it yourself.</p><p>Let me show you where to configure this.</p>',
+      buttons: [{ ...NEXT_BTN, text: 'Continue' }],
     },
     // Only show "Open menu" step on mobile where menu is hidden
     ...(layoutService.isShowMobileBottomNav()
@@ -610,8 +622,8 @@ export const SHEPHERD_STEPS = (
     // ------------------------------
     {
       id: TourId.FinalCongrats,
-      title: '🎉 Congratulations! 🎉',
-      text: '<p>This concludes the tour. Remember that you can always start it again via the Help button in the menu.</p><p>Best way to get familiar with the app, is to play around with it. Have fun! 😄</p>',
+      title: 'Tour Complete',
+      text: '<p>This concludes the tour. You can restart it anytime via the Help button in the menu.</p><p>The best way to get familiar with the app is to explore it yourself.</p>',
       buttons: [
         ...(IS_MOUSE_PRIMARY
           ? [
