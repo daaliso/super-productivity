@@ -2,7 +2,7 @@
 
 :host {
   border: 2px dashed var(--c-accent);
-  border-radius: 8px;
+  border-radius: var(--sys-corner-radius-small);
   position: relative;
   pointer-events: none;
   z-index: 33;
@@ -99,7 +99,7 @@
       gap: 4px;
       font-size: 10px;
       padding: 2px 6px;
-      border-radius: 12px;
+      border-radius: var(--sys-corner-chip);
       font-weight: 500;
 
       @include mq(xs, max) {

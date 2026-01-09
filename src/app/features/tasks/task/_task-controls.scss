@@ -21,10 +21,11 @@
 .controls {
   display: flex;
   flex-direction: row;
-  align-items: stretch;
+  align-items: center; // M3: Proper vertical alignment
   text-align: right;
   margin-right: 2px;
   position: relative;
+  gap: 2px; // M3: Consistent spacing between icons
 
   button {
     margin-top: auto;
@@ -38,27 +39,12 @@
         border-radius: var(--card-border-radius);
       }
     }
-
-    &:hover {
-      ////  background: var(--c-light-10);
-      //
-      //
-    }
   }
 
   @include mq(xs, max) {
     white-space: normal;
     margin-left: 5px;
   }
-
-  //@include smallMainContainer {
-  //  white-space: normal;
-  //  margin-left: 5px;
-  //}
-
-  //@include verySmallMainContainer {
-  //  min-height: 40px;
-  //}
 }
 
 // OTHER UI ELEMENTS
@@ -455,10 +441,48 @@ progress-bar {
 }
 
 .ico-btn {
-  color: inherit;
+  // M3: Theme-aware icon styling
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 
-  &.mat-accent {
-    color: var(--c-accent);
+  mat-icon {
+    font-size: 24px;
+    width: 24px;
+    height: 24px;
+    // M3: Theme-dynamic default color (muted)
+    color: var(--sys-on-surface-variant);
+    transition:
+      color var(--transition-duration-xs) ease,
+      transform var(--transition-duration-xs) var(--m3-spring-easing, ease-out);
+  }
+
+  &:hover mat-icon {
+    // M3: Full contrast on hover
+    color: var(--sys-on-surface);
+    transform: scale(1.08);
+  }
+
+  &:active mat-icon {
+    transform: scale(0.95);
+  }
+
+  // M3: Accent color for active states
+  &.mat-accent mat-icon,
+  &[color='accent'] mat-icon {
+    color: var(--sys-tertiary, var(--c-accent));
+  }
+
+  // M3: Primary color for emphasis
+  &.mat-primary mat-icon,
+  &[color='primary'] mat-icon {
+    color: var(--sys-primary);
+  }
+
+  // M3: Warning color for overdue items
+  &.mat-warn mat-icon,
+  &[color='warn'] mat-icon {
+    color: var(--sys-error, var(--c-warn));
   }
 }
 
@@ -541,9 +565,11 @@ progress-bar {
   0% {
     transform: scale(0.5) rotate(-180deg);
   }
+
   50% {
     transform: scale(1) rotate(-90deg);
   }
+
   100% {
     transform: scale(1) rotate(0deg);
   }
@@ -552,7 +578,8 @@ progress-bar {
 .isPreventPointerEventsWhilePanning {
   * {
     user-select: none !important;
-    -webkit-user-select: none !important; /* Safari */
+    -webkit-user-select: none !important;
+    /* Safari */
     pointer-events: none !important;
     transition: none !important;
   }

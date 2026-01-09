@@ -12,13 +12,13 @@
   /* Track */
   ::-webkit-scrollbar-track {
     background: var(--scrollbar-track);
-    border-radius: 4px;
+    border-radius: var(--sys-corner-radius-small);
   }
 
   /* Handle */
   ::-webkit-scrollbar-thumb {
     background: var(--scrollbar-thumb);
-    border-radius: 16px;
+    border-radius: var(--sys-corner-radius-large);
   }
 
   /* Handle on hover */

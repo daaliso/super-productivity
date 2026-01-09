@@ -29,8 +29,8 @@
     flex: 1;
     min-width: 0;
     font-family: 'Open Sans', sans-serif;
-    font-weight: 400;
-    letter-spacing: normal;
+    font-weight: 500;
+    letter-spacing: 0.01em;
     color: var(--sidenav-text);
 
     // to make space for the task-count
@@ -205,8 +205,8 @@ button[mat-menu-item].nav-link.active {
   text-align: left;
   font-size: 14px; // Larger text for horizontal layout
   font-family: 'Open Sans', sans-serif;
-  font-weight: 500;
-  letter-spacing: 0.1px;
+  font-weight: 600; // Bolder for better presence
+  letter-spacing: 0.02em;
 
   // Override Angular Material mat-menu-item defaults so buttons/anchors match our palette
   &[mat-menu-item] {
@@ -281,6 +281,7 @@ button[mat-menu-item].nav-link.active {
     width: 24px;
     height: 24px;
     font-size: 24px;
+    color: var(--sidenav-icon-color, var(--sys-primary)); // Tinted icons
   }
 
   .nav-label {

@@ -6,6 +6,8 @@
       [class.expand-up]="expandDirection() === 'up'"
       [class.expand-down]="expandDirection() === 'down'"
       [@listAnimation]="items().length"
+      role="menu"
+      [attr.aria-hidden]="!isOpen()"
     >
       @for (item of items(); track item.id) {
         <button
@@ -15,6 +17,8 @@
           [class.warn]="item.color === 'warn'"
           (click)="onItemClick(item, $event)"
           [@menuState]
+          role="menuitem"
+          [attr.aria-label]="item.label ? (item.label | translate) : ''"
         >
           <mat-icon class="item-icon">{{ item.icon }}</mat-icon>
           @if (item.label) {
@@ -33,6 +37,9 @@
     (click)="toggleMenu($event)"
     [matTooltip]="mainTooltip() | translate"
     matTooltipPosition="left"
+    [attr.aria-expanded]="isOpen()"
+    [attr.aria-label]="mainTooltip() | translate"
+    role="button"
   >
     <mat-icon [@fabRotation]="isOpen() ? 'open' : 'closed'">{{ mainIcon() }}</mat-icon>
   </button>

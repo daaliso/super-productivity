@@ -79,18 +79,29 @@ $base-theme: mat.define-theme(
   --sys-surface-container-high: #{map.get($palette, 'surfaceContainerHigh')};
   --sys-surface-container-highest: #{map.get($palette, 'surfaceContainerHighest')};
 
-  // Expressive Material 3 tokens
+  // Expressive Material 3 tokens - Full Shape Scale
   --sys-corner-radius-none: 0px;
   --sys-corner-radius-extra-small: 4px;
   --sys-corner-radius-small: 8px;
   --sys-corner-radius-medium: 12px;
   --sys-corner-radius-large: 16px;
+  --sys-corner-radius-large-increased: 20px;
   --sys-corner-radius-extra-large: 28px;
+  --sys-corner-radius-extra-large-increased: 32px;
+  --sys-corner-radius-extra-extra-large: 48px;
   --sys-corner-radius-full: 9999px;
 
   // M3 Expressive Shape Morphing Support
   --sys-shape-morph-duration: var(--motion-duration-medium);
-  --sys-shape-morph-easing: var(--motion-spring-spatial-default);
+  --sys-shape-morph-easing: var(--motion-easing-expressive);
+
+  // Component-Specific Corner Tokens
+  --sys-corner-fab: var(--sys-corner-radius-large);
+  --sys-corner-card: var(--sys-corner-radius-medium);
+  --sys-corner-dialog: var(--sys-corner-radius-extra-large);
+  --sys-corner-sheet: var(--sys-corner-radius-extra-large-increased);
+  --sys-corner-chip: var(--sys-corner-radius-small);
+  --sys-corner-button: var(--sys-corner-radius-large);
 
   // Squircle approximations (superellipse)
   // Use with clip-path for true squircles, or border-radius for approximation
@@ -590,12 +601,12 @@ body.isDarkTheme.theme-dracula,
 
 // Global light mode background - ensure proper surface colors
 body:not(.isDarkTheme) {
-  background-color: var(--sys-background);
+  background-color: var(--sys-surface-container-low);
   color: var(--sys-on-background);
 }
 
-// Global dark mode background fix if not covered by mat-app-background
+// Global dark mode background fix - matches sidebar for unified appearance
 body.isDarkTheme {
-  background-color: var(--sys-background);
+  background-color: var(--sys-surface-container-low);
   color: var(--sys-on-background);
 }

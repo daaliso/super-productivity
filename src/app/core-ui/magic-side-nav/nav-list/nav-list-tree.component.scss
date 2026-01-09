@@ -5,7 +5,8 @@
 }
 
 :host * {
-  -webkit-user-drag: none; /* Safari/Chrome */
+  -webkit-user-drag: none;
+  /* Safari/Chrome */
 }
 
 .g-multi-btn-wrapper {
@@ -13,6 +14,38 @@
   align-items: center;
   position: relative;
   overflow: hidden;
+
+  // M3 Section Header Styling for group labels (Projects, Tags)
+  nav-item ::ng-deep {
+    .nav-link {
+      // Section header should look different from regular items
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--sidenav-text-secondary);
+      min-height: 40px;
+      padding: 8px 12px;
+
+      .nav-icon {
+        font-size: 20px;
+        width: 20px;
+        height: 20px;
+        opacity: 0.7;
+      }
+
+      .nav-label {
+        opacity: 0.85;
+      }
+
+      &:hover {
+        .nav-icon,
+        .nav-label {
+          opacity: 1;
+        }
+      }
+    }
+  }
 
   // Hide additional buttons by default on desktop
   .additional-btns {
@@ -203,6 +236,7 @@
   .g-multi-btn-wrapper {
     padding-left: var(--s);
   }
+
   .nav-children {
     margin-left: var(--s);
   }
