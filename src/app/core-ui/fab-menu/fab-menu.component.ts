@@ -5,6 +5,7 @@ import {
   HostListener,
   inject,
   input,
+  output,
   signal,
 } from '@angular/core';
 import { MatMiniFabButton } from '@angular/material/button';
@@ -20,6 +21,7 @@ import {
   transition,
   trigger,
 } from '@angular/animations';
+import { LongPressDirective } from '../../ui/longpress/longpress.directive';
 
 export interface FabMenuItem {
   id: string;
@@ -32,7 +34,7 @@ export interface FabMenuItem {
 @Component({
   selector: 'fab-menu',
   standalone: true,
-  imports: [MatMiniFabButton, MatIcon, MatTooltip, TranslatePipe],
+  imports: [MatMiniFabButton, MatIcon, MatTooltip, TranslatePipe, LongPressDirective],
   templateUrl: './fab-menu.component.html',
   styleUrls: ['./fab-menu.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -96,9 +98,39 @@ export class FabMenuComponent {
   mainIcon = input<string>('add');
   mainTooltip = input<string>('');
   expandDirection = input<'up' | 'down'>('up');
+  /**
+   * When provided, clicking the main FAB executes this action directly.
+   * The menu only shows on long-press. This is the recommended UX pattern
+   * when there's a clear primary action (like "Add Task").
+   */
+  mainAction = input<(() => void) | undefined>(undefined);
+
+  /** Emitted when the main FAB is clicked (only when mainAction is not set) */
+  mainFabClick = output<void>();
 
   isOpen = signal(false);
   private _elementRef = inject(ElementRef);
+
+  onMainFabClick(event?: MouseEvent): void {
+    if (event) {
+      event.stopPropagation();
+    }
+
+    const action = this.mainAction();
+    if (action) {
+      // If mainAction is provided, execute it directly on click
+      action();
+    } else {
+      // Otherwise, toggle the menu (original behavior)
+      this.isOpen.update((v) => !v);
+      this.mainFabClick.emit();
+    }
+  }
+
+  onMainFabLongPress(): void {
+    // Long press always opens the menu (for accessing secondary actions)
+    this.isOpen.set(true);
+  }
 
   toggleMenu(event?: MouseEvent): void {
     if (event) {

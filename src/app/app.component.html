@@ -26,46 +26,11 @@
   @if (isShowFocusOverlay()) {
     <focus-mode-overlay @warp></focus-mode-overlay>
   } @else {
-    <div
-      class="app-container"
-      [class.has-mobile-bottom-nav]="isShowMobileButtonNav"
-      [dir]="isRTL ? 'rtl' : 'ltr'"
-    >
-      <magic-side-nav
-        #magicSideNav
-        [activeWorkContextId]="getActiveWorkContextId()"
-      >
-      </magic-side-nav>
-
-      <main class="main-content">
-        <header
-          [class.isNotScrolled]="!layoutService.isScrolled()"
-          class="header-wrapper"
-        >
-          <main-header></main-header>
-
-          <banner></banner>
-        </header>
-
-        <right-panel>
-          <div
-            #routeWrapper
-            [@warpRoute]="getPage(o)"
-            class="route-wrapper"
-          >
-            <router-outlet #o="outlet"></router-outlet>
-          </div>
-        </right-panel>
-        <global-progress-bar></global-progress-bar>
-      </main>
-
-      <!-- Mobile Bottom Navigation -->
-      @if (isShowMobileButtonNav()) {
-        <mobile-bottom-nav
-          (toggleMobileNavEvent)="magicSideNav.toggleMobileNav()"
-        ></mobile-bottom-nav>
-      }
-    </div>
+    <app-shell
+      #appShell
+      [activeWorkContextId]="getActiveWorkContextId()"
+      [isRTL]="isRTL"
+    ></app-shell>
   }
   <!-- -->
 }
@@ -124,10 +89,10 @@
 }
 
 <!-- Background context menu -->
-@if (routeWrapper) {
+@if (appShell?.routeWrapper) {
   <context-menu
     [contextMenu]="backgroundContextMenu"
-    [rightClickTriggerEl]="routeWrapper.nativeElement"
+    [rightClickTriggerEl]="appShell.routeWrapper.nativeElement"
     [allowedSelectors]="
       '.route-wrapper, .today, .task-list-wrapper, .page-wrapper, .route-wrapper > *, .search-results'
     "

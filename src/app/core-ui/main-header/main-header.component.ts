@@ -48,6 +48,7 @@ import { UserProfileService } from '../../features/user-profile/user-profile.ser
 import { FabMenuComponent, FabMenuItem } from '../fab-menu/fab-menu.component';
 import { DialogCreateProjectComponent } from '../../features/project/dialogs/create-project/dialog-create-project.component';
 import { DialogAddNoteComponent } from '../../features/note/dialog-add-note/dialog-add-note.component';
+import { PlanningModeService } from '../../features/planning-mode/planning-mode.service';
 
 @Component({
   selector: 'main-header',
@@ -236,6 +237,16 @@ export class MainHeaderComponent implements OnDestroy {
   get kb(): KeyboardConfig {
     return (this._configService.cfg()?.keyboard as KeyboardConfig) || {};
   }
+
+  private readonly _planningModeService = inject(PlanningModeService);
+
+  /**
+   * Primary action for the FAB button - shows the add task bar directly on click.
+   * Arrow function to preserve `this` context when passed to child component.
+   */
+  readonly showAddTaskBarAction = (): void => {
+    this.layoutService.showAddTaskBar();
+  };
 
   readonly fabMenuItems: FabMenuItem[] = [
     {

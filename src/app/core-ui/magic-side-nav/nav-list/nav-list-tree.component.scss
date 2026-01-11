@@ -132,6 +132,7 @@
   padding: 0;
   margin: 4px 0 8px 0;
   position: relative; // For drop indicator positioning
+  overflow: hidden; // Clip content during expand/collapse animation
   // Angular animations handle expand/collapse - no CSS transitions needed
 }
 

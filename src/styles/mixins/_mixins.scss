@@ -1,4 +1,5 @@
 // Forward all mixins so they can be used without namespace in components
+@forward '_expressive';
 @forward '_theming';
 @forward '_positioning';
 @forward '_text';
