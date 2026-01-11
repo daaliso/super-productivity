@@ -3,17 +3,14 @@ import { TREE_CONSTANTS } from './tree-constants';
 
 export const expandCollapseAni = trigger('expandCollapse', [
   transition(':enter', [
-    style({ height: '0px', overflow: 'hidden' }),
-    animate(
-      `${TREE_CONSTANTS.ANIMATION_DURATION}ms ease-in-out`,
-      style({ height: '*', overflow: 'visible' }),
-    ),
+    style({ height: '0px' }),
+    animate(`${TREE_CONSTANTS.ANIMATION_DURATION}ms ease-in-out`, style({ height: '*' })),
   ]),
   transition(':leave', [
-    style({ height: '*', overflow: 'visible' }),
+    style({ height: '*' }),
     animate(
       `${TREE_CONSTANTS.ANIMATION_DURATION}ms ease-in-out`,
-      style({ height: '0px', overflow: 'hidden' }),
+      style({ height: '0px' }),
     ),
   ]),
 ]);

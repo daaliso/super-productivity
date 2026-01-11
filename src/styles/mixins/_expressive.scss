@@ -1,0 +1,88 @@
+// =============================================================================
+// M3 EXPRESSIVE MOTION MIXINS
+// =============================================================================
+// Reusable mixins for applying spring-based motion to interactive elements.
+// These follow Material 3 Expressive design principles.
+// =============================================================================
+
+/// Interactive scale effect for buttons, chips, and other clickable elements.
+/// Provides a subtle "press" feedback with spring physics.
+///
+/// @param {Number} $hover-scale [1.02] - Scale factor on hover
+/// @param {Number} $active-scale [0.98] - Scale factor on active/pressed
+/// @param {String} $duration [var(--motion-duration-short)] - Transition duration
+/// @example
+///   .my-button {
+///     @include interactive-scale(1.03, 0.97);
+///   }
+@mixin interactive-scale(
+  $hover-scale: 1.02,
+  $active-scale: 0.98,
+  $duration: var(--motion-duration-short)
+) {
+  transition: transform $duration var(--motion-spring-spatial-fast);
+
+  &:not(:disabled):hover {
+    transform: scale($hover-scale);
+  }
+
+  &:not(:disabled):active {
+    transform: scale($active-scale);
+  }
+
+  &:disabled {
+    transform: none;
+  }
+}
+
+/// Spring entrance animation helper.
+/// Applies a named keyframe animation with spring easing.
+///
+/// @param {String} $name - Name of the @keyframes animation
+/// @param {String} $duration [var(--motion-duration-medium)] - Animation duration
+/// @example
+///   .dialog-container {
+///     @include spring-enter(dialog-enter, var(--motion-duration-long));
+///   }
+@mixin spring-enter($name, $duration: var(--motion-duration-medium)) {
+  animation: $name $duration var(--motion-spring-spatial-default);
+}
+
+/// Slide hover effect for list items and menu items.
+/// Items subtly shift horizontally on hover to indicate interactivity.
+///
+/// @param {Length} $distance [4px] - Horizontal shift distance
+/// @example
+///   .menu-item {
+///     @include slide-hover(6px);
+///   }
+@mixin slide-hover($distance: 4px) {
+  transition: transform var(--motion-duration-short) var(--motion-spring-spatial-fast);
+
+  &:hover {
+    transform: translateX($distance);
+  }
+}
+
+/// Hover lift effect for cards and surfaces.
+/// Elevates the element on hover with optional scaling.
+///
+/// @param {Length} $lift [4px] - Vertical lift distance
+/// @param {Number} $scale [1] - Optional scale factor
+/// @example
+///   .card {
+///     @include hover-lift(6px, 1.01);
+///   }
+@mixin hover-lift($lift: 4px, $scale: 1) {
+  transition:
+    transform var(--motion-duration-medium) var(--motion-spring-spatial-default),
+    box-shadow var(--motion-duration-short) var(--motion-spring-effects-default);
+
+  &:hover {
+    @if $scale ==1 {
+      transform: translateY(-$lift);
+    } @else {
+      transform: translateY(-$lift) scale($scale);
+    }
+  }
+}

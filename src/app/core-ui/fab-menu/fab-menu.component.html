@@ -34,7 +34,8 @@
     mat-mini-fab
     color="primary"
     class="main-fab mat-elevation-z4"
-    (click)="toggleMenu($event)"
+    (click)="onMainFabClick($event)"
+    (longPress)="onMainFabLongPress()"
     [matTooltip]="mainTooltip() | translate"
     matTooltipPosition="left"
     [attr.aria-expanded]="isOpen()"

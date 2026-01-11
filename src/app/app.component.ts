@@ -5,7 +5,6 @@ import {
   computed,
   DestroyRef,
   effect,
-  ElementRef,
   HostBinding,
   HostListener,
   inject,
@@ -21,7 +20,6 @@ import { LayoutService } from './core-ui/layout/layout.service';
 import { SnackService } from './core/snack/snack.service';
 import { IS_ELECTRON } from './app.constants';
 import { expandAnimation } from './ui/animations/expand.ani';
-import { warpRouteAnimation } from './ui/animations/warp-route';
 import { combineLatest, merge, Observable, Subscription, timer } from 'rxjs';
 import { fadeAnimation } from './ui/animations/fade.ani';
 import { BannerService } from './core/banner/banner.service';
@@ -33,21 +31,16 @@ import { LanguageService } from './core/language/language.service';
 import { WorkContextService } from './features/work-context/work-context.service';
 import { ImexViewService } from './imex/imex-meta/imex-view.service';
 import { SyncTriggerService } from './imex/sync/sync-trigger.service';
-import { ActivatedRoute, RouterOutlet } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { filter, map, take } from 'rxjs/operators';
 import { isOnline$ } from './util/is-online';
 import { IS_MOBILE } from './util/is-mobile';
 import { warpAnimation, warpInAnimation } from './ui/animations/warp.ani';
 import { AddTaskBarComponent } from './features/tasks/add-task-bar/add-task-bar.component';
-import { Dir } from '@angular/cdk/bidi';
-import { MagicSideNavComponent } from './core-ui/magic-side-nav/magic-side-nav.component';
-import { MainHeaderComponent } from './core-ui/main-header/main-header.component';
-import { BannerComponent } from './core/banner/banner/banner.component';
-import { GlobalProgressBarComponent } from './core-ui/global-progress-bar/global-progress-bar.component';
 import { FocusModeOverlayComponent } from './features/focus-mode/focus-mode-overlay/focus-mode-overlay.component';
 import { ShepherdComponent } from './features/shepherd/shepherd.component';
 import { AsyncPipe, DOCUMENT } from '@angular/common';
-import { RightPanelComponent } from './features/right-panel/right-panel.component';
+import { GlobalProgressBarComponent } from './core-ui/global-progress-bar/global-progress-bar.component';
 import { selectIsOverlayShown } from './features/focus-mode/store/focus-mode.selectors';
 import { Store } from '@ngrx/store';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -64,8 +57,8 @@ import { TagService } from './features/tag/tag.service';
 import { ContextMenuComponent } from './ui/context-menu/context-menu.component';
 import { WorkContextThemeCfg } from './features/work-context/work-context.model';
 import { isInputElement } from './util/dom-element';
-import { MobileBottomNavComponent } from './core-ui/mobile-bottom-nav/mobile-bottom-nav.component';
 import { StartupService } from './core/startup/startup.service';
+import { AppShellComponent } from './core-ui/layout/app-shell/app-shell.component';
 
 const w = window as Window & { productivityTips?: string[][]; randomIndex?: number };
 const productivityTip: string[] | undefined =
@@ -82,23 +75,11 @@ interface BeforeInstallPromptEvent extends Event {
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
-  animations: [
-    expandAnimation,
-    warpRouteAnimation,
-    fadeAnimation,
-    warpAnimation,
-    warpInAnimation,
-  ],
+  animations: [expandAnimation, fadeAnimation, warpAnimation, warpInAnimation],
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     AddTaskBarComponent,
-    Dir,
-    MagicSideNavComponent,
-    MainHeaderComponent,
-    BannerComponent,
-    RightPanelComponent,
-    RouterOutlet,
-    GlobalProgressBarComponent,
+    AppShellComponent,
     FocusModeOverlayComponent,
     ShepherdComponent,
     AsyncPipe,
@@ -107,7 +88,7 @@ interface BeforeInstallPromptEvent extends Event {
     MatIcon,
     TranslatePipe,
     ContextMenuComponent,
-    MobileBottomNavComponent,
+    GlobalProgressBarComponent,
   ],
 })
 export class AppComponent implements OnDestroy, AfterViewInit {
@@ -142,7 +123,7 @@ export class AppComponent implements OnDestroy, AfterViewInit {
   productivityTipText: string = productivityTip?.[1] || '';
   showSkipSyncButton = signal(false);
 
-  @ViewChild('routeWrapper', { read: ElementRef }) routeWrapper?: ElementRef<HTMLElement>;
+  @ViewChild('appShell') appShell?: AppShellComponent;
 
   @HostBinding('@.disabled') get isDisableAnimations(): boolean {
     return this._isDisableAnimations();
@@ -315,10 +296,6 @@ export class AppComponent implements OnDestroy, AfterViewInit {
       },
       2 * 60 * 1000,
     );
-  }
-
-  getPage(outlet: RouterOutlet): string {
-    return outlet.activatedRouteData.page || 'one';
   }
 
   getActiveWorkContextId(): string | null {

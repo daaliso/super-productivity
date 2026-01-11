@@ -57,6 +57,7 @@
 
 .folder-content {
   margin-left: 0;
+  overflow: hidden; // Clip content during expand/collapse animation
 }
 
 .root-drop {

@@ -28,6 +28,8 @@
       right: auto;
       transform: translateX(-50%);
     }
+
+    z-index: var(--z-add-task-bar);
   }
 }
 

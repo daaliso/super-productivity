@@ -116,11 +116,78 @@
   // DURATION TOKENS
   // ---------------------------------------------------------------------------
 
+  // ---------------------------------------------------------------------------
+  // DURATION TOKENS
+  // ---------------------------------------------------------------------------
+
   --motion-duration-extra-short: 100ms;
   --motion-duration-short: 200ms;
   --motion-duration-medium: 300ms;
   --motion-duration-long: 450ms;
   --motion-duration-extra-long: 600ms;
+
+  // ---------------------------------------------------------------------------
+  // EASING ANIMATION TOKENS (Standard & Emphasized)
+  // ---------------------------------------------------------------------------
+
+  // Expressive Easing: Bouncy overshoot for hero moments (from M3)
+  --motion-easing-expressive: linear(
+    0,
+    0.009,
+    0.035 2.1%,
+    0.141 4.4%,
+    0.723 12.9%,
+    0.938 16.7%,
+    1.017,
+    1.077,
+    1.121,
+    1.149 24.3%,
+    1.159,
+    1.163,
+    1.161,
+    1.154 29.9%,
+    1.129 32.8%,
+    1.051 39.6%,
+    1.017 43.1%,
+    0.991,
+    0.977 51%,
+    0.974 53.8%,
+    0.975 57.1%,
+    0.997 69.8%,
+    1.003 76.9%,
+    1
+  );
+
+  // Standard: Subtle ease, minimal bounce for utilitarian interactions
+  --motion-easing-standard: linear(
+    0,
+    0.009,
+    0.035 2.1%,
+    0.141 4.4%,
+    0.723 12.9%,
+    0.938 16.7%,
+    1.017,
+    1.077,
+    1.121,
+    1.048 39.6%,
+    1.011 43.1%,
+    0.991,
+    0.977 51%,
+    0.974 53.8%,
+    0.975 57.1%,
+    0.994 69.8%,
+    0.999 76.9%,
+    1
+  );
+
+  // Emphasized: For hero moments and key transitions
+  --motion-easing-emphasized: cubic-bezier(0.2, 0, 0, 1);
+  --motion-easing-emphasized-decelerate: cubic-bezier(0.05, 0.7, 0.1, 1);
+  --motion-easing-emphasized-accelerate: cubic-bezier(0.3, 0, 0.8, 0.15);
+
+  // Legacy M2 / Compatibility
+  --motion-easing-decelerate: cubic-bezier(0, 0, 0.2, 1);
+  --motion-easing-accelerate: cubic-bezier(0.4, 0, 1, 1);
 
   // ---------------------------------------------------------------------------
   // STANDARD MOTION SCHEME (minimal bounce, utilitarian)
@@ -154,6 +221,13 @@
     --motion-spring-spatial-fast: ease-out;
     --motion-spring-spatial-default: ease-out;
     --motion-spring-spatial-slow: ease-out;
+
+    --motion-easing-expressive: linear;
+    --motion-easing-standard: linear;
+    --motion-easing-emphasized: linear;
+    --motion-easing-emphasized-decelerate: linear;
+    --motion-easing-emphasized-accelerate: linear;
+
     --motion-duration-short: 0ms;
     --motion-duration-medium: 0ms;
     --motion-duration-long: 0ms;

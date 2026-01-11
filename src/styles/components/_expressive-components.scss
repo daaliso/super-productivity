@@ -566,3 +566,130 @@
     opacity: 1;
   }
 }
+
+// -----------------------------------------------------------------------------
+// BOTTOM SHEETS (Mobile)
+// -----------------------------------------------------------------------------
+// Migrated from _m3-expressive-global.scss
+
+.mat-bottom-sheet-container {
+  border-radius: var(--sys-corner-sheet) var(--sys-corner-sheet) 0 0 !important;
+  animation: sheet-slide-up 400ms var(--motion-easing-emphasized);
+}
+
+@keyframes sheet-slide-up {
+  from {
+    transform: translateY(100%);
+  }
+
+  to {
+    transform: translateY(0);
+  }
+}
+
+// -----------------------------------------------------------------------------
+// RIPPLE ENHANCEMENT (M3 Expressive)
+// -----------------------------------------------------------------------------
+// Migrated from _m3-expressive-global.scss
+
+.mat-ripple-element {
+  background-color: rgba(var(--sys-on-surface-rgb), 0.1) !important;
+  animation: ripple-expand 400ms var(--motion-easing-expressive) !important;
+}
+
+@keyframes ripple-expand {
+  0% {
+    transform: scale(0);
+    opacity: 0.3;
+  }
+
+  50% {
+    opacity: 0.2;
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 0;
+  }
+}
+
+// -----------------------------------------------------------------------------
+// FOCUS INDICATORS (Accessibility - WCAG AAA)
+// -----------------------------------------------------------------------------
+// Migrated from _m3-expressive-global.scss
+// Critical for accessibility compliance
+
+.mat-mdc-button:focus-visible,
+.mat-mdc-icon-button:focus-visible,
+.mat-mdc-fab:focus-visible,
+.mat-mdc-mini-fab:focus-visible,
+.mat-mdc-chip:focus-visible {
+  outline: 3px solid var(--sys-primary);
+  outline-offset: 2px;
+  animation: focus-pulse 1s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes focus-pulse {
+  0%,
+  100% {
+    outline-offset: 2px;
+  }
+
+  50% {
+    outline-offset: 4px;
+  }
+}
+
+// -----------------------------------------------------------------------------
+// MATERIAL ICONS → MATERIAL SYMBOLS MIGRATION SUPPORT
+// -----------------------------------------------------------------------------
+// Migrated from _m3-expressive-global.scss
+
+mat-icon {
+  // Support for Material Symbols variable font features
+  &.material-symbols-rounded,
+  &.material-symbols-outlined,
+  &.material-symbols-sharp {
+    font-variation-settings:
+      'FILL' 0,
+      'wght' 400,
+      'GRAD' 0,
+      'opsz' 24;
+
+    transition: font-variation-settings 200ms var(--motion-easing-standard);
+  }
+
+  // Filled variant for selected/active states
+  &.filled,
+  &.icon-filled {
+    font-variation-settings:
+      'FILL' 1,
+      'wght' 400,
+      'GRAD' 0,
+      'opsz' 24;
+  }
+
+  // Emphasized variant (bolder)
+  &.emphasized {
+    font-variation-settings:
+      'FILL' 0,
+      'wght' 600,
+      'GRAD' 0,
+      'opsz' 24;
+  }
+}
+
+// Interactive icons in buttons/chips should fill on hover
+.mat-mdc-button:hover mat-icon,
+.mat-mdc-icon-button:hover mat-icon,
+.mat-mdc-chip:hover mat-icon {
+  &.material-symbols-rounded,
+  &.material-symbols-outlined,
+  &.material-symbols-sharp {
+    font-variation-settings:
+      'FILL' 1,
+      'wght' 500,
+      'GRAD' 0,
+      'opsz' 24;
+  }
+}
