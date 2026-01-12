@@ -2,38 +2,41 @@
 trigger: always_on
 ---
 
-Web Version
-Action Command
-Start npm run startFrontend
-Stop Ctrl+C in terminal
-URL http://localhost:4200/
-Android APK (Testing/Debug)
+# Local Development Commands
 
-# Build + sync + assemble (all-in-one on Linux/Mac)
+## Web (Development)
 
-npm run dist:android
+```bash
+npm run startFrontend   # Start dev server at http://localhost:4200/
+```
 
-# On Windows (workaround for gradlew path issue):
+---
 
-npm run droid # Build + sync only
-cd android && .\gradlew assembleDebug # Assemble APK
+## Android Debug APK
 
-# Install to connected device
+```bash
+npm run droid                           # Build + sync
+cd android && .\gradlew assembleDebug   # Assemble APK
+```
 
+**Output:** `android/app/build/outputs/apk/fdroid/debug/app-fdroid-debug.apk`
+
+---
+
+## Android Release APK (Production)
+
+```bash
+cd android && build-release.bat
+```
+
+**Output:** `android/app/build/outputs/apk/fdroid/release/app-fdroid-release.apk`
+
+> **Note:** The `build-release.bat` script sets the required keystore environment variables automatically.
+
+---
+
+## Install APK to Device
+
+```bash
 npm run install:android
-APK Location:
-
-android/app/build/outputs/apk/fdroid/debug/app-fdroid-debug.apk
-
-Android APK (Production)
-npm run dist:android:prod
-APK Location: android/app/build/outputs/apk/fdroid/release/app-fdroid-release.apk
-
-📦 Staging vs Production Differences
-Aspect Staging (dist:android) Production (dist:android:prod)
-Build config stageWeb prodWeb
-Optimization Disabled (--optimization=false) Full minification
-AOT Disabled Enabled
-Gradle assembleDebug assembleRelease
-Signing Debug keystore Requires release keystore
-Filename app-fdroid-debug.apk app-fdroid-release.apk
+```

@@ -113,3 +113,6 @@ playwright-report/
 
 electron-builder-appx.yaml
 test-results/
+
+# Android keystore (never commit)
+keystore.jks
