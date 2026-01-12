@@ -8,13 +8,18 @@ import { signal } from '@angular/core';
 describe('AppShellComponent', () => {
   let component: AppShellComponent;
   let fixture: ComponentFixture<AppShellComponent>;
-  let mockLayoutService: jasmine.SpyObj<LayoutService>;
+  let mockLayoutService: any;
+  let isScrolledSignal: ReturnType<typeof signal<boolean>>;
+  let isShowMobileBottomNavSignal: ReturnType<typeof signal<boolean>>;
 
   beforeEach(async () => {
-    mockLayoutService = jasmine.createSpyObj<LayoutService>('LayoutService', [], {
-      isScrolled: signal(false),
-      isShowMobileBottomNav: signal(false),
-    });
+    isScrolledSignal = signal(false);
+    isShowMobileBottomNavSignal = signal(false);
+
+    mockLayoutService = {
+      isScrolled: isScrolledSignal,
+      isShowMobileBottomNav: isShowMobileBottomNavSignal,
+    };
 
     await TestBed.configureTestingModule({
       imports: [AppShellComponent],
