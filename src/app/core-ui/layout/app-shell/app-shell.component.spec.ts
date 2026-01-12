@@ -3,6 +3,7 @@ import { AppShellComponent } from './app-shell.component';
 import { LayoutService } from '../layout.service';
 import { provideRouter } from '@angular/router';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
+import { signal } from '@angular/core';
 
 describe('AppShellComponent', () => {
   let component: AppShellComponent;
@@ -10,16 +11,10 @@ describe('AppShellComponent', () => {
   let mockLayoutService: jasmine.SpyObj<LayoutService>;
 
   beforeEach(async () => {
-    mockLayoutService = jasmine.createSpyObj<LayoutService>('LayoutService', [
-      'isScrolled',
-      'isShowMobileBottomNav',
-    ]);
-
-    // Default signal returns
-    mockLayoutService.isScrolled = jasmine.createSpy('isScrolled').and.returnValue(false);
-    mockLayoutService.isShowMobileBottomNav = jasmine
-      .createSpy('isShowMobileBottomNav')
-      .and.returnValue(false);
+    mockLayoutService = jasmine.createSpyObj<LayoutService>('LayoutService', [], {
+      isScrolled: signal(false),
+      isShowMobileBottomNav: signal(false),
+    });
 
     await TestBed.configureTestingModule({
       imports: [AppShellComponent],
@@ -61,9 +56,7 @@ describe('AppShellComponent', () => {
     expect(compiled.querySelector('mobile-bottom-nav')).toBeFalsy();
 
     // Update signal to true
-    mockLayoutService.isShowMobileBottomNav = jasmine
-      .createSpy('isShowMobileBottomNav')
-      .and.returnValue(true);
+    mockLayoutService.isShowMobileBottomNav.set(true);
 
     fixture.detectChanges();
 
@@ -90,9 +83,7 @@ describe('AppShellComponent', () => {
   });
 
   it('should add has-mobile-bottom-nav class when mobile nav is shown', () => {
-    mockLayoutService.isShowMobileBottomNav = jasmine
-      .createSpy('isShowMobileBottomNav')
-      .and.returnValue(true);
+    mockLayoutService.isShowMobileBottomNav.set(true);
 
     fixture.detectChanges();
 
