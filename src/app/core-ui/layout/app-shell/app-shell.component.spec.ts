@@ -5,6 +5,8 @@ import { provideRouter } from '@angular/router';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { signal } from '@angular/core';
 import { provideMockStore } from '@ngrx/store/testing';
+import { provideMockActions } from '@ngrx/effects/testing';
+import { of } from 'rxjs';
 
 describe('AppShellComponent', () => {
   let component: AppShellComponent;
@@ -27,6 +29,7 @@ describe('AppShellComponent', () => {
       providers: [
         { provide: LayoutService, useValue: mockLayoutService },
         provideMockStore(),
+        provideMockActions(() => of()),
         provideRouter([]),
         provideNoopAnimations(),
       ],
