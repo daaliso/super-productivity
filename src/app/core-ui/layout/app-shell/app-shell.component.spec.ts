@@ -4,6 +4,7 @@ import { LayoutService } from '../layout.service';
 import { provideRouter } from '@angular/router';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { signal } from '@angular/core';
+import { provideMockStore } from '@ngrx/store/testing';
 
 describe('AppShellComponent', () => {
   let component: AppShellComponent;
@@ -25,6 +26,7 @@ describe('AppShellComponent', () => {
       imports: [AppShellComponent],
       providers: [
         { provide: LayoutService, useValue: mockLayoutService },
+        provideMockStore(),
         provideRouter([]),
         provideNoopAnimations(),
       ],
