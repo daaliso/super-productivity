@@ -7,6 +7,7 @@ import { signal } from '@angular/core';
 import { provideMockStore } from '@ngrx/store/testing';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { of } from 'rxjs';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('AppShellComponent', () => {
   let component: AppShellComponent;
@@ -25,7 +26,7 @@ describe('AppShellComponent', () => {
     };
 
     await TestBed.configureTestingModule({
-      imports: [AppShellComponent],
+      imports: [AppShellComponent, TranslateModule.forRoot()],
       providers: [
         { provide: LayoutService, useValue: mockLayoutService },
         provideMockStore(),
